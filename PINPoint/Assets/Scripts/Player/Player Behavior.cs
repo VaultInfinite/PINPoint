@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Joseph Acuna 9/3/25 11:27pm
@@ -11,10 +13,21 @@ public class PlayerBehavior : MonoBehaviour
 {
     #region Variables
     public float moveSpeed;
-    public float jumpSpeed;
-    public float gravity;
+    public float jumpHeight;
+    public float runSpeed;
+
+    private Rigidbody rb;
+
+    //Movement
+    Vector3 moveInput;
+    bool hasJumped = false;
+    bool jumpCheck = false;
     #endregion
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
@@ -25,13 +38,16 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Update()
     {
-        
+        rb.AddForce(moveInput * moveSpeed);
+
+        if (!jumpCheck) return;
+        CheckGround();
     }
 
     /// <summary>
     /// Allows the player to control the camera
     /// </summary>
-    private void CameraControl()
+    public void CameraControl()
     {
         
     }
@@ -39,9 +55,53 @@ public class PlayerBehavior : MonoBehaviour
     /// <summary>
     /// Moves the player via the given inputs
     /// </summary>
-    private void Movement()
+    void OnMovement(InputValue value)
     {
+        //moveInput = value.Get<Vector2>();
 
-
+        moveInput = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
     }
+
+    /// <summary>
+    /// Makes the player jump
+    /// </summary>
+    void OnJump(InputValue value)
+    {
+        if ((value.isPressed) && (!hasJumped))
+        {
+            hasJumped = true;
+            Debug.Log("Jump!");
+            rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.y);
+            StartCoroutine(JumpRefresh(1f));
+        }
+    }
+
+    /// <summary>
+    /// Checks to see if the player is on the ground
+    /// </summary>
+    private void CheckGround()
+    {
+        RaycastHit groundCheck;
+        float checkDist = 2f;
+        if (Physics.Raycast(transform.position, -Vector3.up, out groundCheck, checkDist))
+        {
+            if (groundCheck.collider.tag == "Ground")
+            {
+                hasJumped = false;
+                jumpCheck = false;
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// The amount of time to check for the ground
+    /// </summary>
+    private IEnumerator JumpRefresh(float jumpTimer)
+    {
+        yield return new WaitForSeconds(jumpTimer);
+
+        jumpCheck = true;
+    }
+  
 }
