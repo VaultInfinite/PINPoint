@@ -15,12 +15,25 @@ public class PlayerBehavior : MonoBehaviour
     public float gravity;
     #endregion
 
+
+    private void Start()
+    {
+        //Hide Mouse and lock to screen
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void Update()
+    {
+        
+    }
+
     /// <summary>
     /// Allows the player to control the camera
     /// </summary>
     private void CameraControl()
     {
-
+        
     }
 
     /// <summary>
