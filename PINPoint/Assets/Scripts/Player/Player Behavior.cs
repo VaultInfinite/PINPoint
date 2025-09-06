@@ -4,6 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+enum State
+{
+    IDLE,
+    WALK,
+    RUN,
+    JUMP,
+    AIRMOVE
+}
+
 /// <summary>
 /// Joseph Acuna 9/3/25 11:27pm
 /// 
@@ -12,16 +21,27 @@ using UnityEngine.InputSystem;
 public class PlayerBehavior : MonoBehaviour
 {
     #region Variables
+
+    [Header("Movement")]
     public float moveSpeed;
-    public float jumpHeight;
+    public float groundDrag;
     public float runSpeed;
 
     private Rigidbody rb;
 
     //Movement
     Vector3 moveInput;
-    bool hasJumped = false;
-    bool jumpCheck = false;
+
+    [Header("Ground Check")]
+    public float playerHeight;
+    bool grounded;
+    public LayerMask whatIsGround;
+    public float jumpForce;
+    public float jumpCD;
+    public float airMulti;
+    bool readyToJump = true;
+   
+    State playerState;
     #endregion
 
     private void Awake()
@@ -29,28 +49,15 @@ public class PlayerBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        //Hide Mouse and lock to screen
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
     public void Update()
     {
-        rb.AddForce(moveInput * moveSpeed);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        if (!jumpCheck) return;
-        CheckGround();
+
+        rb.AddForce(moveInput * moveSpeed, ForceMode.Force);
     }
 
-    /// <summary>
-    /// Allows the player to control the camera
-    /// </summary>
-    public void CameraControl()
-    {
-        
-    }
 
     /// <summary>
     /// Moves the player via the given inputs
@@ -60,6 +67,9 @@ public class PlayerBehavior : MonoBehaviour
         //moveInput = value.Get<Vector2>();
 
         moveInput = new Vector3(value.Get<Vector2>().x, 0, value.Get<Vector2>().y);
+
+  
+        playerState = State.WALK;
     }
 
     /// <summary>
@@ -67,41 +77,26 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     void OnJump(InputValue value)
     {
-        if ((value.isPressed) && (!hasJumped))
+        if ((value.isPressed) && readyToJump && grounded)
         {
-            hasJumped = true;
-            Debug.Log("Jump!");
-            rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.y);
-            StartCoroutine(JumpRefresh(1f));
+            readyToJump = false;
+
+            playerState = State.JUMP;
+
+            //Makes player jump the same height
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            //Jump
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+            Invoke(nameof(ResetJump), jumpCD);
         }
     }
 
-    /// <summary>
-    /// Checks to see if the player is on the ground
-    /// </summary>
-    private void CheckGround()
+    private void ResetJump()
     {
-        RaycastHit groundCheck;
-        float checkDist = 2f;
-        if (Physics.Raycast(transform.position, -Vector3.up, out groundCheck, checkDist))
-        {
-            if (groundCheck.collider.tag == "Ground")
-            {
-                hasJumped = false;
-                jumpCheck = false;
-            }
-
-        }
+        readyToJump = true;
     }
 
-    /// <summary>
-    /// The amount of time to check for the ground
-    /// </summary>
-    private IEnumerator JumpRefresh(float jumpTimer)
-    {
-        yield return new WaitForSeconds(jumpTimer);
 
-        jumpCheck = true;
-    }
-  
 }
