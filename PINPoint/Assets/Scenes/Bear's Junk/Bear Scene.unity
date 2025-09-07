@@ -1742,9 +1742,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  groundDrag: 2
+  groundDrag: 0
   runSpeed: 21
-  sprinting: 0
   orientation: {fileID: 1753220138}
   playerHeight: 2
   whatIsGround:
