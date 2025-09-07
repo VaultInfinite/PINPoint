@@ -19,6 +19,8 @@ public class PlayerBehavior : MonoBehaviour
     public float groundDrag;
     public float runSpeed;
     private float tempSpeed;
+    [SerializeField]
+    bool sprinting;
 
     private MeshRenderer mr;
     private Rigidbody rb;
@@ -44,6 +46,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
+        tempSpeed = moveSpeed;
     }
 
     private void Start()
@@ -65,8 +68,14 @@ public class PlayerBehavior : MonoBehaviour
         if (grounded)
         {
             rb.drag = groundDrag;
+            if (!sprinting)
+            {
+                moveSpeed = tempSpeed;
+            }
         }
         else rb.drag = 0;
+
+        
     }
 
 
@@ -82,22 +91,36 @@ public class PlayerBehavior : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Makes the player move towards where they are facing
+    /// </summary>
     private void GetDirection()
     {
         moveDirection = orientation.forward * moveInput.z + orientation.right * moveInput.x;
+
+        if (grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
+        }
     }
 
     public void OnSprint(InputAction.CallbackContext value)
     {
-        if (value.performed)
+        if (value.performed && grounded)
         {
+            sprinting = true;
             Debug.Log("Im Running!");
-            tempSpeed = moveSpeed;
             moveSpeed = runSpeed;
         }else if (value.canceled)
         {
+            sprinting = false;
             Debug.Log("Im walkin here!");
-            moveSpeed = tempSpeed;
+            //moveSpeed = tempSpeed;
         }
 
         

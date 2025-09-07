@@ -498,7 +498,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 1, z: 50}
+  m_LocalScale: {x: 366.035, y: 1, z: 341.825}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2042931975}
@@ -1744,6 +1744,7 @@ MonoBehaviour:
   moveSpeed: 7
   groundDrag: 2
   runSpeed: 21
+  sprinting: 0
   orientation: {fileID: 1753220138}
   playerHeight: 2
   whatIsGround:
@@ -1751,7 +1752,7 @@ MonoBehaviour:
     m_Bits: 8
   jumpForce: 12.54
   jumpCD: 2
-  airMulti: 0
+  airMulti: 0.4
 --- !u!114 &1843296091
 MonoBehaviour:
   m_ObjectHideFlags: 0
