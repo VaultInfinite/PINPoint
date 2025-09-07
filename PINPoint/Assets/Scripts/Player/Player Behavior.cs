@@ -19,7 +19,7 @@ public class PlayerBehavior : MonoBehaviour
     public float groundDrag;
     public float runSpeed;
     private float tempSpeed;
-    [SerializeField]
+
     bool sprinting;
 
     private MeshRenderer mr;
@@ -109,6 +109,10 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes the player move faster when holding down the sprint button
+    /// </summary>
+    /// <param name="value"></param>
     public void OnSprint(InputAction.CallbackContext value)
     {
         if (value.performed && grounded)
