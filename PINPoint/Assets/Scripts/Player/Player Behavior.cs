@@ -20,6 +20,8 @@ public class PlayerBehavior : MonoBehaviour
     public float runSpeed;
     private float tempSpeed;
 
+    public float knownVel;
+
     bool sprinting;
 
     private MeshRenderer mr;
@@ -33,6 +35,8 @@ public class PlayerBehavior : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     bool grounded;
+    public float gravity;
+    public float maxVel;
     public LayerMask whatIsGround;
     public float jumpForce;
     public float jumpCD;
@@ -58,6 +62,9 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Update()
     {
+        knownVel = rb.velocity.y;
+        Mathf.Abs(knownVel);
+
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         GetDirection();
@@ -73,10 +80,27 @@ public class PlayerBehavior : MonoBehaviour
                 moveSpeed = tempSpeed;
             }
         }
-        else rb.drag = 0;
+        else
+        {
+            //Move quickly in air
+            rb.drag = 0;
 
-        
-    }
+            Vector3 vel = rb.velocity;
+            vel.y -= gravity * Time.deltaTime;
+            rb.velocity = vel;
+
+
+            Vector3 flatVel = new Vector3(0f, rb.velocity.y, 0f);
+            if (flatVel.magnitude > maxVel)
+            {
+                Vector3 limitVel = flatVel.normalized * maxVel;
+
+                rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
+            }
+        }
+
+
+        }
 
 
     /// <summary>
@@ -163,12 +187,17 @@ public class PlayerBehavior : MonoBehaviour
             //Jump
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
+            //Fall down logic
+
+
             Invoke(nameof(ResetJump), jumpCD);
+   
         }
     }
 
     private void ResetJump()
     {
+        
         readyToJump = true;
     }
 
