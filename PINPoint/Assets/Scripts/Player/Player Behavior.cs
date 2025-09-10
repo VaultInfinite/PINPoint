@@ -54,6 +54,8 @@ public class PlayerBehavior : MonoBehaviour
         //Turn of the renderer so that the player can't see the model
         mr.enabled = false;
         rb.freezeRotation = true;
+        //Finding Size of Player
+        startScaleY = transform.localScale.y;
     }
 
     public void Update()
@@ -172,5 +174,28 @@ public class PlayerBehavior : MonoBehaviour
         readyToJump = true;
     }
 
+    //Crouching Code
+    [Header("Crouching")]
+    public float crouchVelocity;
+    public float crouchScaleY;
+    private float startScaleY;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
+    private void OnInput()
+    {
+        if (Input.GetKeyDown(crouchKey))
+        {
+            //Shrinks Player
+            transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
+            //Pushes player down so they dont float in the air when crouching
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            moveSpeed = crouchVelocity;
+        }
+        if (Input.GetKeyUp(crouchKey))
+        {
+            //if player lets go of the crouch key, they will go back to normal
+            transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
+            moveSpeed = 7;
+        }
+    }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1744,7 +1744,6 @@ MonoBehaviour:
   moveSpeed: 7
   groundDrag: 2
   runSpeed: 21
-  sprinting: 0
   orientation: {fileID: 1753220138}
   playerHeight: 2
   whatIsGround:
@@ -1753,6 +1752,9 @@ MonoBehaviour:
   jumpForce: 12.54
   jumpCD: 2
   airMulti: 0.4
+  crouchVelocity: 3
+  crouchScaleY: 0.5
+  crouchKey: 306
 --- !u!114 &1843296091
 MonoBehaviour:
   m_ObjectHideFlags: 0
