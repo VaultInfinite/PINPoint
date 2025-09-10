@@ -42,7 +42,23 @@ public class PlayerBehavior : MonoBehaviour
     public float jumpCD;
     public float airMulti;
     bool readyToJump = true;
-   
+
+    //Crouching Code
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchScaleY;
+    private float startScaleY;
+
+    private bool crouching = false;
+
+    //Player STate
+    public bool freeze;
+    public bool unlimited;
+    public bool restricted;
+
+    //LedgeGrabbing
+    public MovementState state;
+
     State playerState;
     #endregion
 
@@ -64,15 +80,25 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Update()
     {
-        knownVel = rb.velocity.y;
-        Mathf.Abs(knownVel);
+        //This is just to see the player's velocity; can be deleted
+        //knownVel = rb.velocity.y;
+        //Mathf.Abs(knownVel);
 
+        //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        GetDirection();
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        SpeedLimit();
+        GetDirection();
+
+        if (!crouching)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }else if (crouching)
+        {
+            rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
+        }
+
+            SpeedLimit();
 
         if (grounded)
         {
@@ -141,7 +167,7 @@ public class PlayerBehavior : MonoBehaviour
     /// <param name="value"></param>
     public void OnSprint(InputAction.CallbackContext value)
     {
-        if (value.performed && grounded)
+        if (value.performed && grounded && !crouching)
         {
             sprinting = true;
             Debug.Log("Im Running!");
@@ -179,7 +205,7 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     public void OnJump(InputAction.CallbackContext value)
     {
-        if ((value.performed) && readyToJump && grounded)
+        if ((value.performed) && readyToJump && grounded && !crouching)
         {
             readyToJump = false;
 
@@ -203,23 +229,13 @@ public class PlayerBehavior : MonoBehaviour
         readyToJump = true;
     }
 
-    //Crouching Code
-    [Header("Crouching")]
-    public float crouchVelocity;
-    public float crouchScaleY;
-    private float startScaleY;
-    public KeyCode crouchKey = KeyCode.LeftControl;
-
-    //LedgeGrabbing
-    public MovementState state;
+    
      public enum MovementState
     {
         freeze,
         unlimited,
     }
-    public bool freeze;
-    public bool unlimited;
-    public bool restricted;
+    
     //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
 
     private void StateHandler()
@@ -237,21 +253,22 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    private void OnInput()
+    public void OnCrouch(InputAction.CallbackContext value)
     {
-        if (Input.GetKeyDown(crouchKey))
+        if (value.performed)
         {
             //Shrinks Player
             transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
             //Pushes player down so they dont float in the air when crouching
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-            moveSpeed = crouchVelocity;
+            crouching = true;
+            sprinting = false;
         }
-        if (Input.GetKeyUp(crouchKey))
+        if (value.canceled)
         {
             //if player lets go of the crouch key, they will go back to normal
             transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
-            moveSpeed = 7;
+            crouching = false;
         }
     }
 }
