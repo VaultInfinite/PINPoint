@@ -181,6 +181,33 @@ public class PlayerBehavior : MonoBehaviour
     private float startScaleY;
     public KeyCode crouchKey = KeyCode.LeftControl;
 
+    //LedgeGrabbing
+    public MovementState state;
+     public enum MovementState
+    {
+        freeze,
+        unlimited,
+    }
+    public bool freeze;
+    public bool unlimited;
+    public bool restricted;
+    //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
+
+    private void StateHandler()
+    {
+        if (freeze)
+        {
+            state = MovementState.freeze;
+            rb.velocity = Vector3.zero;
+        }
+        else if (unlimited)
+        {
+            state = MovementState.unlimited;
+            moveSpeed = 99f;
+            return;
+        }
+    }
+
     private void OnInput()
     {
         if (Input.GetKeyDown(crouchKey))
