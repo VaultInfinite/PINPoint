@@ -22,4 +22,10 @@ public class ButtonManager : MonoBehaviour
         Application.Quit();
         Debug.Log("You quit the game.");
     }
+
+    public void ReturnToMenu()
+    {
+        Debug.Log("Menu needs to be connected");
+        //SceneManager.LoadScene();
+    }
 }
