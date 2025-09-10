@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 63411859}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,8 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72901a89c573ef44b04e004a6afda43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 716444752}
-  playerController: {fileID: 564160988}
+  player: {fileID: 63411857}
+  respawn: {fileID: 716444752}
 --- !u!1 &467622918
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 564160989}
   m_Layer: 0
   m_Name: Player Container
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

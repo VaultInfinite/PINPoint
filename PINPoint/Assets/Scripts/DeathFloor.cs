@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class DeathFloor : MonoBehaviour
 {
-    public Transform respawnPoint;
-    public GameObject playerController;
-    public static DeathFloor Instance;
+    public GameObject player;
+    public Transform respawn;
 
-    private void Awake()
+    public void OnCollisionEnter(Collision collision)
     {
-        Instance = this;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject == playerController)
+        if(collision.gameObject.CompareTag("Player"))
         {
-            collision.transform.position = respawnPoint.position;
+            player.transform.position = respawn.transform.position;
         }
     }
 
