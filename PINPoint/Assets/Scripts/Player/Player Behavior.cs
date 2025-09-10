@@ -58,6 +58,8 @@ public class PlayerBehavior : MonoBehaviour
         //Turn of the renderer so that the player can't see the model
         mr.enabled = true;
         rb.freezeRotation = true;
+        //Finding Size of Player
+        startScaleY = transform.localScale.y;
     }
 
     public void Update()
@@ -201,5 +203,55 @@ public class PlayerBehavior : MonoBehaviour
         readyToJump = true;
     }
 
+    //Crouching Code
+    [Header("Crouching")]
+    public float crouchVelocity;
+    public float crouchScaleY;
+    private float startScaleY;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
+    //LedgeGrabbing
+    public MovementState state;
+     public enum MovementState
+    {
+        freeze,
+        unlimited,
+    }
+    public bool freeze;
+    public bool unlimited;
+    public bool restricted;
+    //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
+
+    private void StateHandler()
+    {
+        if (freeze)
+        {
+            state = MovementState.freeze;
+            rb.velocity = Vector3.zero;
+        }
+        else if (unlimited)
+        {
+            state = MovementState.unlimited;
+            moveSpeed = 99f;
+            return;
+        }
+    }
+
+    private void OnInput()
+    {
+        if (Input.GetKeyDown(crouchKey))
+        {
+            //Shrinks Player
+            transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
+            //Pushes player down so they dont float in the air when crouching
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            moveSpeed = crouchVelocity;
+        }
+        if (Input.GetKeyUp(crouchKey))
+        {
+            //if player lets go of the crouch key, they will go back to normal
+            transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
+            moveSpeed = 7;
+        }
+    }
 }
