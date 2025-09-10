@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class DeathFloor : MonoBehaviour
 {
-    public GameObject playerContainer;
-    private GameObject spawnPoint;
+    public Transform respawnPoint;
+    public GameObject playerController;
+    public static DeathFloor Instance;
 
-    private void Start()
+    private void Awake()
     {
-        //GetComponent(spawnPoint.transform.position);
-        //spawnPoint = transform.position;
+        Instance = this;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject == playerController)
+        {
+            collision.transform.position = respawnPoint.position;
+        }
+    }
+
+    /**public GameObject playerContainer;
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.name == "playerContainer")
         {
-            //Destroy(playerContainer);
+            Destroy(playerContainer);
             //I will switch this to play the respawn code once I have made that
-            //transform.position = spawnPoint;
         }
-    }
+    }**/
 }
