@@ -56,7 +56,7 @@ public class PlayerBehavior : MonoBehaviour
     private void Start()
     {
         //Turn of the renderer so that the player can't see the model
-        mr.enabled = false;
+        mr.enabled = true;
         rb.freezeRotation = true;
     }
 
