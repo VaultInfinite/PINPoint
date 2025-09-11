@@ -80,6 +80,7 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Update()
     {
+        LedgeGrab();
         //This is just to see the player's velocity; can be deleted
         //knownVel = rb.velocity.y;
         //Mathf.Abs(knownVel);
@@ -125,6 +126,8 @@ public class PlayerBehavior : MonoBehaviour
 
                 rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
             }
+
+           
         }
 
 
@@ -269,6 +272,17 @@ public class PlayerBehavior : MonoBehaviour
             //if player lets go of the crouch key, they will go back to normal
             transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
             crouching = false;
+        }
+    }
+    bool hanging;
+
+    void LedgeGrab()
+    {
+        if (rb.velocity.y < 0 && !hanging)
+        {
+            RaycastHit downHit;
+            Vector3 lineDownStart = (transform.position + Vector3.up*1.5f) + transform.forward *1;
+            Vector3 LineDownEnd = (transform.position + Vector3.up * 0.8f) + transform.forward * 1;
         }
     }
 }
