@@ -10,10 +10,12 @@ public class LedgeGrab : MonoBehaviour
     public Transform orientation;
     public Transform cam;
     public Rigidbody rb;
+
     [Header("Edges")]
     public float ledgeDetectionLength;
     public float ledgeSphereCastRadius;
     public LayerMask whatIsLedge;
+
     [Header("Grabbing")]
     public float moveToLedgeSpeed;
     public float maxLedgeGrabDistance;
@@ -32,6 +34,10 @@ public class LedgeGrab : MonoBehaviour
         bool ledgeFound = Physics.SphereCast(transform.position, ledgeSphereCastRadius, cam.forward, out ledgeHit, ledgeDetectionLength, whatIsLedge);
         ///if you didnt find ledge, go back to normal
         if (!ledgeFound) return;
+
+        
+        //if (ledgeFound) Debug.Log("im gonna jump!");
+
         ///Found the ledge
         float distancetoLedge = Vector3.Distance(transform.position, ledgeHit.transform.position);
 
@@ -48,12 +54,14 @@ public class LedgeGrab : MonoBehaviour
 
     private void SubStateMachine()
     {
+
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         bool anyInputKeyPressed = horizontalInput != 0 || verticalInput != 0;
 
         if (holding)
         {
+            Debug.Log("hold on!");
             FreezeRigidbodyOnLedge();
 
             timeOnLedge = Time.deltaTime;
@@ -64,6 +72,8 @@ public class LedgeGrab : MonoBehaviour
 
     private void holdLedge()
     {
+        Debug.Log("i am currently holding the ledge");
+        pb.canMove = false;
         holding = true;
 
         pb.unlimited = true;
@@ -73,12 +83,14 @@ public class LedgeGrab : MonoBehaviour
         prevLedge = ledgeHit.transform;
 
         rb.useGravity = false;
+       
         //remove all momentem from rigidbody
         rb.velocity = Vector3.zero;
     }
 
     private void FreezeRigidbodyOnLedge()
     {
+        Debug.Log("im frozen");
         rb.useGravity = false;
 
         Vector3 directionToLedge = curLedge.position - transform.position;
@@ -100,6 +112,8 @@ public class LedgeGrab : MonoBehaviour
 
     private void exitLedge()
     {
+        Debug.Log("im jumped!");
+        pb.canMove = true;
         holding = false;
         timeOnLedge = 0f;   
 
@@ -114,6 +128,7 @@ public class LedgeGrab : MonoBehaviour
 
     private void resetprevLedge()
     {
+        Debug.Log("last ledge forgotton");
         prevLedge = null;
     }
 }

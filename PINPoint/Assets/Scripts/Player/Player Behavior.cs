@@ -5,6 +5,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum MovementState
+{
+    freeze,
+    unlimited,
+}
+
 /// <summary>
 /// Joseph Acuna 9/3/25 11:27pm
 /// 
@@ -19,6 +25,8 @@ public class PlayerBehavior : MonoBehaviour
     public float groundDrag;
     public float runSpeed;
     private float tempSpeed;
+
+    public bool canMove = true;
 
     public float knownVel;
 
@@ -86,9 +94,16 @@ public class PlayerBehavior : MonoBehaviour
 
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-
         GetDirection();
+        StateHandler();
+        
+        if (!canMove)
+        {
+            Debug.Log("look! im grabbing the ledge!");
+            return;
+
+        }
+        
 
         if (!crouching)
         {
@@ -228,28 +243,26 @@ public class PlayerBehavior : MonoBehaviour
         
         readyToJump = true;
     }
-
-    
-     public enum MovementState
-    {
-        freeze,
-        unlimited,
-    }
     
     //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
 
     private void StateHandler()
     {
-        if (freeze)
+        switch (state)
         {
-            state = MovementState.freeze;
-            rb.velocity = Vector3.zero;
-        }
-        else if (unlimited)
-        {
-            state = MovementState.unlimited;
-            moveSpeed = 99f;
-            return;
+            case MovementState.freeze:
+                Debug.Log("im cold");
+                state = MovementState.freeze;
+                canMove = false;
+                rb.velocity = Vector3.zero;
+                break;
+
+            case MovementState.unlimited:
+                Debug.Log("im warm");
+                state = MovementState.unlimited;
+                canMove = true;
+                //moveSpeed = 99f;
+                break;
         }
     }
 
