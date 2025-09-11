@@ -7,8 +7,12 @@ using UnityEngine.InputSystem;
 
 public enum MovementState
 {
-    freeze,
-    unlimited,
+    IDLE,
+    MOVE,
+    JUMP,
+    AIR,
+    CROUCH,
+    LEDGE
 }
 
 /// <summary>
@@ -27,8 +31,6 @@ public class PlayerBehavior : MonoBehaviour
     private float tempSpeed;
 
     public bool canMove = true;
-
-    public float knownVel;
 
     bool sprinting;
 
@@ -65,9 +67,7 @@ public class PlayerBehavior : MonoBehaviour
     public bool restricted;
 
     //LedgeGrabbing
-    public MovementState state;
-
-    State playerState;
+    public MovementState playerState;
     #endregion
 
     private void Awake()
@@ -82,83 +82,146 @@ public class PlayerBehavior : MonoBehaviour
         //Turn of the renderer so that the player can't see the model
         mr.enabled = true;
         rb.freezeRotation = true;
+
         //Finding Size of Player
         startScaleY = transform.localScale.y;
+
+        //Initiate Player State
+        playerState = MovementState.IDLE;
     }
 
     public void Update()
     {
-        LedgeGrab();
-        //This is just to see the player's velocity; can be deleted
-        //knownVel = rb.velocity.y;
-        //Mathf.Abs(knownVel);
+        StateManager();
 
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        GetDirection();
-        StateHandler();
-        
-        if (!canMove)
+
+        //Makes the player enter the AIR state
+        if (!grounded)
         {
-            Debug.Log("look! im grabbing the ledge!");
-            return;
+            playerState = MovementState.AIR;
+        }
+    }
+
+    /// <summary>
+    /// Manages the player's state
+    /// </summary>
+    private void StateManager()
+    {
+        switch (playerState)
+        {
+            case MovementState.IDLE:
+                canMove = true;
+                break;
+
+            case MovementState.MOVE:
+                
+                GetDirection();
+
+                //Slow player down when on the ground
+                rb.drag = groundDrag;
+
+                //Check if player is sprinting
+                if (sprinting)
+                {
+                    moveSpeed = runSpeed;
+                }
+                else if (!sprinting)
+                {
+                    moveSpeed = tempSpeed;
+                }
+
+                //Apply movement to avatar
+                rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+                
+
+                //Prevent the player from going too fast
+                SpeedLimit();
+
+                break;
+
+            case MovementState.JUMP:
+                LedgeGrab();
+
+                if (playerState == MovementState.AIR) return;
+
+                if (readyToJump && grounded && !crouching)
+                {
+
+                    readyToJump = false;
+
+                    //Makes player jump the same height
+                    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+                    //Jump
+                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+                    //Fall down logic
+
+
+                    Invoke(nameof(ResetJump), jumpCD);
+
+                }
+
+                break;
+
+            case MovementState.AIR:
+                LedgeGrab();
+
+                rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
+
+
+                //Move quickly in air
+                rb.drag = 0;
+
+                Vector3 vel = rb.velocity;
+                vel.y -= gravity * Time.deltaTime;
+                rb.velocity = vel;
+
+
+                Vector3 flatVel = new Vector3(0f, rb.velocity.y, 0f);
+                if (flatVel.magnitude > maxVel)
+                {
+                    Vector3 limitVel = flatVel.normalized * maxVel;
+
+                    rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
+                }
+
+                
+                if (grounded) playerState = MovementState.MOVE;
+                break;
+
+            case MovementState.CROUCH:
+                rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
+
+                //Shrinks Player
+                transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
+
+                //Pushes player down so they dont float in the air when crouching
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+                crouching = true;
+                sprinting = false;
+
+                break;
+
 
         }
-        
-
-        if (!crouching)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }else if (crouching)
-        {
-            rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
-        }
-
-            SpeedLimit();
-
-        if (grounded)
-        {
-            rb.drag = groundDrag;
-            if (!sprinting)
-            {
-                moveSpeed = tempSpeed;
-            }
-        }
-        else
-        {
-            //Move quickly in air
-            rb.drag = 0;
-
-            Vector3 vel = rb.velocity;
-            vel.y -= gravity * Time.deltaTime;
-            rb.velocity = vel;
-
-
-            Vector3 flatVel = new Vector3(0f, rb.velocity.y, 0f);
-            if (flatVel.magnitude > maxVel)
-            {
-                Vector3 limitVel = flatVel.normalized * maxVel;
-
-                rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
-            }
-
-           
-        }
-
-
-        }
-
+    }
 
     /// <summary>
     /// Moves the player via the given inputs
     /// </summary>
     public void OnMovement(InputAction.CallbackContext value)
     {
-        //moveInput = value.Get<Vector2>();
+        
+        if (!canMove) return;
+        playerState = MovementState.MOVE;
 
         moveInput = new Vector3(value.ReadValue<Vector2>().x, 0, value.ReadValue<Vector2>().y);
 
-        
+        if (value.canceled) playerState = MovementState.IDLE;
     }
 
     /// <summary>
@@ -185,19 +248,15 @@ public class PlayerBehavior : MonoBehaviour
     /// <param name="value"></param>
     public void OnSprint(InputAction.CallbackContext value)
     {
-        if (value.performed && grounded && !crouching)
+        if (grounded && !crouching)
         {
             sprinting = true;
-            Debug.Log("Im Running!");
-            moveSpeed = runSpeed;
-        }else if (value.canceled)
+        }
+        
+        if (value.canceled)
         {
             sprinting = false;
-            Debug.Log("Im walkin here!");
-            //moveSpeed = tempSpeed;
         }
-
-        
     }
 
     /// <summary>
@@ -223,72 +282,37 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     public void OnJump(InputAction.CallbackContext value)
     {
-        if ((value.performed) && readyToJump && grounded && !crouching)
-        {
-
-            readyToJump = false;
-
-            //Makes player jump the same height
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-            //Jump
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-
-            //Fall down logic
-
-
-            Invoke(nameof(ResetJump), jumpCD);
-   
-        }
-       
+        //Prevents player from entering jumping state while in the air
+        if (playerState == MovementState.AIR) return;
+        playerState = MovementState.JUMP;
     }
 
+    /// <summary>
+    /// Allows the player to jump again
+    /// </summary>
     private void ResetJump()
     {
-        
+        playerState = MovementState.AIR;
         readyToJump = true;
     }
     
     //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
 
-    private void StateHandler()
-    {
-        switch (state)
-        {
-            case MovementState.freeze:
-                Debug.Log("im cold");
-                state = MovementState.freeze;
-                canMove = false;
-                rb.velocity = Vector3.zero;
-                break;
 
-            case MovementState.unlimited:
-                Debug.Log("im warm");
-                state = MovementState.unlimited;
-                canMove = true;
-                //moveSpeed = 99f;
-                break;
-        }
-    }
 
     public void OnCrouch(InputAction.CallbackContext value)
     {
-        if (value.performed)
-        {
-            //Shrinks Player
-            transform.localScale = new Vector3(transform.localScale.x, crouchScaleY, transform.localScale.z);
-            //Pushes player down so they dont float in the air when crouching
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-            crouching = true;
-            sprinting = false;
-        }
+        playerState = MovementState.CROUCH;
         if (value.canceled)
         {
+            playerState = MovementState.IDLE;
+
             //if player lets go of the crouch key, they will go back to normal
             transform.localScale = new Vector3(transform.localScale.x, startScaleY, transform.localScale.z);
             crouching = false;
         }
     }
+
     bool hanging;
 
     void LedgeGrab()
