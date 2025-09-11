@@ -37,10 +37,11 @@ public class PlayerBehavior : MonoBehaviour
     private MeshRenderer mr;
     private Rigidbody rb;
 
-    //Movement
+    [Header("Direction")]
+    public Transform orientation;
     Vector3 moveInput;
     Vector3 moveDirection;
-    public Transform orientation;
+    
 
     [Header("Ground Check")]
     public float playerHeight;
