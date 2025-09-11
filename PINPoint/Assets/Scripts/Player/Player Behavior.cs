@@ -112,11 +112,11 @@ public class PlayerBehavior : MonoBehaviour
         switch (playerState)
         {
             case MovementState.IDLE:
-                canMove = true;
+
                 break;
 
             case MovementState.MOVE:
-                
+                //Move in faced direction
                 GetDirection();
 
                 //Slow player down when on the ground
@@ -135,21 +135,17 @@ public class PlayerBehavior : MonoBehaviour
                 //Apply movement to avatar
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-                
-
                 //Prevent the player from going too fast
                 SpeedLimit();
 
                 break;
 
             case MovementState.JUMP:
-                LedgeGrab();
-
-                if (playerState == MovementState.AIR) return;
+                //if (playerState == MovementState.AIR) return;
 
                 if (readyToJump && grounded && !crouching)
                 {
-
+                    //Prevent double jumping
                     readyToJump = false;
 
                     //Makes player jump the same height
@@ -158,29 +154,29 @@ public class PlayerBehavior : MonoBehaviour
                     //Jump
                     rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-                    //Fall down logic
-
-
+                    //Jump Cooldown
                     Invoke(nameof(ResetJump), jumpCD);
-
                 }
 
                 break;
 
             case MovementState.AIR:
-                LedgeGrab();
 
+                //Apply movement in faced direction
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
 
 
                 //Move quickly in air
                 rb.drag = 0;
 
+                //Get player velocity
                 Vector3 vel = rb.velocity;
+
+                //Apply gravity
                 vel.y -= gravity * Time.deltaTime;
                 rb.velocity = vel;
 
-
+                //Prevents player from falling too fast
                 Vector3 flatVel = new Vector3(0f, rb.velocity.y, 0f);
                 if (flatVel.magnitude > maxVel)
                 {
@@ -189,8 +185,12 @@ public class PlayerBehavior : MonoBehaviour
                     rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
                 }
 
-                
+                //Limit Player X & Z SPeed
+                SpeedLimit();
+
+                //Change state when on ground
                 if (grounded) playerState = MovementState.MOVE;
+
                 break;
 
             case MovementState.CROUCH:
@@ -202,10 +202,11 @@ public class PlayerBehavior : MonoBehaviour
                 //Pushes player down so they dont float in the air when crouching
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
                 crouching = true;
+
+                //Prevents sprinting while crouching
                 sprinting = false;
 
                 break;
-
 
         }
     }
@@ -215,12 +216,14 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     public void OnMovement(InputAction.CallbackContext value)
     {
-        
+        //Ignore if can't move
         if (!canMove) return;
         playerState = MovementState.MOVE;
 
+        //Get inputs
         moveInput = new Vector3(value.ReadValue<Vector2>().x, 0, value.ReadValue<Vector2>().y);
 
+        //Return to idle if Move buttons unpressed
         if (value.canceled) playerState = MovementState.IDLE;
     }
 
@@ -229,17 +232,11 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     private void GetDirection()
     {
+        //Get direction where the player was facing
         moveDirection = orientation.forward * moveInput.z + orientation.right * moveInput.x;
 
-        if (grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-
-        else if (!grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
-        }
+        //Apply movement in that direction
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
     /// <summary>
@@ -248,11 +245,13 @@ public class PlayerBehavior : MonoBehaviour
     /// <param name="value"></param>
     public void OnSprint(InputAction.CallbackContext value)
     {
+        //Sprint if the player isn't crouching and is OTG
         if (grounded && !crouching)
         {
             sprinting = true;
         }
         
+        //Cancel SPrint when button unpressed
         if (value.canceled)
         {
             sprinting = false;
@@ -264,6 +263,7 @@ public class PlayerBehavior : MonoBehaviour
     /// </summary>
     private void SpeedLimit()
     {
+        //Get velocity from RB
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         //Limit velocity if needed
@@ -299,7 +299,9 @@ public class PlayerBehavior : MonoBehaviour
     //need code for "if (restricted) return;" so that if the player is in the return state, they cannot move with their keys
 
 
-
+    /// <summary>
+    /// Makes the player crouch
+    /// </summary>
     public void OnCrouch(InputAction.CallbackContext value)
     {
         playerState = MovementState.CROUCH;
