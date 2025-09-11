@@ -225,6 +225,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if ((value.performed) && readyToJump && grounded && !crouching)
         {
+
             readyToJump = false;
 
             //Makes player jump the same height
@@ -239,6 +240,7 @@ public class PlayerBehavior : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCD);
    
         }
+       
     }
 
     private void ResetJump()
@@ -296,6 +298,32 @@ public class PlayerBehavior : MonoBehaviour
             RaycastHit downHit;
             Vector3 lineDownStart = (transform.position + Vector3.up*1.5f) + transform.forward *1;
             Vector3 LineDownEnd = (transform.position + Vector3.up * 0.8f) + transform.forward * 1;
+            Physics.Linecast(lineDownStart, LineDownEnd, out downHit, LayerMask.GetMask("whatIsGround"));
+            Debug.DrawLine(lineDownStart, LineDownEnd);
+
+            if (downHit.collider != null)
+            {
+                RaycastHit fwdHit;
+                Vector3 lineFwdStart = new Vector3(transform.position.x,downHit.point.y-0.1f,transform.position.z);
+                Vector3 LineFwdEnd = new Vector3(transform.position.x, downHit.point.y - 0.1f, transform.position.z) + transform.forward;
+                Physics.Linecast(lineDownStart, LineDownEnd, out fwdHit, LayerMask.GetMask("whatIsGround"));
+                Debug.DrawLine(lineDownStart, LineDownEnd);
+
+                if (fwdHit.collider != null)
+                {
+                    rb.useGravity = false;
+                    rb.velocity = Vector3.zero;
+
+                    hanging = true;
+                    //possible animation here
+
+                    Vector3 hangPos = new Vector3(fwdHit.point.x,downHit.point.y, fwdHit.point.z);
+                    Vector3 offset = transform.forward * -0.1f + transform.up * -1f;
+                    hangPos += offset;
+                    transform.position = hangPos;
+                    transform.forward = -fwdHit.normal;
+                }
+            }
         }
     }
 }
