@@ -20,7 +20,7 @@ public enum MovementState
 /// 
 /// This script handles the player's movement
 /// </summary>
-public class PlayerBehavior : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     #region Variables
 
@@ -48,7 +48,7 @@ public class PlayerBehavior : MonoBehaviour
     bool grounded;
     public float gravity;
     public float maxVel;
-    public LayerMask whatIsGround;
+    public LayerMask Ground;
     public float jumpForce;
     public float jumpCD;
     public float airMulti;
@@ -62,7 +62,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private bool crouching = false;
 
-    //Player STate
+    //Player State
     public bool freeze;
     public bool unlimited;
     public bool restricted;
@@ -96,7 +96,7 @@ public class PlayerBehavior : MonoBehaviour
         StateManager();
 
         //Check if the player is touching the ground
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
 
         //Makes the player enter the AIR state
         if (!grounded)
@@ -115,7 +115,6 @@ public class PlayerBehavior : MonoBehaviour
             case MovementState.IDLE:
 
                 break;
-
             case MovementState.MOVE:
                 //Move in faced direction
                 GetDirection();
@@ -140,7 +139,6 @@ public class PlayerBehavior : MonoBehaviour
                 SpeedLimit();
 
                 break;
-
             case MovementState.JUMP:
                 //if (playerState == MovementState.AIR) return;
 
@@ -160,7 +158,6 @@ public class PlayerBehavior : MonoBehaviour
                 }
 
                 break;
-
             case MovementState.AIR:
 
                 //Apply movement in faced direction
@@ -186,7 +183,7 @@ public class PlayerBehavior : MonoBehaviour
                     rb.velocity = new Vector3(rb.velocity.x, limitVel.y, rb.velocity.z);
                 }
 
-                //Limit Player X & Z SPeed
+                //Limit Player X & Z Speed
                 SpeedLimit();
 
                 //Change state when on ground
@@ -325,7 +322,7 @@ public class PlayerBehavior : MonoBehaviour
             RaycastHit downHit;
             Vector3 lineDownStart = (transform.position + Vector3.up*1.5f) + transform.forward *1;
             Vector3 LineDownEnd = (transform.position + Vector3.up * 0.8f) + transform.forward * 1;
-            Physics.Linecast(lineDownStart, LineDownEnd, out downHit, LayerMask.GetMask("whatIsGround"));
+            Physics.Linecast(lineDownStart, LineDownEnd, out downHit, LayerMask.GetMask("Ground"));
             Debug.DrawLine(lineDownStart, LineDownEnd);
 
             if (downHit.collider != null)
@@ -333,7 +330,7 @@ public class PlayerBehavior : MonoBehaviour
                 RaycastHit fwdHit;
                 Vector3 lineFwdStart = new Vector3(transform.position.x,downHit.point.y-0.1f,transform.position.z);
                 Vector3 LineFwdEnd = new Vector3(transform.position.x, downHit.point.y - 0.1f, transform.position.z) + transform.forward;
-                Physics.Linecast(lineDownStart, LineDownEnd, out fwdHit, LayerMask.GetMask("whatIsGround"));
+                Physics.Linecast(lineDownStart, LineDownEnd, out fwdHit, LayerMask.GetMask("Ground"));
                 Debug.DrawLine(lineDownStart, LineDownEnd);
 
                 if (fwdHit.collider != null)
