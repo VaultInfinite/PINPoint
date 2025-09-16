@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
     Vector3 moveDirection;
     
 
-    [Header("Ground Check")]
+    [Header("Jump")]
     public float playerHeight;
     bool grounded;
     public float gravity;
@@ -53,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpCD;
     public float airMulti;
     bool readyToJump = true;
+    bool doubleJump = false;
 
     //Crouching Code
     [Header("Crouching")]
@@ -139,6 +140,7 @@ public class PlayerBehaviour : MonoBehaviour
                 SpeedLimit();
 
                 break;
+
             case MovementState.JUMP:
                 //if (playerState == MovementState.AIR) return;
 
