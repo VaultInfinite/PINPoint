@@ -6,7 +6,7 @@ using UnityEngine;
 public class LedgeGrab : MonoBehaviour
 {
     [Header("References")]
-    public PlayerBehavior pb;
+    public PlayerBehaviour pb;
     public Transform orientation;
     public Transform cam;
     public Rigidbody rb;
