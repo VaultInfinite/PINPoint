@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17868932, g: 0.22374196, b: 0.30567098, a: 1}
+  m_IndirectSpecularColor: {r: 0.17868954, g: 0.22374247, b: 0.30567154, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1729,6 +1729,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: groundDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: crouchSpeed
       value: 3
       objectReference: {fileID: 0}
@@ -1736,6 +1741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: crouchScaleY
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: Ground.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4274604311284024590, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
