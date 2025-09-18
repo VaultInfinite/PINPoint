@@ -7,18 +7,13 @@ public class JumpState : MonoBehaviour, IState
 {
     private StateController stateController;
 
-    public void OnEnter()
+    public void OnMovement(PlayerBehaviour player)
     {
-
+        StartCoroutine(Jump(player));
     }
 
-    public void UpdateState()
+    IEnumerator Jump(PlayerBehaviour player)
     {
-
-    }
-
-    public void OnExit()
-    {
-
+        yield return null;
     }
 }

@@ -7,18 +7,13 @@ public class AirState : MonoBehaviour, IState
 {
     private StateController stateController;
 
-    public void OnEnter()
+    public void OnMovement(PlayerBehaviour player)
     {
-
+        StartCoroutine(Air(player));
     }
 
-    public void UpdateState()
+    IEnumerator Air(PlayerBehaviour player)
     {
-
-    }
-
-    public void OnExit()
-    {
-
+        yield return null;
     }
 }

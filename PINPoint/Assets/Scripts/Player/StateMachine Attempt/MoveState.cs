@@ -7,18 +7,13 @@ public class MoveState : MonoBehaviour, IState
 {
     private StateController stateController;
 
-    public void OnEnter()
+    public void OnMovement(PlayerBehaviour player)
     {
-
+        StartCoroutine(Move(player));
     }
 
-    public void UpdateState()
+    IEnumerator Move(PlayerBehaviour player)
     {
-
-    }
-
-    public void OnExit()
-    {
-
+        yield return null;
     }
 }

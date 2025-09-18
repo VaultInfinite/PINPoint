@@ -1,45 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StateController : MonoBehaviour
 {
-    private IState
-        moveState, airState, 
+    private List<IState> states = new List<IState>();
 
-    public MoveState moveState = new MoveState();
-    public AirState airState = new AirState();
-    public CrouchState crouchState = new CrouchState();
-    public JumpState jumpState = new JumpState();
-    public LedgeState ledgeState = new LedgeState();
-
-    private MoveStateContext moveStateContext;
+    private PlayerBehaviour playerController;
 
     private void Start()
     {
+        Object player = FindFirstObjectByType(typeof(PlayerBehaviour));
+        playerController = player.GetComponent<PlayerBehaviour>();
+
         //moveStateContext = new MoveStateContext(this);
 
-        //moveState = gameObject.AddComponent<MoveState>();
+        states.Add(player.AddComponent<MoveState>());
+        states.Add(player.AddComponent<JumpState>());
+        states.Add(player.AddComponent<CrouchState>());
+        states.Add(player.AddComponent<AirState>());
+        states.Add(player.AddComponent<LedgeState>());
     }
 
-    private void Update()
-    {
-        currentState.UpdateState();
-    }
+    //private void Update()
+    //{
+    //    currentState.UpdateState();
+    //}
 
-    public void ChangeState(IState newState)
-    {
-        currentState.OnExit();
-        currentState = newState;
-        currentState.OnEnter();
-    }
+    //public void ChangeState(IState newState)
+    //{
+        
+    //}
 }
 
 public interface IState
 {
-    public void OnEnter();
-
-    public void UpdateState();
-
-    public void OnExit();
+    void OnMovement(PlayerBehaviour player);
 }

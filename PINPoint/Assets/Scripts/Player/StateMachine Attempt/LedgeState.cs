@@ -7,18 +7,13 @@ public class LedgeState : MonoBehaviour, IState
 {
     private StateController stateController;
 
-    public void OnEnter()
+    public void OnMovement(PlayerBehaviour player)
     {
-
+        StartCoroutine(Movement(player));
     }
 
-    public void UpdateState()
+    IEnumerator Movement(PlayerBehaviour player)
     {
-
-    }
-
-    public void OnExit()
-    {
-
+        yield return null;
     }
 }

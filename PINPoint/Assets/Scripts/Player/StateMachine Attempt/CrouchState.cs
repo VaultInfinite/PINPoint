@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,18 +8,13 @@ public class CrouchState : MonoBehaviour, IState
 {
     private StateController stateController;
 
-    public void OnEnter()
+    public void OnMovement(PlayerBehaviour player)
     {
-
+        StartCoroutine(Crouch(player));
     }
 
-    public void UpdateState()
+    IEnumerator Crouch(PlayerBehaviour player)
     {
-
-    }
-
-    public void OnExit()
-    {
-
+        yield return null;
     }
 }
