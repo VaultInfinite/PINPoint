@@ -15,6 +15,11 @@ public partial class PlayerController
             {
                 player.SetState<Walking>();
             }
+
+            if (player.input.Movement.Jump.IsPressed())
+            {
+                player.SetState<Jump>();
+            }
         }
     }
 }
