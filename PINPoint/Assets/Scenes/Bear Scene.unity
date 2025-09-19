@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17868932, g: 0.22374196, b: 0.30567098, a: 1}
+  m_IndirectSpecularColor: {r: 0.17868954, g: 0.22374247, b: 0.30567154, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1631,11 +1631,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904439111}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0
+  groundDrag: 0
+  runSpeed: 0
+  canMove: 1
+  doublejump: 0
+  orientation: {fileID: 0}
+  playerHeight: 0
+  gravity: 0
+  maxVel: 0
+  Ground:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpForce: 0
+  jumpCD: 0
+  airMulti: 0
+  crouchSpeed: 0
+  crouchScaleY: 0
+  freeze: 0
+  unlimited: 0
+  restricted: 0
 --- !u!1 &2042931974
 GameObject:
   m_ObjectHideFlags: 0
