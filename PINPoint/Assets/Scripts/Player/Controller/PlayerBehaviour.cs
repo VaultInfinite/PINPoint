@@ -173,8 +173,11 @@ public class PlayerBehaviour : MonoBehaviour
                 break;
             case MovementState.AIR:
 
+                //Get player velocity to carry momentum
+                Vector3 airVel = new Vector3(rb.velocity.normalized.x, 0f, rb.velocity.normalized.z);
+
                 //Apply movement in faced direction
-                rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
+                rb.AddForce(airVel.normalized * moveSpeed * 10f * airMulti, ForceMode.Force);
 
 
                 //Move quickly in air
@@ -233,8 +236,8 @@ public class PlayerBehaviour : MonoBehaviour
         //Get inputs
         moveInput = new Vector3(value.ReadValue<Vector2>().x, 0, value.ReadValue<Vector2>().y);
 
-        xVal = value.ReadValue<Vector2>().x;
-        yVal = value.ReadValue<Vector2>().y;
+        xVal = moveInput.x;
+        yVal = moveInput.z;
 
         //Return to idle if Move buttons unpressed
         if (value.canceled) playerState = MovementState.IDLE;
