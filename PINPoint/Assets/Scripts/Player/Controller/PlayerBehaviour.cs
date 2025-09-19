@@ -53,6 +53,8 @@ public class PlayerBehaviour : MonoBehaviour
     public float jumpCD;
     public float airMulti;
     bool readyToJump = true;
+    public int extraJump;
+    private int extraJumpNum;
 
     //Crouching Code
     [Header("Crouching")]
@@ -61,6 +63,10 @@ public class PlayerBehaviour : MonoBehaviour
     private float startScaleY;
 
     private bool crouching = false;
+
+    [Header("Variable Checker")]
+    public float xVal;
+    public float yVal;
 
     //Player State
     public bool freeze;
@@ -89,6 +95,9 @@ public class PlayerBehaviour : MonoBehaviour
 
         //Initiate Player State
         playerState = MovementState.IDLE;
+
+        //Set up jump amount
+        extraJumpNum = extraJump;
     }
 
     public void Update()
@@ -102,7 +111,16 @@ public class PlayerBehaviour : MonoBehaviour
         if (!grounded)
         {
             playerState = MovementState.AIR;
+
         }
+
+        //Restore number of double jumps
+        else if (extraJump != extraJumpNum)
+        {
+            extraJump = extraJumpNum;
+        }
+
+        
     }
 
     /// <summary>
@@ -140,22 +158,17 @@ public class PlayerBehaviour : MonoBehaviour
 
                 break;
             case MovementState.JUMP:
-                //if (playerState == MovementState.AIR) return;
+                //Prevent double jumping
+                readyToJump = false;
 
-                if (readyToJump && grounded && !crouching)
-                {
-                    //Prevent double jumping
-                    readyToJump = false;
+                //Makes player jump the same height
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-                    //Makes player jump the same height
-                    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                //Jump
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-                    //Jump
-                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-
-                    //Jump Cooldown
-                    Invoke(nameof(ResetJump), jumpCD);
-                }
+                //Jump Cooldown
+                Invoke(nameof(ResetJump), jumpCD);
 
                 break;
             case MovementState.AIR:
@@ -190,7 +203,6 @@ public class PlayerBehaviour : MonoBehaviour
                 if (grounded) playerState = MovementState.MOVE;
 
                 break;
-
             case MovementState.CROUCH:
                 rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
 
@@ -220,6 +232,9 @@ public class PlayerBehaviour : MonoBehaviour
 
         //Get inputs
         moveInput = new Vector3(value.ReadValue<Vector2>().x, 0, value.ReadValue<Vector2>().y);
+
+        xVal = value.ReadValue<Vector2>().x;
+        yVal = value.ReadValue<Vector2>().y;
 
         //Return to idle if Move buttons unpressed
         if (value.canceled) playerState = MovementState.IDLE;
@@ -281,8 +296,18 @@ public class PlayerBehaviour : MonoBehaviour
     public void OnJump(InputAction.CallbackContext value)
     {
         //Prevents player from entering jumping state while in the air
-        if (playerState == MovementState.AIR) return;
-        playerState = MovementState.JUMP;
+        if (grounded && value.performed && readyToJump && !crouching)
+        {
+            //Debug.Log("Initial Jump");
+            playerState = MovementState.JUMP;
+        }
+
+        else if (value.performed && extraJump > 0 && !crouching)
+        {
+            extraJump--;
+            //Debug.Log("Trying to double jump");
+            playerState = MovementState.JUMP;
+        }
     }
 
     /// <summary>

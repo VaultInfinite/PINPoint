@@ -1742,6 +1742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: extraJump
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: moveSpeed
       value: 12
       objectReference: {fileID: 0}
@@ -1799,7 +1804,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3198032699783989264}
+      objectReference: {fileID: 1317526255}
     - target: {fileID: 4317432357222760452, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1823,7 +1828,7 @@ PrefabInstance:
     - target: {fileID: 4317432357222760452, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: JumpTEMP, Assembly-CSharp
+      value: PlayerBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4317432357222760452, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
@@ -1937,10 +1942,6 @@ PrefabInstance:
         type: 3}
       insertIndex: 6
       addedObject: {fileID: 3198032699783989262}
-    - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3198032699783989264}
   m_SourcePrefab: {fileID: 100100000, guid: ba8d91f477f53af47ac4af82c83ca54b, type: 3}
 --- !u!4 &3198032699783989258 stripped
 Transform:
@@ -1992,29 +1993,6 @@ MonoBehaviour:
   timeOnLedge: 2
   minTimeOnLedge: 0.5
   holding: 0
---- !u!114 &3198032699783989264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198032699783989259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee6f35f46ec6af4ea3a27e6d1ded964, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: 3
-  playerHeight: 2
-  gravity: 30
-  maxVel: 20
-  Ground:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpForce: 80
-  jumpCD: 1
-  airMulti: 0.4
-  extraJump: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

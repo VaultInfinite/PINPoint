@@ -8,7 +8,6 @@ using UnityEngine.Playables;
 public enum TheJumpState
 {
     JUMP,
-    DJUMP,
     AIR,
     GROUND
 }
@@ -40,6 +39,10 @@ public class JumpTEMP : MonoBehaviour
     public int extraJump;
     private int extraJumpNum;
 
+    [Header("Velocity Viewer - TEMP")]
+    public float xVel;
+    public float yVel;
+    public float zVel;
 
     private void Awake()
     {
@@ -57,6 +60,7 @@ public class JumpTEMP : MonoBehaviour
 
     private void Update()
     {
+        ViewVelocity();
 
         JumpManager();
 
@@ -72,6 +76,14 @@ public class JumpTEMP : MonoBehaviour
             playerState = TheJumpState.AIR;
         }
 
+    }
+
+
+    private void ViewVelocity()
+    {
+        xVel = rb.velocity.x;
+        yVel = rb.velocity.y;
+        zVel = rb.velocity.z;
     }
 
     private void JumpManager()
@@ -95,26 +107,6 @@ public class JumpTEMP : MonoBehaviour
                 
 
                 break;
-
-            case TheJumpState.DJUMP:
-
-    
-
-                //Makes player jump the same height
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-                //Jump
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-
-                //Jump Cooldown
-                Invoke(nameof(ResetJump), jumpCD);
-
-
-                break;
-
-            case TheJumpState.AIR:
-                //The AIR state is already handled in the "Player Behaviour" Script
-                break;
         }
     }
 
@@ -131,7 +123,7 @@ public class JumpTEMP : MonoBehaviour
         {
             extraJump--;
             //Debug.Log("Trying to double jump");
-            playerState = TheJumpState.DJUMP;
+            playerState = TheJumpState.JUMP;
         }
         
     }
