@@ -11,59 +11,28 @@ public partial class PlayerController : MonoBehaviour
     #region Variables
 
     [Header("Movement")]
-    public float moveSpeed;
     public float groundDrag;
-    public float runSpeed;
-    private float tempSpeed;
-
-    public bool canMove = true;
-
-    public bool doublejump;
 
     private MeshRenderer mr;
     private Rigidbody rb;
 
     [Header("Direction")]
     public Transform orientation;
-    Vector3 moveInput;
-    Vector3 moveDirection;
-
 
     [Header("Ground Check")]
     public float playerHeight;
-    bool grounded;
-    public float gravity;
-    public float maxVel;
     public LayerMask Ground;
-    public float jumpForce;
-    public float jumpCD;
-    public float airMulti;
-    private bool jumping;
-
-    //Crouching Code
-    [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchScaleY;
-    private float startScaleY;
-
-    private bool crouching = false;
-
-    //Player State
-    public bool freeze;
-    public bool unlimited;
-    public bool restricted;
+    bool grounded;
     #endregion
 
-    //Dictionary containing all the states the player can be in
-    private readonly Dictionary<Type, State> _states = new()
-    {
-        {typeof(Walking), new Walking() },
-        {typeof(Running), new Running() },
-        {typeof(Jump), new Jump() },
-        {typeof(Ledge), new Ledge() },
-        {typeof(Crouch), new Crouch() },
-        {typeof(Air), new Air() },
-    };
+    //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
+    public Walking walking;
+    public Running running;
+    public Jump jump;
+    public Ledge ledge;
+    public Crouch crouch;
+    public Air air;
+    private readonly Dictionary<Type, State> _states = new();
     
     //The Input system
     public PlayerControllerInput input;
@@ -78,7 +47,14 @@ public partial class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
-        tempSpeed = moveSpeed;
+
+        _states.Add(typeof(Walking), walking);
+        _states.Add(typeof(Running), running);
+        _states.Add(typeof(Jump), jump);
+        _states.Add(typeof(Ledge), ledge);
+        _states.Add(typeof(Crouch), crouch);
+        _states.Add(typeof(Air), air);
+
     }
 
     private void Start()
@@ -86,9 +62,6 @@ public partial class PlayerController : MonoBehaviour
         //Turn of the renderer so that the player can't see the model
         mr.enabled = true;
         rb.freezeRotation = true;
-
-        //Finding Size of Player
-        startScaleY = transform.localScale.y;
     }
 
     //Unity builtin fixed update
@@ -102,10 +75,12 @@ public partial class PlayerController : MonoBehaviour
     private void Update()
     {
         var state = _states[_state];
-        state.OnUpdate(this);
 
         //Check if the player is touching the ground
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
+
+        state.OnUpdate(this);
+
     }
 
     //Sets the current state calling OnEnter on new state and OnExit on old state
@@ -128,45 +103,38 @@ public partial class PlayerController : MonoBehaviour
     /// <summary>
     /// Moves the player via the given inputs
     /// </summary>
-    public void OnMovement(PlayerControllerInput.MovementActions input)
+    public Vector3 GetMovement()
     {
         //Get inputs
-        moveInput = new Vector3(input.Movement.ReadValue<Vector2>().x, 0, input.Movement.ReadValue<Vector2>().y);
+        return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
     }
 
     /// <summary>
     /// Makes the player move towards where they are facing
     /// </summary>
-    private void GetDirection()
+    private Vector3 GetDirection()
     {
+        Vector3 moveInput = GetMovement();
         //Get direction where the player was facing
-        moveDirection = orientation.forward * moveInput.z + orientation.right * moveInput.x;
+        return orientation.forward * moveInput.z + orientation.right * moveInput.x;
 
         //Apply movement in that direction
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-    }
-
-    /// <summary>
-    /// Makes the player jump
-    /// </summary>
-    public void OnJump(InputAction.CallbackContext value)
-    {
-
+        //rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
     }
 
     /// <summary>
     /// Controls how fast the player can go
     /// </summary>
-    private void SpeedLimit()
+    private void SpeedLimit(float speed)
     {
         //Get velocity from RB
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         //Limit velocity if needed
-        if (flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > speed)
         {
             //Calculate the speed it would be
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            Vector3 limitedVel = flatVel.normalized * speed;
 
             //Apply speed limit
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);

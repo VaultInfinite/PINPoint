@@ -1,32 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class PlayerController
 {
+    [Serializable]
     public class Jump : State
     {
+        public float speed;
+        public float jumpForce;
+
         public override void OnUpdate(PlayerController player)
         {
             //Put Jumping movement related code here
-            player.OnMovement(player.input.Movement);
-            player.GetDirection();
 
             //Makes player jump the same height
             player.rb.velocity = new Vector3(player.rb.velocity.x, 0f, player.rb.velocity.z);
 
             //Jump
-            player.rb.AddForce(player.transform.up * player.jumpForce, ForceMode.Impulse);
-
-            if (player.input.Movement.Jump.IsPressed() & player.doublejump)
-            {
-                //RERUN JUMP FUNCTIONALITY
-            }
-            else
-            {
-                player.SetState<Air>();
-            }
+            player.rb.AddForce(player.transform.up * jumpForce, ForceMode.Impulse);
+            
+            player.SetState<Air>();
         }
     }
-
 }

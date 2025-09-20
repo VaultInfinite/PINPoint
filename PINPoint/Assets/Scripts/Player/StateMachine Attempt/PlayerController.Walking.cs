@@ -1,28 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public partial class PlayerController
 {
+    [Serializable]
     public class Walking : State
     {
+        public float speed;
+
         public override void OnUpdate(PlayerController player)
         {
             //Put Walking movement related code here
 
-            player.moveSpeed = player.tempSpeed;
-
             //Move in faced direction
-
-            player.OnMovement(player.input.Movement);
-            player.GetDirection();
+            Vector3 moveDirection = player.GetDirection();
 
             //Apply movement to avatar
-            player.rb.AddForce(player.moveDirection.normalized * player.moveSpeed * 10f, ForceMode.Force);
+            player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
 
             //Prevent the player from going too fast
-            player.SpeedLimit();
+            player.SpeedLimit(speed);
 
             //Slow player down when on the ground
             player.rb.drag = player.groundDrag;
@@ -32,7 +31,7 @@ public partial class PlayerController
                 player.SetState<Running>();
             }
 
-            if (player.input.Movement.Jump.IsPressed())
+            if (player.input.Movement.Jump.WasPressedThisFrame())
             {
                 player.SetState<Jump>();
             }
