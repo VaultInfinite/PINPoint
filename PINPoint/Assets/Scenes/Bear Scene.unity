@@ -970,7 +970,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 3198032699783989257}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3198032699783989259}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 375a06604fea5114787bc7d2685bd173, type: 3}
   m_Name: 
@@ -1618,44 +1618,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1904439111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5122045086986388650, guid: ba8d91f477f53af47ac4af82c83ca54b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3198032699783989257}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1904439114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1904439111}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  groundDrag: 0
-  runSpeed: 0
-  canMove: 1
-  doublejump: 0
-  orientation: {fileID: 0}
-  playerHeight: 0
-  gravity: 0
-  maxVel: 0
-  Ground:
-    serializedVersion: 2
-    m_Bits: 0
-  jumpForce: 0
-  jumpCD: 0
-  airMulti: 0
-  crouchSpeed: 0
-  crouchScaleY: 0
-  freeze: 0
-  unlimited: 0
-  restricted: 0
 --- !u!1 &2042931974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,6 +1721,11 @@ PrefabInstance:
         type: 3}
       propertyPath: state
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3503092324008877818, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
@@ -1934,14 +1901,14 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5122045086986388650, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1904439114}
     - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       insertIndex: 6
       addedObject: {fileID: 3198032699783989262}
+    - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3198032699783989272}
   m_SourcePrefab: {fileID: 100100000, guid: ba8d91f477f53af47ac4af82c83ca54b, type: 3}
 --- !u!4 &3198032699783989258 stripped
 Transform:
@@ -1974,7 +1941,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3198032699783989259}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3746ef5e0346f8a43af258d782d21a5e, type: 3}
   m_Name: 
@@ -1993,6 +1960,38 @@ MonoBehaviour:
   timeOnLedge: 2
   minTimeOnLedge: 0.5
   holding: 0
+--- !u!114 &3198032699783989272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198032699783989259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 8
+  groundDrag: 10
+  runSpeed: 14
+  canMove: 1
+  doublejump: 0
+  orientation: {fileID: 3198032699783989258}
+  playerHeight: 2
+  gravity: 30
+  maxVel: 20
+  Ground:
+    serializedVersion: 2
+    m_Bits: 8
+  jumpForce: 85
+  jumpCD: 1
+  airMulti: 0.4
+  crouchSpeed: 6
+  crouchScaleY: 0.5
+  freeze: 0
+  unlimited: 0
+  restricted: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

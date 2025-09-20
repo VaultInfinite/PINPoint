@@ -9,9 +9,8 @@ public partial class PlayerController
         public override void OnUpdate(PlayerController player)
         {
             //Put Jumping movement related code here
-
-            //Prevent double jumping
-            player.readyToJump = false;
+            player.OnMovement(player.input.Movement);
+            player.GetDirection();
 
             //Makes player jump the same height
             player.rb.velocity = new Vector3(player.rb.velocity.x, 0f, player.rb.velocity.z);
@@ -23,11 +22,11 @@ public partial class PlayerController
             {
                 //RERUN JUMP FUNCTIONALITY
             }
-
-            if (player.rb.velocity.y <= 0f)
+            else
             {
                 player.SetState<Air>();
             }
         }
     }
+
 }

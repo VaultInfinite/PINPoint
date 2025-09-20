@@ -11,6 +11,22 @@ public partial class PlayerController
         {
             //put running related code here
 
+            player.moveSpeed = player.runSpeed;
+
+            //Move in faced direction
+            player.OnMovement(player.input.Movement);
+            player.GetDirection();
+
+
+            //Apply movement to avatar
+            player.rb.AddForce(player.moveDirection.normalized * player.moveSpeed * 10f, ForceMode.Force);
+
+            //Prevent the player from going too fast
+            player.SpeedLimit();
+
+            //Slow player down when on the ground
+            player.rb.drag = player.groundDrag;
+
             if (!player.input.Movement.Sprint.IsPressed())
             {
                 player.SetState<Walking>();
@@ -19,6 +35,11 @@ public partial class PlayerController
             if (player.input.Movement.Jump.IsPressed())
             {
                 player.SetState<Jump>();
+            }
+
+            if (!player.grounded)
+            {
+                player.SetState<Air>();
             }
         }
     }

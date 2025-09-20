@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public partial class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public partial class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
-    bool sprinting;
     public bool doublejump;
 
     private MeshRenderer mr;
@@ -38,7 +38,7 @@ public partial class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCD;
     public float airMulti;
-    bool readyToJump = true;
+    private bool jumping;
 
     //Crouching Code
     [Header("Crouching")]
@@ -126,6 +126,15 @@ public partial class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Moves the player via the given inputs
+    /// </summary>
+    public void OnMovement(PlayerControllerInput.MovementActions input)
+    {
+        //Get inputs
+        moveInput = new Vector3(input.Movement.ReadValue<Vector2>().x, 0, input.Movement.ReadValue<Vector2>().y);
+    }
+
+    /// <summary>
     /// Makes the player move towards where they are facing
     /// </summary>
     private void GetDirection()
@@ -135,6 +144,14 @@ public partial class PlayerController : MonoBehaviour
 
         //Apply movement in that direction
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+
+    /// <summary>
+    /// Makes the player jump
+    /// </summary>
+    public void OnJump(InputAction.CallbackContext value)
+    {
+
     }
 
     /// <summary>

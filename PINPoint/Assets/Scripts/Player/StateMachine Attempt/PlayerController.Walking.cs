@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public partial class PlayerController
 {
@@ -10,10 +11,12 @@ public partial class PlayerController
         {
             //Put Walking movement related code here
 
-            //Move in faced direction
-            player.GetDirection();
-
             player.moveSpeed = player.tempSpeed;
+
+            //Move in faced direction
+
+            player.OnMovement(player.input.Movement);
+            player.GetDirection();
 
             //Apply movement to avatar
             player.rb.AddForce(player.moveDirection.normalized * player.moveSpeed * 10f, ForceMode.Force);
@@ -31,12 +34,17 @@ public partial class PlayerController
 
             if (player.input.Movement.Jump.IsPressed())
             {
-                player.SetState<Air>();
+                player.SetState<Jump>();
             }
 
             if (player.input.Movement.Crouch.IsPressed())
             {
                 player.SetState<Crouch>();
+            }
+
+            if (!player.grounded)
+            {
+                player.SetState<Air>();
             }
         }
     }

@@ -8,7 +8,13 @@ public partial class PlayerController
     {
         public override void OnUpdate(PlayerController player)
         {
-            player.rb.AddForce(player.moveDirection.normalized * player.crouchSpeed * 10f, ForceMode.Force);
+            //put crouching related code here
+
+            player.moveSpeed = player.crouchSpeed;
+
+            //Move in faced direction
+            player.OnMovement(player.input.Movement);
+            player.GetDirection();
 
             //Shrinks Player
             player.transform.localScale = new Vector3(player.transform.localScale.x, player.crouchScaleY, player.transform.localScale.z);
@@ -17,12 +23,16 @@ public partial class PlayerController
             player.rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
             player.crouching = true;
 
-            //Prevents sprinting while crouching
-            player.sprinting = false;
-
             if (!player.input.Movement.Crouch.IsPressed())
             {
+                player.crouching = false;
+                player.transform.localScale = new Vector3(player.transform.localScale.x, player.crouchScaleY * 2, player.transform.localScale.z);
                 player.SetState<Walking>();
+            }
+
+            if (!player.grounded)
+            {
+                player.SetState<Air>();
             }
         }
     }
