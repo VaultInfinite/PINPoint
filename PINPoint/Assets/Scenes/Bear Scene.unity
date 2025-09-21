@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17868954, g: 0.22374247, b: 0.30567154, a: 1}
+  m_IndirectSpecularColor: {r: 0.17868932, g: 0.22374196, b: 0.30567098, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1389,13 +1389,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775425704}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.23546499, z: -0, w: 0.9718828}
-  m_LocalPosition: {x: 25.7, y: -33.804, z: -14.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -33.804, z: 0}
   m_LocalScale: {x: 54.74142, y: 352.32675, z: 54.74142}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2042931975}
-  m_LocalEulerAnglesHint: {x: 0, y: -27.238, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1782378217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,7 +1663,7 @@ PrefabInstance:
     - target: {fileID: 5482515872983557032, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5482515872983557032, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
@@ -1673,7 +1673,7 @@ PrefabInstance:
     - target: {fileID: 5482515872983557032, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.69
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5482515872983557032, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
@@ -1749,6 +1749,16 @@ PrefabInstance:
         type: 3}
       propertyPath: walking.speed
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: air.glideSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: air.glideTimer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}

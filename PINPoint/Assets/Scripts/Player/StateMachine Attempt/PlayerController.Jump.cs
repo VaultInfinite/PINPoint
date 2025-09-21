@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the player's jumping behavior
+/// </summary>
 public partial class PlayerController
 {
     [Serializable]

@@ -55,6 +55,8 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Crouch), crouch);
         _states.Add(typeof(Air), air);
 
+        //Air State Variables
+        air.glideTimeRefill = air.glideTimer;
     }
 
     private void Start()
