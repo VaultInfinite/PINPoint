@@ -58,6 +58,8 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
 
+        //Air State Variables
+        air.glideTimeRefill = air.glideTimer;
     }
 
     private void Start()

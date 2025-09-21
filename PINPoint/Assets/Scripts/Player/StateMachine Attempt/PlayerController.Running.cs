@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Controls the player's running behavior
+/// </summary>
 public partial class PlayerController
 {
     [Serializable]
