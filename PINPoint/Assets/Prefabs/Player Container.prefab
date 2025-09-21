@@ -150,26 +150,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
   groundDrag: 10
-  runSpeed: 14
-  canMove: 1
-  doublejump: 0
   orientation: {fileID: 3235075872990336042}
   playerHeight: 2
-  gravity: 30
-  maxVel: 20
   Ground:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 85
-  jumpCD: 1
-  airMulti: 0.4
-  crouchSpeed: 6
-  crouchScaleY: 0.5
-  freeze: 0
-  unlimited: 0
-  restricted: 0
+  walking:
+    speed: 8
+  running:
+    speed: 12
+  jump:
+    speed: 8
+    jumpForce: 50
+  crouch:
+    speed: 4
+    crouchScaleY: 0.5
+  air:
+    speed: 6
+    maxFallSpeed: 75
+    gravity: 30
+    glideSpeed: 5
+    glideTimer: 3
+    glideTimeRefill: 0
 --- !u!1 &2259903564013810654
 GameObject:
   m_ObjectHideFlags: 0
