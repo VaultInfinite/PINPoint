@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 715836088934206107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.46, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -133,7 +133,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
@@ -150,26 +150,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
   groundDrag: 10
-  runSpeed: 14
-  canMove: 1
-  doublejump: 0
   orientation: {fileID: 3235075872990336042}
   playerHeight: 2
-  gravity: 30
-  maxVel: 20
+  playerRadius: 0.5
   Ground:
     serializedVersion: 2
     m_Bits: 8
-  jumpForce: 85
-  jumpCD: 1
-  airMulti: 0.4
-  crouchSpeed: 6
-  crouchScaleY: 0.5
-  freeze: 0
-  unlimited: 0
-  restricted: 0
+  walking:
+    speed: 8
+  running:
+    speed: 12
+  jump:
+    speed: 8
+    jumpForce: 50
+  crouch:
+    speed: 4
+    crouchScaleY: 0.5
+  air:
+    speed: 6
+    maxFallSpeed: 75
+    gravity: 30
+  wall:
+    wallSpeed: 10
+    wallGravity: 35
+    maxWallTime: 2.5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.12038019
+        value: 1.000245
+        inSlope: -0.41817075
+        outSlope: -0.41817075
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0.5461779
+      - serializedVersion: 3
+        time: 0.9985185
+        value: 0.10333863
+        inSlope: -2.9917598
+        outSlope: -2.9917598
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0.111346744
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1 &2259903564013810654
 GameObject:
   m_ObjectHideFlags: 0

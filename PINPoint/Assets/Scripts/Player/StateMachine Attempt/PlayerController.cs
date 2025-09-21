@@ -21,6 +21,7 @@ public partial class PlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     public float playerHeight;
+    public float playerRadius;
     public LayerMask Ground;
     bool grounded;
     #endregion
@@ -32,6 +33,7 @@ public partial class PlayerController : MonoBehaviour
     public Ledge ledge;
     public Crouch crouch;
     public Air air;
+    public WallRunning wall;
     private readonly Dictionary<Type, State> _states = new();
     
     //The Input system
@@ -54,6 +56,7 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Ledge), ledge);
         _states.Add(typeof(Crouch), crouch);
         _states.Add(typeof(Air), air);
+        _states.Add(typeof(WallRunning), wall);
 
     }
 

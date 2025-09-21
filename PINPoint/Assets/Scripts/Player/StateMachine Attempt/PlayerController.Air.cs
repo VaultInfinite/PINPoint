@@ -14,6 +14,7 @@ public partial class PlayerController
         public float gravity;
 
         private bool doubleJumped;
+        private bool wallRan;
 
         public override void OnUpdate(PlayerController player)
         {
@@ -54,7 +55,15 @@ public partial class PlayerController
             if (player.grounded)
             {
                 doubleJumped = false;
+                wallRan = false;
                 player.SetState<Walking>();
+            }
+
+            //Wallrunning check here
+            if (player.wall.CanWallRun(player) && !wallRan)
+            {
+                wallRan = true;
+                player.SetState<WallRunning>();
             }
         }
     }
