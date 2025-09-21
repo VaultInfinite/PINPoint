@@ -18,6 +18,7 @@ public partial class PlayerController
         public float gravity;
 
         private bool doubleJumped;
+        private bool wallRan;
 
         public float glideSpeed;
         private bool gliding;
@@ -103,7 +104,15 @@ public partial class PlayerController
                 glideTimer = glideTimeRefill;
 
                 doubleJumped = false;
+                wallRan = false;
                 player.SetState<Walking>();
+            }
+
+            //Wallrunning check here
+            if (player.wall.CanWallRun(player) && !wallRan)
+            {
+                wallRan = true;
+                player.SetState<WallRunning>();
             }
         }
 
