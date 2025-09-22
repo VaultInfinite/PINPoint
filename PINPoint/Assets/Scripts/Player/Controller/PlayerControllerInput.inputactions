@@ -1,5 +1,5 @@
 {
-    "name": "Player Input",
+    "name": "PlayerControllerInput",
     "maps": [
         {
             "name": "Movement",
@@ -18,6 +18,15 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "8d3570b0-58e5-473f-a3d6-2c216874698d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Gliding",
+                    "type": "Button",
+                    "id": "82ea6b9f-8a0f-45ac-9f78-5fe98eb475ed",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -183,6 +192,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e78af57e-b588-454c-afce-7bd417c2605c",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gliding",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

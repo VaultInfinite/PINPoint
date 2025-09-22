@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6317267148356265128}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,7 +162,6 @@ MonoBehaviour:
   running:
     speed: 12
   jump:
-    speed: 8
     jumpForce: 50
   crouch:
     speed: 4
@@ -172,9 +171,9 @@ MonoBehaviour:
     maxFallSpeed: 75
     gravity: 30
   wall:
-    wallSpeed: 10
+    wallSpeed: 9.5
     wallGravity: 35
-    maxWallTime: 2.5
+    maxWallTime: 2.75
     curve:
       serializedVersion: 2
       m_Curve:
@@ -199,6 +198,11 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  gliding:
+    glideSpeed: 6
+    glideTurn: 0.9
+    glideDecline: 0.8
+    maxGlideTime: 4
 --- !u!1 &2259903564013810654
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +214,7 @@ GameObject:
   - component: {fileID: 1130777483267093934}
   m_Layer: 7
   m_Name: CameraPos
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -394,7 +398,7 @@ GameObject:
   - component: {fileID: 3235075872990336042}
   m_Layer: 7
   m_Name: Orientation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -458,7 +462,7 @@ GameObject:
   - component: {fileID: 8150840847747313262}
   m_Layer: 7
   m_Name: Player Holder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -491,7 +495,7 @@ GameObject:
   - component: {fileID: 3581923800055076769}
   m_Layer: 7
   m_Name: Camera Holder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

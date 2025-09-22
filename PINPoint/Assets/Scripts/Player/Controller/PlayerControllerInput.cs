@@ -46,6 +46,15 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Gliding"",
+                    ""type"": ""Button"",
+                    ""id"": ""82ea6b9f-8a0f-45ac-9f78-5fe98eb475ed"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""448b5c47-d932-441c-b7bc-d396885540e0"",
@@ -207,6 +216,17 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e78af57e-b588-454c-afce-7bd417c2605c"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gliding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -217,6 +237,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_Gliding = m_Movement.FindAction("Gliding", throwIfNotFound: true);
         m_Movement_Sprint = m_Movement.FindAction("Sprint", throwIfNotFound: true);
         m_Movement_Crouch = m_Movement.FindAction("Crouch", throwIfNotFound: true);
     }
@@ -282,6 +303,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Movement;
     private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_Gliding;
     private readonly InputAction m_Movement_Sprint;
     private readonly InputAction m_Movement_Crouch;
     public struct MovementActions
@@ -290,6 +312,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         public MovementActions(@PlayerControllerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Movement_Movement;
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        public InputAction @Gliding => m_Wrapper.m_Movement_Gliding;
         public InputAction @Sprint => m_Wrapper.m_Movement_Sprint;
         public InputAction @Crouch => m_Wrapper.m_Movement_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
@@ -307,6 +330,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Gliding.started += instance.OnGliding;
+            @Gliding.performed += instance.OnGliding;
+            @Gliding.canceled += instance.OnGliding;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -323,6 +349,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Gliding.started -= instance.OnGliding;
+            @Gliding.performed -= instance.OnGliding;
+            @Gliding.canceled -= instance.OnGliding;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -350,6 +379,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnGliding(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
     }

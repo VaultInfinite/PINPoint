@@ -11,7 +11,6 @@ public partial class PlayerController
     [Serializable]
     public class Jump : State
     {
-        public float speed;
         public float jumpForce;
 
         public override void OnUpdate(PlayerController player)
