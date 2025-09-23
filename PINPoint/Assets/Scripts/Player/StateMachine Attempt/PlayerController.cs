@@ -34,6 +34,7 @@ public partial class PlayerController : MonoBehaviour
     public Crouch crouch;
     public Air air;
     public WallRunning wall;
+    public Gliding gliding;
     private readonly Dictionary<Type, State> _states = new();
     
     //The Input system
@@ -57,9 +58,7 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Crouch), crouch);
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
-
-        //Air State Variables
-        air.glideTimeRefill = air.glideTimer;
+        _states.Add(typeof(Gliding), gliding);
     }
 
     private void Start()
