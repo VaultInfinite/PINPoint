@@ -42,6 +42,8 @@ public class PoliceDrone : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Wandering();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        Debug.Log(walkPoint.y);
     }
 
     private void Wandering()
@@ -97,6 +99,8 @@ public class PoliceDrone : MonoBehaviour
         //check if this point is on the map
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
+
+        
     }
 
     public void TakeDamage(int damage)
