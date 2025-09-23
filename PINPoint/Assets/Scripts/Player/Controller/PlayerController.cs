@@ -88,7 +88,7 @@ public partial class PlayerController : MonoBehaviour
         //for player shooting
         if(input.Movement.Shoot.IsPressed())
         {
-            
+            gun.Shoot();
         }
     }
 
