@@ -46,5 +46,11 @@ public partial class PlayerController
                 player.SetState<Air>();
             }
         }
+
+        public override void OnEnter(PlayerController player)
+        {
+            
+        }
+
     }
 }

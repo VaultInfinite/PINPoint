@@ -28,8 +28,12 @@ public partial class PlayerController
             //Shrinks Player
             player.transform.localScale = new Vector3(player.transform.localScale.x, crouchScaleY, player.transform.localScale.z);
 
-            //Pushes player down so they dont float in the air when crouching
-            player.rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            //Move in faced direction
+            Vector3 moveDirection = player.GetDirection();
+
+
+            //Apply movement to avatar
+            player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
 
             if (!player.input.Movement.Crouch.IsPressed())
             {

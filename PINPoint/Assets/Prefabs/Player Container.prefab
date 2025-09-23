@@ -173,7 +173,7 @@ MonoBehaviour:
   wall:
     wallSpeed: 9.5
     wallGravity: 35
-    maxWallTime: 2.75
+    maxWallTime: 2.5
     curve:
       serializedVersion: 2
       m_Curve:
@@ -227,13 +227,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2259903564013810654}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.30297855, y: 0.6431465, z: -0.30830842, w: -0.63207006}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5440581289200226139}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &2783884035799311060
 GameObject:
   m_ObjectHideFlags: 0
