@@ -65,7 +65,7 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
-        _states.Add(typeof(Aim), aiming);
+        _states.Add(typeof(Aiming), aiming);
     }
 
     private void Start()
