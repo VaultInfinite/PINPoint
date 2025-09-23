@@ -6,7 +6,7 @@ using UnityEngine;
 public class LedgeGrab : MonoBehaviour
 {
     [Header("References")]
-    public PlayerBehaviour pb;
+    public PlayerController player;
     public Transform orientation;
     public Transform cam;
     public Rigidbody rb;
@@ -73,11 +73,11 @@ public class LedgeGrab : MonoBehaviour
     private void holdLedge()
     {
         Debug.Log("i am currently holding the ledge");
-        pb.canMove = false;
+        player.canMove = false;
         holding = true;
 
-        pb.unlimited = true;
-        pb.restricted = true;
+        player.unlimited = true;
+        player.restricted = true;
 
         curLedge = ledgeHit.transform;
         prevLedge = ledgeHit.transform;
@@ -103,8 +103,8 @@ public class LedgeGrab : MonoBehaviour
         }
         else
         {
-            if (!pb.freeze) pb.freeze = true;
-            if (pb.unlimited) pb.unlimited = false;
+            if (!player.freeze) player.freeze = true;
+            if (player.unlimited) player.unlimited = false;
         }
 
         if (distanceToLedge > maxLedgeGrabDistance) exitLedge();
@@ -113,12 +113,12 @@ public class LedgeGrab : MonoBehaviour
     private void exitLedge()
     {
         Debug.Log("im jumped!");
-        pb.canMove = true;
+        player.canMove = true;
         holding = false;
         timeOnLedge = 0f;   
 
-        pb.restricted = false;
-        pb.freeze = false;
+        player.restricted = false;
+        player.freeze = false;
         rb.useGravity = true;
 
         StopAllCoroutines();

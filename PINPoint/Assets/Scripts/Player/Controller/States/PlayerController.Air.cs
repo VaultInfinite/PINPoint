@@ -45,11 +45,9 @@ public partial class PlayerController
             //Maintain downward velocity
             if (player.rb.velocity.y < -maxFallSpeed)
             {
-                
                     Vector3 limitVel = flatVel.normalized * maxFallSpeed;
 
                     player.rb.velocity = new Vector3(player.rb.velocity.x, limitVel.y, player.rb.velocity.z);
-                
             }
 
             //If player is in the air and holds the jump key, player will glide

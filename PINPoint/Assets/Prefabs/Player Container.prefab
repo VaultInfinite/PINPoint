@@ -173,7 +173,7 @@ MonoBehaviour:
   wall:
     wallSpeed: 9.5
     wallGravity: 35
-    maxWallTime: 2.5
+    maxWallTime: 3
     curve:
       serializedVersion: 2
       m_Curve:
@@ -199,7 +199,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   gliding:
-    glideSpeed: 6
+    glideSpeed: 8
     glideTurn: 0.9
     glideDecline: 0.8
     maxGlideTime: 4
