@@ -24,6 +24,11 @@ public partial class PlayerController : MonoBehaviour
     public float playerRadius;
     public LayerMask Ground;
     bool grounded;
+
+    [Header("Speed Limit")]
+    public AnimationCurve speedCurve;
+    public float maxSpeedLimit;
+    public float seeSoftLimit;
     #endregion
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
@@ -35,6 +40,7 @@ public partial class PlayerController : MonoBehaviour
     public Air air;
     public WallRunning wall;
     public Gliding gliding;
+    public Aiming aiming;
     private readonly Dictionary<Type, State> _states = new();
     
     //The Input system
@@ -59,6 +65,7 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
+        _states.Add(typeof(Aim), aiming);
     }
 
     private void Start()
@@ -84,7 +91,6 @@ public partial class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 
         state.OnUpdate(this);
-
     }
 
     //Sets the current state calling OnEnter on new state and OnExit on old state
@@ -134,11 +140,18 @@ public partial class PlayerController : MonoBehaviour
         //Get velocity from RB
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
+        //float curveMult = speedCurve.Evaluate(speed / maxSpeedLimit);
+
+        float curveMult = speedCurve.Evaluate(flatVel.magnitude / speed);
+
+
+        
+
         //Limit velocity if needed
         if (flatVel.magnitude > speed)
         {
             //Calculate the speed it would be
-            Vector3 limitedVel = flatVel.normalized * speed;
+            Vector3 limitedVel = flatVel.normalized * curveMult;
 
             //Apply speed limit
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
