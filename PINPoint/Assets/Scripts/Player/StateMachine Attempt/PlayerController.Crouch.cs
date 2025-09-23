@@ -35,6 +35,7 @@ public partial class PlayerController
             //Apply movement to avatar
             player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
 
+            player.SpeedLimit(speed);
             if (!player.input.Movement.Crouch.IsPressed())
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x, startScaleY, player.transform.localScale.z);
