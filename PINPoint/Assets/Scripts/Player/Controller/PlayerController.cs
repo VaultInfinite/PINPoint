@@ -68,6 +68,9 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Aiming), aiming);
+
+        //Get current FoV from Camera
+        aiming.deZoom = Mathf.Round(aiming.playerCam.fieldOfView);
     }
 
     private void Start()
@@ -90,10 +93,9 @@ public partial class PlayerController : MonoBehaviour
             gun.Shoot();
         }
 
-        if (!aiming.isAiming && input.Movement.Aim.IsPressed())
+        if (!aiming.isAiming && input.Movement.Aim.IsPressed() && grounded)
         {
             SetState<Aiming>();
-            StartCoroutine(aiming.AimTimer());
         }
     }
 

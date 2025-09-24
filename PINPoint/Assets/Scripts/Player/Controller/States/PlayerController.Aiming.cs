@@ -14,11 +14,12 @@ public partial class PlayerController
     public class Aiming : State
     {
         //Variables
-        [SerializeField]
-        private Camera playerCam;
+        public Camera playerCam;
         public float camZoom;
-        private float deZoom;
+        public float deZoom;
         public bool isAiming;
+        public float zoomSpeed;
+        public float viewCheck;
 
         
         private float exitAimTimer = 1f;
@@ -26,40 +27,44 @@ public partial class PlayerController
 
         public override void OnEnter(PlayerController player)
         {
-            //Get current FoV from Camera
-            deZoom = playerCam.fieldOfView;
             
-            aimCD = false;
+
+            isAiming = true;
         }
 
         public override void OnUpdate(PlayerController player)
         {
             //Return to Walking state 
-            if (isAiming == true && player.input.Movement.Aim.IsPressed() && aimCD)
+            if (!player.input.Movement.Aim.IsPressed())
             {
-                Debug.Log("Exit Aiming");
                 isAiming = false;
-                player.SetState<Walking>();
+
+                CameraMoveEffect(deZoom);
+
+                //Return to 'Neutral' State
+                if (Mathf.Round(playerCam.fieldOfView) == deZoom) player.SetState<Walking>();
             }
 
-            if (playerCam.fieldOfView == camZoom) return;
-            playerCam.fieldOfView = camZoom;
-        }
-
-        /// <summary>
-        /// Timer to set before being able to return from aiming
-        /// </summary>
-        public IEnumerator AimTimer()
-        {
-            aimCD = true;
-            isAiming = true;
-            yield return new WaitForSeconds(exitAimTimer);
+            //Zoom In
+            if (isAiming) CameraMoveEffect(camZoom);
+            
         }
 
         public override void OnExit(PlayerController player)
         {
+            //Zoom out
+            //ZoomOut();
+            
+        }
 
-            playerCam.fieldOfView = deZoom;
+        /// <summary>
+        /// Make the camera move to desired position
+        /// </summary>
+        /// <param name="targetView">The view of the camera</param>
+        void CameraMoveEffect(float targetView)
+        {
+            playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetView, Time.deltaTime * zoomSpeed);
+            viewCheck = Mathf.Round(playerCam.fieldOfView);
         }
     }
 }
