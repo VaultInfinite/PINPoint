@@ -19,11 +19,6 @@ public partial class PlayerController
         public float deZoom;
         public bool isAiming;
         public float zoomSpeed;
-        public float viewCheck;
-
-        
-        private float exitAimTimer = 1f;
-        private bool aimCD;
 
         public override void OnEnter(PlayerController player)
         {
@@ -64,7 +59,6 @@ public partial class PlayerController
         void CameraMoveEffect(float targetView)
         {
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetView, Time.deltaTime * zoomSpeed);
-            viewCheck = Mathf.Round(playerCam.fieldOfView);
         }
     }
 }
