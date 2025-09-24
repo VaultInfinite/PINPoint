@@ -648,6 +648,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2042931975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &658360015 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4909722018506090555, guid: ba8d91f477f53af47ac4af82c83ca54b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3198032699783989257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &924890589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1757,6 +1763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: aiming.camZoom
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: air.glideSpeed
       value: 5
       objectReference: {fileID: 0}
@@ -1770,6 +1781,11 @@ PrefabInstance:
       propertyPath: jump.jumpForce
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: aiming.playerCam
+      value: 
+      objectReference: {fileID: 658360015}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: air.maxFallSpeed

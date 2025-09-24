@@ -28,7 +28,6 @@ public partial class PlayerController : MonoBehaviour
     [Header("Speed Limit")]
     public AnimationCurve speedCurve;
     public float maxSpeedLimit;
-    public float seeSoftLimit;
     #endregion
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
@@ -89,6 +88,12 @@ public partial class PlayerController : MonoBehaviour
         if(input.Movement.Shoot.IsPressed())
         {
             gun.Shoot();
+        }
+
+        if (!aiming.isAiming && input.Movement.Aim.IsPressed())
+        {
+            SetState<Aiming>();
+            StartCoroutine(aiming.AimTimer());
         }
     }
 
@@ -151,19 +156,19 @@ public partial class PlayerController : MonoBehaviour
 
         //float curveMult = speedCurve.Evaluate(speed / maxSpeedLimit);
 
-        float curveMult = speedCurve.Evaluate(flatVel.magnitude / speed);
-
-
-        
 
         //Limit velocity if needed
         if (flatVel.magnitude > speed)
         {
+            float curveMult = speedCurve.Evaluate(speed/flatVel.magnitude);
+
             //Calculate the speed it would be
             Vector3 limitedVel = flatVel.normalized * curveMult;
 
             //Apply speed limit
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+
+        
     }
 }
