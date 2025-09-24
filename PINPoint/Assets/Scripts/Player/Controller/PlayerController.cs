@@ -49,6 +49,9 @@ public partial class PlayerController : MonoBehaviour
     //The key of the current state, default to walking
     private Type _state = typeof(Walking);
 
+    //For player shooting
+    [SerializeField] Gun gun;
+
     private void Awake()
     {
         input = new();
@@ -81,6 +84,12 @@ public partial class PlayerController : MonoBehaviour
         var state = _states[_state];
         state.OnFixedUpdate(this);
         Debug.Log(_state);
+
+        //for player shooting
+        if(input.Movement.Shoot.IsPressed())
+        {
+            gun.Shoot();
+        }
     }
 
     private void Update()
