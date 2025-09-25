@@ -1788,6 +1788,11 @@ PrefabInstance:
       objectReference: {fileID: 658360015}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: aiming.zoomSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: air.maxFallSpeed
       value: 75
       objectReference: {fileID: 0}
