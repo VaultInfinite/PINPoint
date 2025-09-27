@@ -21,7 +21,7 @@ public partial class PlayerController
             startScaleY = player.transform.localScale.y;
         }
 
-        public override void OnUpdate(PlayerController player)
+        public override void OnFixedUpdate(PlayerController player)
         {
             //put crouching related code here
 
@@ -36,6 +36,10 @@ public partial class PlayerController
             player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
 
             player.SpeedLimit(speed);
+        }
+
+        public override void OnUpdate(PlayerController player)
+        {
             if (!player.input.Movement.Crouch.IsPressed())
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x, startScaleY, player.transform.localScale.z);

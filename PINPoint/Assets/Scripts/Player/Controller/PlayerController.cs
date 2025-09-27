@@ -25,11 +25,10 @@ public partial class PlayerController : MonoBehaviour
     public LayerMask Ground;
     bool grounded;
 
-    [Header("Speed Limit")]
-    public AnimationCurve speedCurve;
-    public float maxSpeedLimit;
-    public float seeSoftLimit;
     #endregion
+
+    //PROTOTYPE SHIT
+    public GameObject UI;
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
     public Walking walking;
@@ -50,7 +49,9 @@ public partial class PlayerController : MonoBehaviour
     private Type _state = typeof(Walking);
 
     //For player shooting
-    [SerializeField] Gun gun;
+    //[SerializeField] Gun gun;
+
+    
 
     private void Awake()
     {
@@ -69,6 +70,10 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Aiming), aiming);
+
+        //PROTOTYPE SHIT
+        StartCoroutine(DisableUI());
+
     }
 
     private void Start()
@@ -85,11 +90,11 @@ public partial class PlayerController : MonoBehaviour
         state.OnFixedUpdate(this);
         Debug.Log(_state);
 
-        //for player shooting
-        if(input.Movement.Shoot.IsPressed())
-        {
-            gun.Shoot();
-        }
+        ////for player shooting
+        //if(input.Movement.Shoot.IsPressed())
+        //{
+        //    gun.Shoot();
+        //}
     }
 
     private void Update()
@@ -149,21 +154,37 @@ public partial class PlayerController : MonoBehaviour
         //Get velocity from RB
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        //float curveMult = speedCurve.Evaluate(speed / maxSpeedLimit);
-
-        float curveMult = speedCurve.Evaluate(flatVel.magnitude / speed);
-
-
-        
-
         //Limit velocity if needed
         if (flatVel.magnitude > speed)
         {
             //Calculate the speed it would be
-            Vector3 limitedVel = flatVel.normalized * curveMult;
+            Vector3 limitedVel = flatVel.normalized * speed;
 
             //Apply speed limit
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
+
+
+    //PROTOTYPE SHIT
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<DeathFloor>())
+        {
+            DeathFloor deathfloor = other.gameObject.GetComponent<DeathFloor>();
+            deathfloor.Respawn();
+        }
+        if (other.gameObject.tag == "Respawn")
+        {
+            Transform respawn = other.gameObject.transform;
+            DeathFloor deathFloor = FindAnyObjectByType<DeathFloor>();
+            deathFloor.Checkpoint(respawn);
+        }
+    }
+
+    IEnumerator DisableUI()
+    {
+        yield return new WaitForSeconds(14f);
+        UI.SetActive(false);
     }
 }

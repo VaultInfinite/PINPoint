@@ -14,7 +14,7 @@ public partial class PlayerController
     {
         public float speed;
 
-        public override void OnUpdate(PlayerController player)
+        public override void OnFixedUpdate(PlayerController player)
         {
             //put running related code here
 
@@ -30,7 +30,10 @@ public partial class PlayerController
 
             //Slow player down when on the ground
             player.rb.drag = player.groundDrag;
+        }
 
+        public override void OnUpdate(PlayerController player)
+        {
             if (!player.input.Movement.Sprint.IsPressed())
             {
                 player.SetState<Walking>();

@@ -16,10 +16,12 @@ public partial class PlayerController
         public float maxFallSpeed;
         public float gravity;
 
-        private bool doubleJumped;
+        //Accessed in WallRunning to allow detaching
+        [HideInInspector]
+        public bool doubleJumped;
         private bool wallRan;
 
-        public override void OnUpdate(PlayerController player)
+        public override void OnFixedUpdate(PlayerController player)
         {
             //Apply movement in faced direction
             Vector3 moveDirection = player.GetDirection();
@@ -33,7 +35,7 @@ public partial class PlayerController
             Vector3 vel = player.rb.velocity;
 
             //Apply gravity
-            vel.y -= gravity * Time.deltaTime;
+            vel.y -= gravity * Time.fixedDeltaTime;
             player.rb.velocity = vel;
 
             //Prevents player from falling too fast
@@ -49,7 +51,10 @@ public partial class PlayerController
 
                     player.rb.velocity = new Vector3(player.rb.velocity.x, limitVel.y, player.rb.velocity.z);
             }
+        }
 
+        public override void OnUpdate(PlayerController player)
+        {
             //If player is in the air and holds the jump key, player will glide
             if (player.input.Movement.Gliding.WasPressedThisFrame() && player.gliding.CanGlide())
             {
@@ -62,8 +67,6 @@ public partial class PlayerController
                 doubleJumped = true;
                 player.SetState<Jump>();
             }
-
-            
 
             //If player is on the ground, change state to walking
             if (player.grounded)

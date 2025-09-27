@@ -157,23 +157,31 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 8
+  speedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSpeedLimit: 0
+  seeSoftLimit: 0
   walking:
-    speed: 8
+    speed: 9.5
   running:
-    speed: 12
+    speed: 14
   jump:
     jumpForce: 50
   crouch:
-    speed: 4
+    speed: 5
     crouchScaleY: 0.5
   air:
-    speed: 6
+    speed: 8
     maxFallSpeed: 75
     gravity: 30
   wall:
-    wallSpeed: 9.5
+    wallSpeed: 11
     wallGravity: 35
-    maxWallTime: 3
+    maxWallTime: 4
     curve:
       serializedVersion: 2
       m_Curve:
@@ -199,9 +207,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   gliding:
-    glideSpeed: 8
+    glideSpeed: 12
     glideTurn: 0.9
-    glideDecline: 0.8
+    glideDecline: 0.75
     maxGlideTime: 4
 --- !u!1 &2259903564013810654
 GameObject:
