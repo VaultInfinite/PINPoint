@@ -150,42 +150,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDrag: 10
+  groundDrag: 5
   orientation: {fileID: 3235075872990336042}
+  wallCameraAngle: 12
   playerHeight: 2
   playerRadius: 0.5
   Ground:
     serializedVersion: 2
     m_Bits: 8
   walking:
-    speed: 8
+    maxSpeed: 10
+    acceleration: 75
   running:
-    speed: 12
+    maxSpeed: 18
+    acceleration: 100
   jump:
-    jumpForce: 50
+    jumpForce: 45
   crouch:
-    speed: 4
+    maxSpeed: 5
+    acceleration: 0
     crouchScaleY: 0.5
   air:
-    speed: 6
+    maxSpeed: 18
+    acceleration: 25
     maxFallSpeed: 75
     gravity: 30
+    doubleJumped: 0
   wall:
-    wallSpeed: 9.5
-    wallGravity: 35
-    maxWallTime: 3
+    maxSpeed: 22
+    acceleration: 100
+    wallGravity: 50
+    maxWallTime: 4
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.12038019
-        value: 1.000245
-        inSlope: -0.41817075
-        outSlope: -0.41817075
+        time: 0.125
+        value: 0.9
+        inSlope: -0.08106554
+        outSlope: -0.08106554
         tangentMode: 0
         weightedMode: 3
         inWeight: 0
-        outWeight: 0.5461779
+        outWeight: 0.71507305
       - serializedVersion: 3
         time: 0.9985185
         value: 0.10333863
@@ -199,10 +206,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   gliding:
-    glideSpeed: 8
-    glideTurn: 0.9
-    glideDecline: 0.8
-    maxGlideTime: 4
+    maxSpeed: 30
+    acceleration: 20
+    glideTurn: 10
+    glideDecline: 0.75
+    maxGlideTime: 3.5
 --- !u!1 &2259903564013810654
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +254,6 @@ GameObject:
   - component: {fileID: 4909722018506090555}
   - component: {fileID: 3913777706732577639}
   - component: {fileID: 4747494001993596243}
-  - component: {fileID: 577043740430102533}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -372,21 +379,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!114 &577043740430102533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2783884035799311060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bec8a31d883dc3341b5e39efd2cb9423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
-  orientation: {fileID: 3235075872990336042}
 --- !u!1 &4274604311284024590
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3737704606183863865}
   - component: {fileID: 3581923800055076769}
+  - component: {fileID: 4229398368613993915}
   m_Layer: 7
   m_Name: Camera Holder
   m_TagString: Player
@@ -529,3 +522,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPos: {fileID: 1130777483267093934}
+--- !u!114 &4229398368613993915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070010652320882503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec8a31d883dc3341b5e39efd2cb9423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensX: 36.5
+  sensY: 36.5
+  orientation: {fileID: 3235075872990336042}

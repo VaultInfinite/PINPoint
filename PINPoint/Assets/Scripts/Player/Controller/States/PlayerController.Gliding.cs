@@ -9,7 +9,8 @@ public partial class PlayerController
     public class Gliding : State
     {
 
-        public float glideSpeed;
+        public float maxSpeed;
+        public float acceleration;
         public float glideTurn;
         public float glideDecline;
         public float maxGlideTime;
@@ -19,30 +20,30 @@ public partial class PlayerController
 
         public override void OnEnter(PlayerController player)
         {
-
             //Set the input direction for the player velocity
             direction = player.rb.velocity;
             direction.y = 0;
             direction = direction.normalized;
         }
 
-        public override void OnUpdate(PlayerController player)
+        public override void OnFixedUpdate(PlayerController player)
         {
 
             //Move in faced direction
-            direction += Camera.main.transform.forward * glideTurn * Time.deltaTime;
+            direction += Camera.main.transform.forward * glideTurn * Time.fixedDeltaTime;
             direction = direction.normalized;
 
             //Apply movement to avatar
-            player.rb.AddForce(direction * glideSpeed * 10f, ForceMode.Force);
+            player.Accelerate(direction, maxSpeed, acceleration);
 
             //Add time to glideTime
-            glideTime += Time.deltaTime;
+            glideTime += Time.fixedDeltaTime;
 
             player.rb.velocity = new Vector3(player.rb.velocity.x, -glideDecline, player.rb.velocity.z);
+        }
 
-            player.SpeedLimit(glideSpeed);
-
+        public override void OnUpdate(PlayerController player)
+        {
             //Checks if gliding button was released, or if glideTime has surpassed maxGlideTime
             if (player.input.Movement.Gliding.WasReleasedThisFrame() || !CanGlide())
             {

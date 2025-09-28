@@ -13,7 +13,7 @@ public partial class PlayerController
     {
         public float jumpForce;
 
-        public override void OnUpdate(PlayerController player)
+        public override void OnFixedUpdate(PlayerController player)
         {
             //Put Jumping movement related code here
 
