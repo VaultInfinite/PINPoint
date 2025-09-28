@@ -1754,7 +1754,7 @@ PrefabInstance:
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: running.speed
-      value: 12
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
@@ -1823,8 +1823,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: speedCurve.m_Curve.Array.data[0].outSlope
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].outSlope
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

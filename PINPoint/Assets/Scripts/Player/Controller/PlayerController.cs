@@ -24,10 +24,6 @@ public partial class PlayerController : MonoBehaviour
     public float playerRadius;
     public LayerMask Ground;
     bool grounded;
-
-    [Header("Speed Limit")]
-    public AnimationCurve speedCurve;
-    public float maxSpeedLimit;
     #endregion
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
@@ -156,21 +152,13 @@ public partial class PlayerController : MonoBehaviour
         //Get velocity from RB
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        //float curveMult = speedCurve.Evaluate(speed / maxSpeedLimit);
-
-
-        //Limit velocity if needed
-        if (flatVel.magnitude > speed)
+        if (flatVel.magnitude >= speed && grounded)
         {
-            float curveMult = speedCurve.Evaluate(speed/flatVel.magnitude);
-
             //Calculate the speed it would be
-            Vector3 limitedVel = flatVel.normalized * curveMult;
+            Vector3 limitedVel = flatVel.normalized;
 
             //Apply speed limit
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
-
-        
     }
 }
