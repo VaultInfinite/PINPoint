@@ -12,7 +12,8 @@ public partial class PlayerController
     [Serializable]
     public class Running : State
     {
-        public float speed;
+        public float maxSpeed;
+        public float acceleration;
 
         public override void OnFixedUpdate(PlayerController player)
         {
@@ -20,13 +21,10 @@ public partial class PlayerController
 
             //Move in faced direction
             Vector3 moveDirection = player.GetDirection();
-
+            player.Accelerate(moveDirection, maxSpeed, acceleration);
 
             //Apply movement to avatar
-            player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
-
-            //Prevent the player from going too fast
-            player.SpeedLimit(speed);
+            player.rb.AddForce(moveDirection.normalized * maxSpeed * 10f, ForceMode.Force);
 
             //Slow player down when on the ground
             player.rb.drag = player.groundDrag;

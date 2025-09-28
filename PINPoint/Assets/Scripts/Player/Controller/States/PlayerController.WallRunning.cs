@@ -11,7 +11,8 @@ public partial class PlayerController
     public class WallRunning : State
     {
 
-        public float wallSpeed;
+        public float maxSpeed;
+        public float acceleration;
         public float wallGravity;
         public float maxWallTime;
 
@@ -50,14 +51,10 @@ public partial class PlayerController
 
                 //Apply gravity
                 vel.y -= wallGravity * Time.fixedDeltaTime * (1 - curveMult);
-
-                //Debug.Log(curveMult);
-
                 player.rb.velocity = vel;
 
-                player.rb.AddForce(forward * wallSpeed * curveMult * 10f, ForceMode.Force);
-
-                player.SpeedLimit(wallSpeed);
+                //Apply force
+                player.Accelerate(forward, maxSpeed, acceleration);
             }
 
             if (wallTime >= maxWallTime || !canWallRun || player.input.Movement.Jump.WasPressedThisFrame() && player.air.doubleJumped && CanJump())
@@ -106,9 +103,19 @@ public partial class PlayerController
         /// Checking if player can jump to stop multiple jumps
         /// </summary>
         /// <returns></returns>
-        public bool CanJump()
+        private bool CanJump()
         {
             return wallTime >= 0.2f;
+        }
+
+        /// <summary>
+        /// Checks direction of the wall the player is running on.
+        /// </summary>
+        /// <param name="player">Yourself</param>
+        /// <returns>If true, running on a left wall, if false, running on a right wall</returns>
+        public bool IsOnLeftWall(PlayerController player)
+        {
+            return Physics.Raycast(player.transform.position, -Camera.main.transform.right, player.playerRadius + 0.02f, player.Ground);
         }
     }
 }

@@ -11,7 +11,8 @@ public partial class PlayerController
     [Serializable]
     public class Crouch : State
     {
-        public float speed;
+        public float maxSpeed;
+        public float acceleration;
         public float crouchScaleY;
         private float startScaleY;
 
@@ -30,12 +31,11 @@ public partial class PlayerController
 
             //Move in faced direction
             Vector3 moveDirection = player.GetDirection();
+            player.Accelerate(moveDirection, maxSpeed, acceleration);
 
 
             //Apply movement to avatar
-            player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
-
-            player.SpeedLimit(speed);
+            player.rb.AddForce(moveDirection.normalized * maxSpeed * 10f, ForceMode.Force);
         }
 
         public override void OnUpdate(PlayerController player)

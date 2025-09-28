@@ -12,7 +12,8 @@ public partial class PlayerController
     public class Air : State
     {
 
-        public float speed;
+        public float maxSpeed;
+        public float acceleration;
         public float maxFallSpeed;
         public float gravity;
 
@@ -25,8 +26,7 @@ public partial class PlayerController
         {
             //Apply movement in faced direction
             Vector3 moveDirection = player.GetDirection();
-
-            player.rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
+            player.Accelerate(moveDirection, maxSpeed, acceleration);
 
             //Move quickly in air
             player.rb.drag = 0;
@@ -40,9 +40,6 @@ public partial class PlayerController
 
             //Prevents player from falling too fast
             Vector3 flatVel = new Vector3(0f, player.rb.velocity.y, 0f);
-
-            //Limit Player X & Z Speed
-            player.SpeedLimit(speed);
 
             //Maintain downward velocity
             if (player.rb.velocity.y < -maxFallSpeed)
@@ -82,7 +79,6 @@ public partial class PlayerController
             //Wallrunning check here
             if (player.wall.CanWallRun(player) && !wallRan)
             {
-                wallRan = true;
                 player.SetState<WallRunning>();
             }
         }

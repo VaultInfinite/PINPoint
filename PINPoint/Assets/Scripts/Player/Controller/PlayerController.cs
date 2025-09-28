@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
@@ -18,6 +19,8 @@ public partial class PlayerController : MonoBehaviour
 
     [Header("Direction")]
     public Transform orientation;
+    public float wallCameraAngle;
+    private float roll;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -26,9 +29,6 @@ public partial class PlayerController : MonoBehaviour
     bool grounded;
 
     #endregion
-
-    //PROTOTYPE SHIT
-    public GameObject UI;
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
     public Walking walking;
@@ -70,10 +70,6 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Aiming), aiming);
-
-        //PROTOTYPE SHIT
-        StartCoroutine(DisableUI());
-
     }
 
     private void Start()
@@ -89,12 +85,6 @@ public partial class PlayerController : MonoBehaviour
         var state = _states[_state];
         state.OnFixedUpdate(this);
         Debug.Log(_state);
-
-        ////for player shooting
-        //if(input.Movement.Shoot.IsPressed())
-        //{
-        //    gun.Shoot();
-        //}
     }
 
     private void Update()
@@ -104,7 +94,24 @@ public partial class PlayerController : MonoBehaviour
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 
-        state.OnUpdate(this);
+        if (state is WallRunning)
+        {
+            if (wall.IsOnLeftWall(this))
+            {
+                roll = Mathf.Lerp(roll, -wallCameraAngle, Time.deltaTime * 3);
+            }
+            else
+            {
+                roll = Mathf.Lerp(roll, wallCameraAngle, Time.deltaTime * 3);
+            }
+            Camera.main.transform.localEulerAngles = new Vector3(0, 0, roll);
+        }
+        else
+        {
+            roll = Mathf.Lerp(roll, 0, Time.deltaTime * 3);
+            Camera.main.transform.localEulerAngles = new Vector3(0, 0, roll);
+        }
+            state.OnUpdate(this);
     }
 
     //Sets the current state calling OnEnter on new state and OnExit on old state
@@ -138,35 +145,31 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private Vector3 GetDirection()
     {
-        Vector3 moveInput = GetMovement();
+        Vector3 moveInput = GetMovement().normalized;
         //Get direction where the player was facing
         return orientation.forward * moveInput.z + orientation.right * moveInput.x;
-
-        //Apply movement in that direction
-        //rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
     }
 
     /// <summary>
     /// Controls how fast the player can go
     /// </summary>
-    private void SpeedLimit(float speed)
+    private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
-        //Get velocity from RB
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        //Limit velocity if needed
-        if (flatVel.magnitude > speed)
+        Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        float product = Vector3.Dot(moveDirection, velocity);
+        float accel = acceleration * Time.fixedDeltaTime;
+        if (product + accel > maxSpeed)
         {
-            //Calculate the speed it would be
-            Vector3 limitedVel = flatVel.normalized * speed;
-
-            //Apply speed limit
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            accel = maxSpeed - product;
         }
+        Vector3 newVelocity = velocity + moveDirection * accel;
+
+        Debug.Log(newVelocity.magnitude);
+
+        newVelocity.y = rb.velocity.y;
+        rb.velocity = newVelocity;
     }
 
-
-    //PROTOTYPE SHIT
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<DeathFloor>())
@@ -180,11 +183,5 @@ public partial class PlayerController : MonoBehaviour
             DeathFloor deathFloor = FindAnyObjectByType<DeathFloor>();
             deathFloor.Checkpoint(respawn);
         }
-    }
-
-    IEnumerator DisableUI()
-    {
-        yield return new WaitForSeconds(14f);
-        UI.SetActive(false);
     }
 }
