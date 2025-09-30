@@ -31,6 +31,7 @@ public partial class PlayerController : MonoBehaviour
     [Header("Shooting")]
     public Shoot shootScr;
 
+
     #endregion
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
@@ -47,6 +48,7 @@ public partial class PlayerController : MonoBehaviour
     
     //The Input system
     public PlayerControllerInput input;
+
 
     //The key of the current state, default to walking
     private Type _state = typeof(Walking);

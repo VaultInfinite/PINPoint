@@ -59,7 +59,7 @@ public partial class PlayerController
             }
 
             //If player is in the air and jumps, double jump if applicable
-            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped)
+            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
             {
                 doubleJumped = true;
                 player.SetState<Jump>();

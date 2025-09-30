@@ -89,6 +89,15 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""67396306-967d-4da5-a368-c842de946bc2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -267,6 +276,28 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69ba4281-a46b-4ce1-ad65-99ce8d01fa65"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af99442c-9238-4ab2-8e98-f3653b72b63e"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -282,6 +313,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         m_Movement_Crouch = m_Movement.FindAction("Crouch", throwIfNotFound: true);
         m_Movement_Shoot = m_Movement.FindAction("Shoot", throwIfNotFound: true);
         m_Movement_Aim = m_Movement.FindAction("Aim", throwIfNotFound: true);
+        m_Movement_Pause = m_Movement.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -350,6 +382,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
     private readonly InputAction m_Movement_Crouch;
     private readonly InputAction m_Movement_Shoot;
     private readonly InputAction m_Movement_Aim;
+    private readonly InputAction m_Movement_Pause;
     public struct MovementActions
     {
         private @PlayerControllerInput m_Wrapper;
@@ -361,6 +394,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         public InputAction @Crouch => m_Wrapper.m_Movement_Crouch;
         public InputAction @Shoot => m_Wrapper.m_Movement_Shoot;
         public InputAction @Aim => m_Wrapper.m_Movement_Aim;
+        public InputAction @Pause => m_Wrapper.m_Movement_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -391,6 +425,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -416,6 +453,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -442,5 +482,6 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         void OnCrouch(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

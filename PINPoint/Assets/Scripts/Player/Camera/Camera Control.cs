@@ -28,6 +28,9 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Check if Paused
+        if (Pause.isPaused) return;
+
         //Get mouse input
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
