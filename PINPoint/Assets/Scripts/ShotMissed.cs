@@ -15,5 +15,14 @@ public class ShotMissed : MonoBehaviour
             //SceneManager.LoadScene();
             Debug.Log("You failed.");
         }
+
+        //if the projectile does touch the enemy
+        if(other.gameObject.tag == "Enemy")
+        {
+            //send the player to the level complete screen (or equivalent)
+            //PUT THE SCENE NUMBER FOR THE LEVEL COMPLETE SCREEN IN THE PARENTHESIS BELOW
+            //SceneManager.LoadScene();
+            Debug.Log("You killed the enemy.");
+        }
     }
 }
