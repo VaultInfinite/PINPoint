@@ -30,6 +30,8 @@ public partial class PlayerController
 
         public override void OnUpdate(PlayerController player)
         {
+            if (Pause.isPaused) return;
+
             //Zoom In
             if (isAiming)
             {
