@@ -19,30 +19,43 @@ public partial class PlayerController
         public float deZoom;
         public bool isAiming;
         public float zoomSpeed;
+        public GameObject reticle;
 
         public override void OnEnter(PlayerController player)
         {
-            
-
+            //Get current FoV from camera
+            deZoom = Mathf.Round(playerCam.fieldOfView);
             isAiming = true;
         }
 
         public override void OnUpdate(PlayerController player)
         {
+            //Zoom In
+            if (isAiming)
+            {
+                CameraMoveEffect(camZoom);
+
+                reticle.SetActive(true);
+            }
+
+            //If Shoot button is pressed while fully zoomed in, take the shot!
+            if (Mathf.Round(playerCam.fieldOfView) == camZoom && player.input.Movement.Shoot.IsPressed())
+            {
+                //Shoot
+                player.shootScr.Shooting();
+            }
+
             //Return to Walking state 
             if (!player.input.Movement.Aim.IsPressed())
             {
                 isAiming = false;
+                reticle.SetActive(false);
 
                 CameraMoveEffect(deZoom);
 
                 //Return to 'Neutral' State
                 if (Mathf.Round(playerCam.fieldOfView) == deZoom) player.SetState<Walking>();
             }
-
-            //Zoom In
-            if (isAiming) CameraMoveEffect(camZoom);
-            
         }
 
         public override void OnExit(PlayerController player)

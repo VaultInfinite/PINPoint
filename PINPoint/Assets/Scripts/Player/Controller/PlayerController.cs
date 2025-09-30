@@ -28,6 +28,9 @@ public partial class PlayerController : MonoBehaviour
     public LayerMask Ground;
     bool grounded;
 
+    [Header("Shooting")]
+    public Shoot shootScr;
+
     #endregion
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
@@ -70,6 +73,8 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Aiming), aiming);
+
+        aiming.reticle.SetActive(false);
     }
 
     private void Start()
