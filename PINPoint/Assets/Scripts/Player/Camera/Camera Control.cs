@@ -29,7 +29,12 @@ public class CameraControl : MonoBehaviour
     void Update()
     {
         //Check if Paused
-        if (Pause.isPaused) return;
+        if (Pause.isPaused)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            return;
+        }
 
         //Get mouse input
         float mouseX = Input.GetAxis("Mouse X");

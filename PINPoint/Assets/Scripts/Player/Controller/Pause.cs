@@ -42,6 +42,8 @@ public class Pause : MonoBehaviour
         else
         {
             Time.timeScale = 1f;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
