@@ -10,12 +10,14 @@ public class Pause : MonoBehaviour
 {
     //Variables
     public static bool isPaused = false;
+    public GameObject pauseMenu;
     public PlayerControllerInput input;
 
     private void Awake()
     {
         input = new();
         input.Enable();
+        pauseMenu.SetActive(false);
     }
 
     private void Update()
@@ -29,6 +31,9 @@ public class Pause : MonoBehaviour
     public void HitPause()
     {
         isPaused = !isPaused;
+
+        //Set the Pause Menu
+        pauseMenu.SetActive(isPaused);
 
         if (isPaused)
         {
