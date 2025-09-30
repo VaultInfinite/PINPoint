@@ -42,14 +42,29 @@ public partial class PlayerController
         {
             if (!player.input.Movement.Crouch.IsPressed())
             {
-                player.transform.localScale = new Vector3(player.transform.localScale.x, startScaleY, player.transform.localScale.z);
+                ReturnShape(player);
                 player.SetState<Walking>();
             }
 
             if (!player.grounded)
             {
+                ReturnShape(player);
                 player.SetState<Air>();
             }
+
+            if (player.input.Movement.Aim.IsPressed())
+            {
+                ReturnShape(player);
+                player.SetState<Aiming>();
+            }
+        }
+
+        /// <summary>
+        /// Returns the player to their original shape
+        /// </summary>
+        void ReturnShape(PlayerController player)
+        {
+            player.transform.localScale = new Vector3(player.transform.localScale.x, startScaleY, player.transform.localScale.z);
         }
     }
 }

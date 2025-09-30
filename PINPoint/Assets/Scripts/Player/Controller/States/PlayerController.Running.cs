@@ -37,9 +37,14 @@ public partial class PlayerController
                 player.SetState<Walking>();
             }
 
-            if (player.input.Movement.Jump.WasPressedThisFrame())
+            if (player.input.Movement.Jump.WasPressedThisFrame() && (!Pause.isPaused))
             {
                 player.SetState<Jump>();
+            }
+
+            if (player.input.Movement.Aim.IsPressed())
+            {
+                player.SetState<Aiming>();
             }
 
             if (!player.grounded)

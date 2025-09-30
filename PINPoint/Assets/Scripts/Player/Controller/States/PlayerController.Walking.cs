@@ -33,7 +33,7 @@ public partial class PlayerController
                 player.SetState<Running>();
             }
 
-            if (player.input.Movement.Jump.WasPressedThisFrame())
+            if (player.input.Movement.Jump.WasPressedThisFrame() && (!Pause.isPaused))
             {
                 player.SetState<Jump>();
             }
@@ -41,6 +41,11 @@ public partial class PlayerController
             if (player.input.Movement.Crouch.IsPressed())
             {
                 player.SetState<Crouch>();
+            }
+
+            if (player.input.Movement.Aim.IsPressed())
+            {
+                player.SetState<Aiming>();
             }
 
             if (!player.grounded)
