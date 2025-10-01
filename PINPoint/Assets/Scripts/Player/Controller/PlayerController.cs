@@ -171,7 +171,25 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
-        Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        //if the player isn't stunned, then they can move
+        if(stun == false)
+        {
+            Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            float product = Vector3.Dot(moveDirection, velocity);
+            float accel = acceleration * Time.fixedDeltaTime;
+            if (product + accel > maxSpeed)
+            {
+                accel = maxSpeed - product;
+            }
+            Vector3 newVelocity = velocity + moveDirection * accel;
+
+            Debug.Log(newVelocity.magnitude);
+
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
+        }
+        
+        /*Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         float product = Vector3.Dot(moveDirection, velocity);
         float accel = acceleration * Time.fixedDeltaTime;
         if (product + accel > maxSpeed)
@@ -183,7 +201,7 @@ public partial class PlayerController : MonoBehaviour
         Debug.Log(newVelocity.magnitude);
 
         newVelocity.y = rb.velocity.y;
-        rb.velocity = newVelocity;
+        rb.velocity = newVelocity;*/
     }
 
     private void OnTriggerEnter(Collider other)
