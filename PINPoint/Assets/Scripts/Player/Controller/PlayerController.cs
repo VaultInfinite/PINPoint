@@ -217,5 +217,15 @@ public partial class PlayerController : MonoBehaviour
             DeathFloor deathFloor = FindAnyObjectByType<DeathFloor>();
             deathFloor.Checkpoint(respawn);
         }
+        if (other.gameObject.tag == "Projectile")
+        {
+
+        }
+    }
+
+    //time the player will be stunned for when hit by police drone
+    public IEnumerator Stunned()
+    {
+        yield return new WaitForSeconds(3f);
     }
 }
