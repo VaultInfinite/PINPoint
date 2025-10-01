@@ -15,7 +15,8 @@ public partial class PlayerController : MonoBehaviour
     public float groundDrag;
 
     private MeshRenderer mr;
-    private Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
 
     [Header("Direction")]
     public Transform orientation;
