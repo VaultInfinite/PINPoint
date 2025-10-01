@@ -57,7 +57,9 @@ public partial class PlayerController : MonoBehaviour
     //For player shooting
     //[SerializeField] Gun gun;
 
-    
+    //bool to eventually stun player if the police drone shoots them
+    public bool stun = false;
+
 
     private void Awake()
     {
