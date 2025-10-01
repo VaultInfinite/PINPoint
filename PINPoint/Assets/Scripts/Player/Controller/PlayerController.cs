@@ -146,8 +146,14 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 GetMovement()
     {
+        //if the player is not stunned, then they can move
+        if(stun == false)
+        {
+            //Get inputs
+            return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
+        }
         //Get inputs
-        return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
+        //return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
     }
 
     /// <summary>
