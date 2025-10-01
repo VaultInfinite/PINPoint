@@ -219,7 +219,9 @@ public partial class PlayerController : MonoBehaviour
         }
         if (other.gameObject.tag == "Projectile")
         {
-
+            stun = true;
+            StartCoroutine(Stunned());
+            stun = false;
         }
     }
 
