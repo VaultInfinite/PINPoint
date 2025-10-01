@@ -219,15 +219,18 @@ public partial class PlayerController : MonoBehaviour
         }
         if (other.gameObject.tag == "Projectile")
         {
-            stun = true;
+            //stun = true;
+            Debug.Log("Stun is true.");
             StartCoroutine(Stunned());
-            stun = false;
+            //stun = false;
         }
     }
 
     //time the player will be stunned for when hit by police drone
     public IEnumerator Stunned()
     {
+        stun = true;
         yield return new WaitForSeconds(3f);
+        stun = false;
     }
 }
