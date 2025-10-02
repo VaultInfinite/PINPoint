@@ -9,10 +9,17 @@ public class Shoot : MonoBehaviour
 {
     //Variables
     public Transform FirePos;
+    public Camera cam;
     private bool canShoot = true;
     public float shootCooldown;
 
-    
+    [Header("Bullet")]
+    public GameObject bulletOBJ;
+    public float bulletSpeed;
+    public float dieTime;
+
+    Transform attackPoint;
+    Vector3 targetPoint;
 
     //Shoot the bullet
     public void Shooting()
@@ -20,27 +27,30 @@ public class Shoot : MonoBehaviour
         //Check if can shoot
         if (!canShoot) return;
 
+        //Set Shoot to false
+        canShoot = false;
+
         RaycastHit hit;
-        if (Physics.Raycast(FirePos.position, FirePos.forward, out hit, 100))
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        if (Physics.Raycast(ray, out hit))
         {
-            //Set Shoot to false
-            canShoot = false;
-
-            switch (hit.collider.gameObject.tag)
-            {
-                default:
-                    //Don't do anything
-                    Debug.DrawRay(FirePos.position, FirePos.forward * 100, Color.yellow);
-                    return;
-
-                case "Target":
-                    Debug.Log("Take the shot juju!");
-                    Debug.DrawRay(FirePos.position, FirePos.forward * 100, Color.red);
-
-                    break;
-            }
-            
+            targetPoint = hit.point;
         }
+        else
+        {
+            targetPoint = ray.GetPoint(75);
+        }
+
+        Vector3 fireDir = targetPoint - FirePos.position;
+
+
+        GameObject newBullet = Instantiate(bulletOBJ, FirePos.position, Quaternion.identity);
+
+        newBullet.transform.forward = FirePos.forward;
+
+        newBullet.GetComponent<BulletControl>().expireTime = dieTime;
+
+        newBullet.GetComponent<Rigidbody>().AddForce(fireDir.normalized * bulletSpeed, ForceMode.Impulse);
 
         //Call timer
         StartCoroutine(ShootingCooldown(shootCooldown));
