@@ -4098,6 +4098,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: air.gravity
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: yMultiplier
+      value: 1.001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -17,6 +17,9 @@ public class Grappling : MonoBehaviour
     [SerializeField]
     private float yMultiplier;
 
+    [SerializeField]
+    private GameObject point;
+
     private Vector3 hookPoint;
 
     private void Awake()
@@ -33,10 +36,25 @@ public class Grappling : MonoBehaviour
         if (player.input.Movement.Shoot.WasPressedThisFrame() && hookHit)
         {
             hookPoint = grappleHit.point;
+            if (point.transform.position == Vector3.zero)
+            {
+                point = Instantiate(point, hookPoint, cam.transform.rotation);
+                point.SetActive(true);
+            }
+            else
+            {
+                point.transform.position = hookPoint;
+                point.SetActive(true);
+            }
         }
-        if (player.input.Movement.Shoot.IsPressed() && hookPoint != null && hookHit)
+        if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
         {
             Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
+        }
+        if (player.input.Movement.Shoot.WasReleasedThisFrame())
+        {
+            hookPoint = Vector3.zero;
+            point.SetActive(false);
         }
     }
 
@@ -56,6 +74,9 @@ public class Grappling : MonoBehaviour
             accel = maxSpeed - product;
         }
         Vector3 newVelocity = velocity + moveDirection * accel;
+        newVelocity = new Vector3(newVelocity.x, (newVelocity.y), newVelocity.z);
+
+        newVelocity.y = newVelocity.y * yMultiplier;
         player.rb.velocity = newVelocity;
     }
 }
