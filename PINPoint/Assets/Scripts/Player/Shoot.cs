@@ -8,18 +8,18 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     //Variables
-    public Transform FirePos;
-    public Camera cam;
+    private Transform FirePos;
+    private Camera cam;
     private bool canShoot = true;
-    public float shootCooldown;
 
-    [Header("Bullet")]
-    public GameObject bulletOBJ;
-    public float bulletSpeed;
-    public float dieTime;
+    [SerializeField]
+    private float shootCooldown;
 
-    Transform attackPoint;
-    Vector3 targetPoint;
+    private void Awake()
+    {
+        cam = Camera.main;
+        FirePos = Camera.main.transform;
+    }
 
     //Shoot the bullet
     public void Shooting()
@@ -30,27 +30,23 @@ public class Shoot : MonoBehaviour
         //Set Shoot to false
         canShoot = false;
 
+
         RaycastHit hit;
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
         {
-            targetPoint = hit.point;
+            switch (hit.transform.gameObject.tag)
+            {
+                case "Target":
+                    Debug.Log("KILL!");
+                    break;
+
+                default:
+
+                    //Do Nothing
+
+                    break;
+            }
         }
-        else
-        {
-            targetPoint = ray.GetPoint(75);
-        }
-
-        Vector3 fireDir = targetPoint - FirePos.position;
-
-
-        GameObject newBullet = Instantiate(bulletOBJ, FirePos.position, Quaternion.identity);
-
-        newBullet.transform.forward = FirePos.forward;
-
-        newBullet.GetComponent<BulletControl>().expireTime = dieTime;
-
-        newBullet.GetComponent<Rigidbody>().AddForce(fireDir.normalized * bulletSpeed, ForceMode.Impulse);
 
         //Call timer
         StartCoroutine(ShootingCooldown(shootCooldown));
