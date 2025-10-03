@@ -23,9 +23,6 @@ public partial class PlayerController
             Vector3 moveDirection = player.GetDirection();
             player.Accelerate(moveDirection, maxSpeed, acceleration);
 
-            //Apply movement to avatar
-            player.rb.AddForce(moveDirection.normalized * maxSpeed * 10f, ForceMode.Force);
-
             //Slow player down when on the ground
             player.rb.drag = player.groundDrag;
         }

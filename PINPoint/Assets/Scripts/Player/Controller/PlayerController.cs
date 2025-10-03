@@ -172,7 +172,7 @@ public partial class PlayerController : MonoBehaviour
         }
         Vector3 newVelocity = velocity + moveDirection * accel;
 
-        Debug.Log(newVelocity.magnitude);
+        //Debug.Log(newVelocity.magnitude);
 
         newVelocity.y = rb.velocity.y;
         rb.velocity = newVelocity;

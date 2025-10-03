@@ -12,6 +12,8 @@ public partial class PlayerController
     public class Jump : State
     {
         public float jumpForce;
+        [HideInInspector]
+        public Vector3 direction;
 
         public override void OnFixedUpdate(PlayerController player)
         {
@@ -21,8 +23,9 @@ public partial class PlayerController
             player.rb.velocity = new Vector3(player.rb.velocity.x, 0f, player.rb.velocity.z);
 
             //Jump
-            player.rb.AddForce(player.transform.up * jumpForce, ForceMode.Impulse);
-            
+            player.rb.AddForce((player.transform.up + direction).normalized * jumpForce, ForceMode.Impulse);
+
+            direction = Vector3.up;
             player.SetState<Air>();
         }
     }

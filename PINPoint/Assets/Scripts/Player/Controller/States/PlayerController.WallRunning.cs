@@ -17,6 +17,8 @@ public partial class PlayerController
         public float maxWallTime;
 
         private float wallTime;
+        [SerializeField]
+        private float bumpForce;
         private Vector3 cameraForward;
 
         public AnimationCurve curve;
@@ -41,6 +43,8 @@ public partial class PlayerController
 
             bool canWallRun = CanWallRun(player, out RaycastHit hitInfo);
 
+            Vector3 direction = player.GetDirection();
+
             if (canWallRun)
             {
                 Vector3 forward = Vector3.Cross(Vector3.up, hitInfo.normal);
@@ -62,10 +66,16 @@ public partial class PlayerController
                 player.SetState<Air>();
             }
 
-            if (player.input.Movement.Jump.IsPressed() && !player.air.doubleJumped && CanJump())
+            if (player.input.Movement.Jump.IsPressed() && CanJump())
             {
-                player.air.doubleJumped = true;
+                player.jump.direction = hitInfo.normal;
                 player.SetState<Jump>();
+            }
+
+            if (Vector3.Dot(direction, hitInfo.normal) > 0.5f)
+            {
+                player.rb.velocity += hitInfo.normal * bumpForce;
+                player.SetState<Air>();
             }
         }
 

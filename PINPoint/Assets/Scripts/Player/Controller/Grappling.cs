@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(PlayerController), typeof(LineRenderer))]
 public class Grappling : MonoBehaviour
 {
     private PlayerController player;
@@ -15,21 +16,22 @@ public class Grappling : MonoBehaviour
     [SerializeField]
     private float acceleration;
     [SerializeField]
-    private float yMultiplier;
+    private float yAddition;
 
     [SerializeField]
     private GameObject point;
+    private LineRenderer lineRenderer;
 
     private Vector3 hookPoint;
 
     private void Awake()
     {
-        if (gameObject.GetComponent<PlayerController>())
-        {
-            player = gameObject.GetComponent<PlayerController>();
-        }
+        player = gameObject.GetComponent<PlayerController>();
+
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
         cam = Camera.main;
     }
+
     private void Update()
     {
         bool hookHit = CanGrapple(out RaycastHit grappleHit);
@@ -38,23 +40,35 @@ public class Grappling : MonoBehaviour
             hookPoint = grappleHit.point;
             if (point.transform.position == Vector3.zero)
             {
-                point = Instantiate(point, hookPoint, cam.transform.rotation);
+                point = Instantiate(point, hookPoint, Quaternion.identity);
                 point.SetActive(true);
             }
             else
             {
                 point.transform.position = hookPoint;
+                point.transform.rotation = Quaternion.LookRotation(grappleHit.normal, Vector3.up);
                 point.SetActive(true);
             }
-        }
-        if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
-        {
-            Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
+            lineRenderer.SetPosition(0, hookPoint);
+            lineRenderer.enabled = true;
         }
         if (player.input.Movement.Shoot.WasReleasedThisFrame())
         {
             hookPoint = Vector3.zero;
             point.SetActive(false);
+            lineRenderer.enabled = false;
+        }
+        if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
+        {
+            lineRenderer.SetPosition(1, player.transform.position);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
+        {
+            Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
         }
     }
 
@@ -76,7 +90,7 @@ public class Grappling : MonoBehaviour
         Vector3 newVelocity = velocity + moveDirection * accel;
         newVelocity = new Vector3(newVelocity.x, (newVelocity.y), newVelocity.z);
 
-        newVelocity.y = newVelocity.y * yMultiplier;
+        newVelocity.y += yAddition * Time.fixedDeltaTime;
         player.rb.velocity = newVelocity;
     }
 }
