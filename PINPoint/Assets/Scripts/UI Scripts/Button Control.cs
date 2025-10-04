@@ -17,6 +17,9 @@ public class ButtonControl : MonoBehaviour
     [SerializeField]
     private GameObject loseUI;
 
+    [SerializeField]
+    private GameObject pauseUI;
+
     private Scene restartScene;
 
     //Pulls up the COntracts UI
@@ -36,9 +39,21 @@ public class ButtonControl : MonoBehaviour
     {
         restartScene = SceneManager.GetActiveScene();
 
+        SceneManager.LoadSceneAsync(restartScene.name);
+
         loseUI.SetActive(false);
 
-        SceneManager.SetActiveScene(restartScene);
+        //Rough Fix of the Pause Menu
+        //Prevents it from bugging out
+        if (pauseUI.activeSelf == true)
+        {
+            pauseUI.SetActive(false);
+            Time.timeScale = 1f;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Pause.isPaused = false;
+        }
+        
     }
 
 }
