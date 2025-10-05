@@ -9,9 +9,11 @@ public class GaMaControl : MonoBehaviour
 
     public static GaMaControl Instance { get { return _instance; } }
 
-    public GameObject pause, lose, contracts, settings;
+    public GameObject pause, lose, contracts, settings, load;
 
     private Scene restartScene;
+
+    public float boTimer;
 
     private void Awake()
     {
@@ -41,9 +43,14 @@ public class GaMaControl : MonoBehaviour
         settings.SetActive(true);
     }
 
+    /// <summary>
+    /// Restarts the Level
+    /// </summary>
     public void RetryLevel()
     {
         restartScene = SceneManager.GetActiveScene();
+
+        BlackOut();
 
         SceneManager.LoadSceneAsync(restartScene.name);
 
@@ -62,5 +69,20 @@ public class GaMaControl : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Applies a blackout to transition to the next scene
+    /// </summary>
+    private void BlackOut()
+    {
+        load.SetActive(true);
+        StartCoroutine(BlackIn());
+    }
+
+
+    IEnumerator BlackIn()
+    {
+        yield return new WaitForSeconds(boTimer);
+        load.SetActive(false);
+    }
     #endregion
 }
