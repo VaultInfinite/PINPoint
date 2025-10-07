@@ -57,13 +57,13 @@ public class GaMaControl : MonoBehaviour
     private void Awake()
     {
         //Make sure this is the only Game Manager in the Scene
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            _instance = this;
+            instance = this;
         }
 
         //Keep this object even when changing scenes
