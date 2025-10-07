@@ -22,6 +22,8 @@ public class PoliceDrone : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    [SerializeField]
+    private float despawnTime;
 
     //StateSwitch
     public float sightRange, attackRange;
@@ -74,8 +76,10 @@ public class PoliceDrone : MonoBehaviour
         if (!alreadyAttacked)
         {
             //Attack Code
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  
+            GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity);
+            StartCoroutine(DespawnBullet(bullet));
 
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 2f, ForceMode.Impulse);
 
@@ -121,5 +125,11 @@ public class PoliceDrone : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, sightRange);   
+    }
+
+    private IEnumerator DespawnBullet(GameObject bullet)
+    {
+        yield return new WaitForSeconds(despawnTime);
+        bullet.SetActive(false);
     }
 }
