@@ -150,7 +150,7 @@ RectTransform:
   m_GameObject: {fileID: 3553027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 17.91, y: 16.28, z: 16.28}
+  m_LocalScale: {x: 20.61, y: 16.28, z: 16.28}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003002717}
@@ -1417,7 +1417,6 @@ GameObject:
   - component: {fileID: 279926922}
   - component: {fileID: 279926921}
   - component: {fileID: 279926920}
-  - component: {fileID: 279926923}
   m_Layer: 5
   m_Name: UI Holder
   m_TagString: Untagged
@@ -1437,8 +1436,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1102990345}
   - {fileID: 928530047}
+  - {fileID: 1102990345}
   m_Father: {fileID: 1312152604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1509,22 +1508,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &279926923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279926918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6782b35c79abd4048a4b0aca6908ae67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contractsUI: {fileID: 1003002716}
-  settingsUI: {fileID: 0}
-  loseUI: {fileID: 680300596}
-  pauseUI: {fileID: 1096876734}
 --- !u!1 &307625513
 GameObject:
   m_ObjectHideFlags: 0
@@ -5148,7 +5131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   payDisplay: {fileID: 784357993}
   timeDisplay: {fileID: 666561059}
-  interest: 1
+  timer: 
+  interest: 100
   moneyCD: 1
 --- !u!1 &930866790
 GameObject:
@@ -7445,15 +7429,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pause: {fileID: 1096876734}
   lose: {fileID: 680300596}
+  win: {fileID: 333211570}
   contracts: {fileID: 1003002716}
   settings: {fileID: 0}
   load: {fileID: 1674253218}
   playerUI: {fileID: 928530046}
+  reticle: {fileID: 1028623836}
+  winMoney: {fileID: 1697272006}
+  winTime: {fileID: 2142442403}
+  loseMoney: {fileID: 1148301138}
+  loseTime: {fileID: 930866792}
   playerMoney: 0
-  levelMoney: 500
+  levelMoney: 99999999
   targetHit: 0
   levelFailed: 0
-  boTimer: 0.5
+  transTimer: 0.5
 --- !u!1 &1313879285
 GameObject:
   m_ObjectHideFlags: 0
@@ -9148,7 +9138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1674253219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9288,7 +9278,7 @@ GameObject:
   - component: {fileID: 1697272007}
   - component: {fileID: 1697272006}
   m_Layer: 0
-  m_Name: Money
+  m_Name: Money Won
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12298,7 +12288,7 @@ GameObject:
   - component: {fileID: 2142442404}
   - component: {fileID: 2142442403}
   m_Layer: 0
-  m_Name: Elapsed
+  m_Name: Time Completed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

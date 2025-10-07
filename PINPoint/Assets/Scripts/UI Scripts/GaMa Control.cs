@@ -1,30 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GaMaControl : MonoBehaviour
 {
-    private static GaMaControl _instance;
+    private static GaMaControl instance;
 
-    public static GaMaControl Instance { get { return _instance; } }
+    public static GaMaControl Instance { get { return instance; } }
+
+    [Header("UI GameObjects")]
+    public GameObject pause;
+    public GameObject lose;
+    public GameObject win;
+    public GameObject contracts;
+    public GameObject settings;
+    public GameObject load;
+    public GameObject playerUI;
+    public GameObject reticle;
+
+    [Header("UI Text")]
+    [SerializeField]
+    private TextMeshProUGUI winMoney;
+    [SerializeField]
+    private TextMeshProUGUI winTime;
+    [SerializeField]
+    private TextMeshProUGUI loseMoney;
+    [SerializeField]
+    private TextMeshProUGUI loseTime;
 
 
-    public GameObject pause, lose, contracts, settings, load, playerUI;
 
+    [Header("Money & Time")]
     //Money that is CURRENTLY in the player's posession
     public int playerMoney;
 
     //Money that the player can win in the level
     public int levelMoney;
-    int startMoney;
+    private int startMoney;
 
+    [Header("Play State")]
     public bool targetHit = false;
     public bool levelFailed;
 
+    [Header("Scene Transition")]
+    public float transTimer;
     private Scene restartScene;
 
-    public float boTimer;
+
 
     /// <summary>
     /// Make sure there is one one Game Manager Instance
@@ -67,18 +92,22 @@ public class GaMaControl : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
-        
-
+        //Get current scene
         restartScene = SceneManager.GetActiveScene();
 
+        //Apply Black Screen to hide level
         BlackOut();
 
+        //Reset Level Variables
         levelMoney = startMoney;
         playerUI.gameObject.GetComponent<GameUIControl>().ResetTime();
 
+        //Load Scene
         SceneManager.LoadSceneAsync(restartScene.name);
 
+        //Turn Off UI
         lose.SetActive(false);
+        win.SetActive(false);
 
         //Rough Fix of the Pause Menu
         //Prevents it from bugging out
@@ -91,7 +120,9 @@ public class GaMaControl : MonoBehaviour
             Pause.isPaused = false;
         }
 
+        //Time Flows again
         levelFailed = false;
+        targetHit = false;
     }
 
     /// <summary>
@@ -106,22 +137,59 @@ public class GaMaControl : MonoBehaviour
 
     IEnumerator BlackIn()
     {
-        yield return new WaitForSeconds(boTimer);
+        yield return new WaitForSeconds(transTimer);
         load.SetActive(false);
     }
     #endregion
 
     #region Menu Calls
+    /// <summary>
+    /// Pull up the fail screen
+    /// </summary>
     public void Fail()
     {
+        //Variable to stop time & money count
         levelFailed = true;
 
+        //Change UI
+        loseMoney.text = "$" + levelMoney.ToString();
+        loseTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
+
+        //Pull up Lose Screen
         lose.SetActive(true);
-        Time.timeScale = 1f;
+
+        //Show Mouse
+        HiMouse();
+    }
+
+    /// <summary>
+    /// Pull up the Win screen
+    /// Give player the Level Cash
+    /// </summary>
+    public void CashOut()
+    {
+        //Show Mouse
+        HiMouse();
+
+        //Give money to the player
+        playerMoney += levelMoney;
+
+        //Change UI
+        winMoney.text = "$" + levelMoney.ToString();
+        winTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
+
+        //Pull up win menu
+        win.SetActive(true);
+    }
+
+    /// <summary>
+    /// Unlocks the screen and shows the mouse
+    /// </summary>
+    public void HiMouse()
+    {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-
 
     #endregion
 }
