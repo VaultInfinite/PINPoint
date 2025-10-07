@@ -10226,6 +10226,7 @@ MonoBehaviour:
   walkPointRange: 5
   timeBetweenAttacks: 0.5
   projectile: {fileID: 1723100289}
+  despawnTime: 2
   sightRange: 10
   attackRange: 8
   playerInSightRange: 0
@@ -14401,7 +14402,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
