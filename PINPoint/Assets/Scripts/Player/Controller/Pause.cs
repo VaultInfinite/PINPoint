@@ -33,6 +33,8 @@ public class Pause : MonoBehaviour
     /// </summary>
     public void HitPause()
     {
+        if (GaMaControl.Instance.levelFailed) return;
+
         isPaused = !isPaused;
 
         //Set the Pause Menu

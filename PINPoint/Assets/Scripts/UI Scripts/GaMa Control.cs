@@ -9,12 +9,26 @@ public class GaMaControl : MonoBehaviour
 
     public static GaMaControl Instance { get { return _instance; } }
 
-    public GameObject pause, lose, contracts, settings, load;
+
+    public GameObject pause, lose, contracts, settings, load, playerUI;
+
+    //Money that is CURRENTLY in the player's posession
+    public int playerMoney;
+
+    //Money that the player can win in the level
+    public int levelMoney;
+    int startMoney;
+
+    public bool targetHit = false;
+    public bool levelFailed;
 
     private Scene restartScene;
 
     public float boTimer;
 
+    /// <summary>
+    /// Make sure there is one one Game Manager Instance
+    /// </summary>
     private void Awake()
     {
         //Make sure this is the only Game Manager in the Scene
@@ -29,6 +43,11 @@ public class GaMaControl : MonoBehaviour
 
         //Keep this object even when changing scenes
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        startMoney = levelMoney;
     }
 
     #region Button Functions
@@ -48,9 +67,14 @@ public class GaMaControl : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
+        
+
         restartScene = SceneManager.GetActiveScene();
 
         BlackOut();
+
+        levelMoney = startMoney;
+        playerUI.gameObject.GetComponent<GameUIControl>().ResetTime();
 
         SceneManager.LoadSceneAsync(restartScene.name);
 
@@ -67,6 +91,7 @@ public class GaMaControl : MonoBehaviour
             Pause.isPaused = false;
         }
 
+        levelFailed = false;
     }
 
     /// <summary>
@@ -84,5 +109,19 @@ public class GaMaControl : MonoBehaviour
         yield return new WaitForSeconds(boTimer);
         load.SetActive(false);
     }
+    #endregion
+
+    #region Menu Calls
+    public void Fail()
+    {
+        levelFailed = true;
+
+        lose.SetActive(true);
+        Time.timeScale = 1f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+
     #endregion
 }
