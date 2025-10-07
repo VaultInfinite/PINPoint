@@ -12,12 +12,12 @@ public class GameUIControl : MonoBehaviour
     /// </summary>
     #region Timer Variables
     [SerializeField]
-    private TextMeshProUGUI payDisplay, timeDisplay;
+    public TextMeshProUGUI payDisplay, timeDisplay;
 
     //Timer Variables
     private float min, sec, mSec, elapsedTime;
 
-    Text timer;
+    public string timer;
 
     //Money Variables
 
@@ -46,8 +46,11 @@ public class GameUIControl : MonoBehaviour
         mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
     
         //Display UI
-        timeDisplay.text = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
-        payDisplay.text = "$" + GaMaControl.Instance.levelMoney;
+        timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
+
+
+        timeDisplay.text = timer;
+        payDisplay.text = "$" + GaMaControl.Instance.levelMoney.ToString("0,000,000");
     }
 
     /// <summary>
@@ -71,6 +74,9 @@ public class GameUIControl : MonoBehaviour
         if (!GaMaControl.Instance.targetHit || !GaMaControl.Instance.levelFailed) StartCoroutine(MoneyCountdown());
     }
 
+    /// <summary>
+    /// Reset time for new playthrough
+    /// </summary>
     public void ResetTime()
     {
         min = 0;

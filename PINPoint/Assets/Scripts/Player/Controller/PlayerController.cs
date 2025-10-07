@@ -78,8 +78,6 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Aiming), aiming);
-
-        aiming.reticle.SetActive(false);
     }
 
     private void Start()

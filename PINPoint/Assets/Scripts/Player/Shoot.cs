@@ -38,6 +38,17 @@ public class Shoot : MonoBehaviour
             {
                 case "Target":
                     Debug.Log("KILL!");
+
+                    //The Target has been hit
+                    GaMaControl.Instance.targetHit = true;
+
+                    //Pull up win screen
+                    GaMaControl.Instance.CashOut();
+
+                    //Destroy the gameobject
+                    //Can be altered to any other die function
+                    Destroy(hit.transform.gameObject);
+
                     break;
 
                 default:
