@@ -10,13 +10,16 @@ public class Pause : MonoBehaviour
 {
     //Variables
     public static bool isPaused = false;
-    public GameObject pauseMenu;
+    private GameObject pauseMenu;
     public PlayerControllerInput input;
 
     private void Awake()
     {
         input = new();
         input.Enable();
+
+        pauseMenu = GaMaControl.Instance.pause;
+
         pauseMenu.SetActive(false);
     }
 
@@ -30,6 +33,8 @@ public class Pause : MonoBehaviour
     /// </summary>
     public void HitPause()
     {
+        if (GaMaControl.Instance.levelFailed) return;
+
         isPaused = !isPaused;
 
         //Set the Pause Menu

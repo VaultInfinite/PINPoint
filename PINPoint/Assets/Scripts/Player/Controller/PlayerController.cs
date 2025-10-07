@@ -57,7 +57,9 @@ public partial class PlayerController : MonoBehaviour
     //For player shooting
     //[SerializeField] Gun gun;
 
-    
+    //bool to eventually stun player if the police drone shoots them
+    public bool stun = false;
+
 
     private void Awake()
     {
@@ -144,6 +146,12 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 GetMovement()
     {
+        //if the player is not stunned, then they can move
+        /*if(stun == false)
+        {
+            //Get inputs
+            return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
+        }*/
         //Get inputs
         return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
     }
@@ -163,7 +171,25 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
-        Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        //if the player isn't stunned, then they can move
+        if(stun == false)
+        {
+            Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            float product = Vector3.Dot(moveDirection, velocity);
+            float accel = acceleration * Time.fixedDeltaTime;
+            if (product + accel > maxSpeed)
+            {
+                accel = maxSpeed - product;
+            }
+            Vector3 newVelocity = velocity + moveDirection * accel;
+
+            //Debug.Log(newVelocity.magnitude);
+
+            newVelocity.y = rb.velocity.y;
+            rb.velocity = newVelocity;
+        }
+        
+        /*Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         float product = Vector3.Dot(moveDirection, velocity);
         float accel = acceleration * Time.fixedDeltaTime;
         if (product + accel > maxSpeed)
@@ -175,7 +201,7 @@ public partial class PlayerController : MonoBehaviour
         //Debug.Log(newVelocity.magnitude);
 
         newVelocity.y = rb.velocity.y;
-        rb.velocity = newVelocity;
+        rb.velocity = newVelocity;*/
     }
 
     private void OnTriggerEnter(Collider other)
@@ -191,5 +217,20 @@ public partial class PlayerController : MonoBehaviour
             DeathFloor deathFloor = FindAnyObjectByType<DeathFloor>();
             deathFloor.Checkpoint(respawn);
         }
+        if (other.gameObject.tag == "Projectile")
+        {
+            //stun = true;
+            Debug.Log("Stun is true.");
+            StartCoroutine(Stunned());
+            //stun = false;
+        }
+    }
+
+    //time the player will be stunned for when hit by police drone
+    public IEnumerator Stunned()
+    {
+        stun = true;
+        yield return new WaitForSeconds(3f);
+        stun = false;
     }
 }

@@ -8,11 +8,18 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     //Variables
-    public Transform FirePos;
+    private Transform FirePos;
+    private Camera cam;
     private bool canShoot = true;
-    public float shootCooldown;
 
-    
+    [SerializeField]
+    private float shootCooldown;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+        FirePos = Camera.main.transform;
+    }
 
     //Shoot the bullet
     public void Shooting()
@@ -20,26 +27,25 @@ public class Shoot : MonoBehaviour
         //Check if can shoot
         if (!canShoot) return;
 
+        //Set Shoot to false
+        canShoot = false;
+
+
         RaycastHit hit;
-        if (Physics.Raycast(FirePos.position, FirePos.forward, out hit, 100))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
         {
-            //Set Shoot to false
-            canShoot = false;
-
-            switch (hit.collider.gameObject.tag)
+            switch (hit.transform.gameObject.tag)
             {
-                default:
-                    //Don't do anything
-                    Debug.DrawRay(FirePos.position, FirePos.forward * 100, Color.yellow);
-                    return;
-
                 case "Target":
-                    Debug.Log("Take the shot juju!");
-                    Debug.DrawRay(FirePos.position, FirePos.forward * 100, Color.red);
+                    Debug.Log("KILL!");
+                    break;
+
+                default:
+
+                    //Do Nothing
 
                     break;
             }
-            
         }
 
         //Call timer
