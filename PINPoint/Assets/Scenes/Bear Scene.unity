@@ -5131,7 +5131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   payDisplay: {fileID: 784357993}
   timeDisplay: {fileID: 666561059}
-  interest: 1
+  timer: 
+  interest: 100
   moneyCD: 1
 --- !u!1 &930866790
 GameObject:
@@ -7433,10 +7434,13 @@ MonoBehaviour:
   settings: {fileID: 0}
   load: {fileID: 1674253218}
   playerUI: {fileID: 928530046}
+  reticle: {fileID: 1028623836}
   winMoney: {fileID: 1697272006}
   winTime: {fileID: 2142442403}
+  loseMoney: {fileID: 1148301138}
+  loseTime: {fileID: 930866792}
   playerMoney: 0
-  levelMoney: 500
+  levelMoney: 99999999
   targetHit: 0
   levelFailed: 0
   transTimer: 0.5

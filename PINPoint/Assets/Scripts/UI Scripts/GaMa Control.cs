@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GaMaControl : MonoBehaviour
 {
-    private static GaMaControl _instance;
+    private static GaMaControl instance;
 
-    public static GaMaControl Instance { get { return _instance; } }
+    public static GaMaControl Instance { get { return instance; } }
 
     [Header("UI GameObjects")]
     public GameObject pause;
@@ -21,8 +21,15 @@ public class GaMaControl : MonoBehaviour
     public GameObject playerUI;
     public GameObject reticle;
 
+    [Header("UI Text")]
     [SerializeField]
-    TextMeshProUGUI winMoney, winTime, loseMoney, loseTime;
+    private TextMeshProUGUI winMoney;
+    [SerializeField]
+    private TextMeshProUGUI winTime;
+    [SerializeField]
+    private TextMeshProUGUI loseMoney;
+    [SerializeField]
+    private TextMeshProUGUI loseTime;
 
 
 
@@ -32,7 +39,7 @@ public class GaMaControl : MonoBehaviour
 
     //Money that the player can win in the level
     public int levelMoney;
-    int startMoney;
+    private int startMoney;
 
     [Header("Play State")]
     public bool targetHit = false;
@@ -41,7 +48,8 @@ public class GaMaControl : MonoBehaviour
     [Header("Scene Transition")]
     public float transTimer;
     private Scene restartScene;
-    
+
+
 
     /// <summary>
     /// Make sure there is one one Game Manager Instance
@@ -112,7 +120,7 @@ public class GaMaControl : MonoBehaviour
             Pause.isPaused = false;
         }
 
-        
+        //Time Flows again
         levelFailed = false;
         targetHit = false;
     }

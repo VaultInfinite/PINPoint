@@ -17,6 +17,10 @@ public class GameUIControl : MonoBehaviour
     //Timer Variables
     private float min, sec, mSec, elapsedTime;
 
+    //For the money
+    float actionTime;
+    float period = .01f;
+
     public string timer;
 
     //Money Variables
@@ -29,11 +33,7 @@ public class GameUIControl : MonoBehaviour
     float moneyCD;
     #endregion
 
-    private void Start()
-    {
-        StartCoroutine(MoneyCountdown());
-    }
-
+  
     private void Update()
     {
         //If the target has been hit, stop time
@@ -44,34 +44,33 @@ public class GameUIControl : MonoBehaviour
         min = Mathf.FloorToInt(elapsedTime/60);
         sec = Mathf.FloorToInt(elapsedTime%60);
         mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
-    
+
+        //Decrease Money
+        MoneyInterval();
+
         //Display UI
         timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
-
 
         timeDisplay.text = timer;
         payDisplay.text = "$" + GaMaControl.Instance.levelMoney.ToString("0,000,000");
     }
 
-    /// <summary>
-    /// Removes the potential money reward at certain intervals
-    /// </summary>
-    IEnumerator MoneyCountdown()
+    void MoneyInterval()
     {
-        yield return new WaitForSeconds(moneyCD);
-
+        //Check if there is enough money
         if (GaMaControl.Instance.levelMoney == 0)
         {
             GaMaControl.Instance.Fail();
         }
+        //Decrease money
         else
         {
-            GaMaControl.Instance.levelMoney -= interest;
+            if (Time.time > actionTime)
+            {
+                actionTime += period;
+                GaMaControl.Instance.levelMoney -= interest;
+            }
         }
-
-        //As long as the target has NOT been hit OR if player hasn't failed
-        //Continue loop
-        if (!GaMaControl.Instance.targetHit || !GaMaControl.Instance.levelFailed) StartCoroutine(MoneyCountdown());
     }
 
     /// <summary>
