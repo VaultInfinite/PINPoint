@@ -16,6 +16,7 @@ public class GaMaControl : MonoBehaviour
     public GameObject lose;
     public GameObject win;
     public GameObject contracts;
+    public GameObject equipment;
     public GameObject settings;
     public GameObject load;
     public GameObject playerUI;
@@ -23,13 +24,15 @@ public class GaMaControl : MonoBehaviour
 
     [Header("UI Text")]
     [SerializeField]
-    private TextMeshProUGUI winMoney;
+    private TextMeshProUGUI winMoney; //How much money was rewarded after WINNING the level
     [SerializeField]
-    private TextMeshProUGUI winTime;
+    private TextMeshProUGUI winTime; //How much time passed before level was completed
     [SerializeField]
-    private TextMeshProUGUI loseMoney;
+    private TextMeshProUGUI loseMoney; //How much money was rewarded after LOSING the level
     [SerializeField]
-    private TextMeshProUGUI loseTime;
+    private TextMeshProUGUI loseTime; //How much time passed before the level was lost
+    [SerializeField]
+    private TextMeshProUGUI shopCash; //Display player cash in shop
 
 
 
@@ -48,6 +51,7 @@ public class GaMaControl : MonoBehaviour
     [Header("Scene Transition")]
     public float transTimer;
     private Scene restartScene;
+    //public int levelNum;
 
 
 
@@ -57,13 +61,13 @@ public class GaMaControl : MonoBehaviour
     private void Awake()
     {
         //Make sure this is the only Game Manager in the Scene
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            _instance = this;
+            instance = this;
         }
 
         //Keep this object even when changing scenes
@@ -78,14 +82,47 @@ public class GaMaControl : MonoBehaviour
     #region Button Functions
     public void CallContractsUI()
     {
+        //Due to only being accessable in the contracts menu, disable other menus
         contracts.SetActive(true);
+        settings.SetActive(false);
+        equipment.SetActive(false);
     }
 
     //Pulls up the settings UI
     public void CallSettingsUI()
     {
+        //Due to only being accessable in the contracts menu, disable other menus
+        contracts.SetActive(false);
         settings.SetActive(true);
+        equipment.SetActive(false);
     }
+
+    //Calls the shop UI in the menu
+    public void CallEquipmentUI()
+    {
+        //Due to only being accessable in the contracts menu, disable other menus
+        contracts.SetActive(false);
+        settings.SetActive(false);
+        equipment.SetActive(true);
+
+        shopCash.text = "$" + playerMoney.ToString("0,000,000");
+        
+    }
+
+    public void GoToLevel(int levelNum)
+    {
+        BlackOut();
+
+        ResetVariables();
+
+        //Turn off Contracts, Settings, and Equipment UI
+        contracts.SetActive(false);
+        settings.SetActive(false);
+        equipment.SetActive(false);
+
+        SceneManager.LoadSceneAsync(levelNum);
+    }
+
 
     /// <summary>
     /// Restarts the Level
@@ -105,9 +142,7 @@ public class GaMaControl : MonoBehaviour
         //Load Scene
         SceneManager.LoadSceneAsync(restartScene.name);
 
-        //Turn Off UI
-        lose.SetActive(false);
-        win.SetActive(false);
+        ResetVariables();
 
         //Rough Fix of the Pause Menu
         //Prevents it from bugging out
@@ -119,6 +154,13 @@ public class GaMaControl : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Pause.isPaused = false;
         }
+    }
+
+    private void ResetVariables()
+    {
+        //Turn Off UI
+        lose.SetActive(false);
+        win.SetActive(false);
 
         //Time Flows again
         levelFailed = false;
@@ -152,7 +194,7 @@ public class GaMaControl : MonoBehaviour
         levelFailed = true;
 
         //Change UI
-        loseMoney.text = "$" + levelMoney.ToString();
+        loseMoney.text = "$" + levelMoney.ToString("0,000,000");
         loseTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
 
         //Pull up Lose Screen
@@ -175,7 +217,7 @@ public class GaMaControl : MonoBehaviour
         playerMoney += levelMoney;
 
         //Change UI
-        winMoney.text = "$" + levelMoney.ToString();
+        winMoney.text = "$" + levelMoney.ToString("0,000,000");
         winTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
 
         //Pull up win menu

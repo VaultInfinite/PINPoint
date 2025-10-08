@@ -19,7 +19,6 @@ public class GameUIControl : MonoBehaviour
 
     //For the money
     float actionTime;
-    float period = .01f;
 
     public string timer;
 
@@ -29,8 +28,6 @@ public class GameUIControl : MonoBehaviour
 
     [SerializeField]
     private int interest;
-    [SerializeField]
-    float moneyCD;
     #endregion
 
   
@@ -65,9 +62,8 @@ public class GameUIControl : MonoBehaviour
         //Decrease money
         else
         {
-            if (Time.time > actionTime)
+            if (Time.deltaTime > actionTime)
             {
-                actionTime += period;
                 GaMaControl.Instance.levelMoney -= interest;
             }
         }
