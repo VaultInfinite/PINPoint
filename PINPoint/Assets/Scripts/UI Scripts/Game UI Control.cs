@@ -55,7 +55,7 @@ public class GameUIControl : MonoBehaviour
     void MoneyInterval()
     {
         //Check if there is enough money
-        if (GaMaControl.Instance.levelMoney == 0)
+        if (GaMaControl.Instance.levelMoney <= 0)
         {
             GaMaControl.Instance.Fail();
         }
