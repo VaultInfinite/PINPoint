@@ -40,11 +40,6 @@ public partial class PlayerController
                 player.SetState<Crouch>();
             }
 
-            if (player.input.Movement.Aim.IsPressed())
-            {
-                player.SetState<Aiming>();
-            }
-
             if (!player.grounded)
             {
                 player.SetState<Air>();

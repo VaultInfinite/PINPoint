@@ -39,11 +39,6 @@ public partial class PlayerController
                 player.SetState<Jump>();
             }
 
-            if (player.input.Movement.Aim.IsPressed())
-            {
-                player.SetState<Aiming>();
-            }
-
             if (!player.grounded)
             {
                 player.SetState<Air>();

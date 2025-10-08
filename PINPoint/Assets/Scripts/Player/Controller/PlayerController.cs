@@ -44,7 +44,6 @@ public partial class PlayerController : MonoBehaviour
     public Air air;
     public WallRunning wall;
     public Gliding gliding;
-    public Aiming aiming;
     private readonly Dictionary<Type, State> _states = new();
 
     private Shoot sniper;
@@ -80,9 +79,6 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
-        _states.Add(typeof(Aiming), aiming);
-
-        //aiming.reticle.SetActive(false);
 
         sniper = gameObject.GetComponent<Shoot>();
         grapple = gameObject.GetComponent<Grappling>();
@@ -116,6 +112,11 @@ public partial class PlayerController : MonoBehaviour
         {
             sniper.enabled = false;
             grapple.enabled = true;
+        }
+
+        if (input.Movement.Aim.IsPressed())
+        {
+            shootScr.isAiming = true;
         }
 
         //Check if the player is touching the ground

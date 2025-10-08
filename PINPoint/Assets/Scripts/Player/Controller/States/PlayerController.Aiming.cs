@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public partial class PlayerController
 {
+    /*
     [Serializable]
     public class Aiming : State
     {
@@ -75,4 +76,5 @@ public partial class PlayerController
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetView, Time.deltaTime * zoomSpeed);
         }
     }
+    */
 }

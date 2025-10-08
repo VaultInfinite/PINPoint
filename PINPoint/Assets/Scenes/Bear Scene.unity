@@ -3926,12 +3926,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644920207}
   m_CullTransparentMesh: 1
---- !u!20 &658360015 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4909722018506090555, guid: ba8d91f477f53af47ac4af82c83ca54b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3198032699783989257}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &658900007
 GameObject:
   m_ObjectHideFlags: 0
@@ -6069,6 +6063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   payDisplay: {fileID: 784357993}
   timeDisplay: {fileID: 666561059}
+  weaponDisplay: {fileID: 0}
   timer: 
   interest: 12
 --- !u!1 &930866790
@@ -13001,32 +12996,13 @@ Transform:
   - {fileID: 867367746}
   m_Father: {fileID: 1102990345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1945554026 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
+--- !u!114 &1945554031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 789659434168861328, guid: ba8d91f477f53af47ac4af82c83ca54b,
     type: 3}
   m_PrefabInstance: {fileID: 3198032699783989257}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1945554029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945554026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootCooldown: 1
---- !u!114 &1945554031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945554026}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11f7e1b3ea95b754fa0cdf4278e6bae3, type: 3}
@@ -15146,148 +15122,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: freeze
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: shootScr
-      value: 
-      objectReference: {fileID: 1945554029}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.speed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: jump.speed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.gravity
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.airMulti
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: crouch.speed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: maxSpeedLimit
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: running.speed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: walking.speed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: aiming.camZoom
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: aiming.reticle
-      value: 
-      objectReference: {fileID: 1028623836}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.glideSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.glideTimer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: jump.jumpForce
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: aiming.playerCam
-      value: 
-      objectReference: {fileID: 658360015}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: aiming.zoomSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: air.maxFallSpeed
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: crouch.crouchScaleY
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[0].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[1].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[0].outSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: speedCurve.m_Curve.Array.data[1].outSlope
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1945554029}
-    - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1945554031}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba8d91f477f53af47ac4af82c83ca54b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
