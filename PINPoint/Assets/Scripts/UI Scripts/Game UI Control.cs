@@ -12,7 +12,7 @@ public class GameUIControl : MonoBehaviour
     /// </summary>
     #region Timer Variables
     [SerializeField]
-    public TextMeshProUGUI payDisplay, timeDisplay;
+    private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay;
 
     //Timer Variables
     private float min, sec, mSec, elapsedTime;
