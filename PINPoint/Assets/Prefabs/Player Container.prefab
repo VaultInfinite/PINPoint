@@ -218,10 +218,10 @@ MonoBehaviour:
     maxGlideTime: 3.5
   aiming:
     playerCam: {fileID: 0}
-    camZoom: 0
+    camZoom: 10
     deZoom: 0
     isAiming: 0
-    zoomSpeed: 0
+    zoomSpeed: 10
     reticle: {fileID: 0}
 --- !u!114 &8068283405148292497
 MonoBehaviour:
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715836088934206107}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ee4c55319966d4083a5bd7c2c9a777, type: 3}
   m_Name: 
