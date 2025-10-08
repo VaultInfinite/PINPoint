@@ -13,11 +13,9 @@ GameObject:
   - component: {fileID: 2385179720791068542}
   - component: {fileID: 7303076335600652044}
   - component: {fileID: 8147905177628162496}
-  - component: {fileID: 7910514782556280425}
   - component: {fileID: 6317267148356265128}
   - component: {fileID: 8068283405148292497}
   - component: {fileID: 5272038183968401200}
-  - component: {fileID: 789659434168861328}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -141,24 +139,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &7910514782556280425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715836088934206107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootCooldown: 1
-  player: {fileID: 6317267148356265128}
-  camZoom: 20
-  deZoom: 80
-  isAiming: 0
-  zoomSpeed: 20
 --- !u!114 &6317267148356265128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +160,7 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 8
-  shootScr: {fileID: 7910514782556280425}
+  shootScr: {fileID: 0}
   walking:
     maxSpeed: 10
     acceleration: 75
@@ -188,7 +168,7 @@ MonoBehaviour:
     maxSpeed: 22
     acceleration: 100
   jump:
-    jumpForce: 50
+    jumpForce: 22.5
     direction: {x: 0, y: 0, z: 0}
   crouch:
     maxSpeed: 5
@@ -198,7 +178,7 @@ MonoBehaviour:
     maxSpeed: 24
     acceleration: 25
     maxFallSpeed: 75
-    gravity: 30
+    gravity: 36
     doubleJumped: 0
   wall:
     maxSpeed: 22
@@ -236,7 +216,13 @@ MonoBehaviour:
     glideTurn: 10
     glideDecline: 0.75
     maxGlideTime: 3.5
-  stun: 0
+  aiming:
+    playerCam: {fileID: 0}
+    camZoom: 10
+    deZoom: 0
+    isAiming: 0
+    zoomSpeed: 10
+    reticle: {fileID: 0}
 --- !u!114 &8068283405148292497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +230,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715836088934206107}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ee4c55319966d4083a5bd7c2c9a777, type: 3}
   m_Name: 
@@ -358,18 +344,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &789659434168861328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715836088934206107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11f7e1b3ea95b754fa0cdf4278e6bae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2783884035799311060
 GameObject:
   m_ObjectHideFlags: 0
