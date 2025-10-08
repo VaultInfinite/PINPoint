@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7303076335600652044}
   - component: {fileID: 8147905177628162496}
   - component: {fileID: 6317267148356265128}
+  - component: {fileID: 2604340745770524506}
   - component: {fileID: 8068283405148292497}
   - component: {fileID: 5272038183968401200}
   m_Layer: 7
@@ -216,13 +217,25 @@ MonoBehaviour:
     glideTurn: 10
     glideDecline: 0.75
     maxGlideTime: 3.5
-  aiming:
-    playerCam: {fileID: 0}
-    camZoom: 10
-    deZoom: 0
-    isAiming: 0
-    zoomSpeed: 10
-    reticle: {fileID: 0}
+  stun: 0
+--- !u!114 &2604340745770524506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715836088934206107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootCooldown: 2
+  player: {fileID: 0}
+  camZoom: 0
+  deZoom: 0
+  isAiming: 0
+  zoomSpeed: 0
 --- !u!114 &8068283405148292497
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,6 +39,15 @@ public class Shoot : MonoBehaviour
     {
         if (Pause.isPaused) return;
 
+        if (player.input.Movement.Aim.IsPressed())
+        {
+            isAiming = true;
+        }
+        if (!player.input.Movement.Aim.IsPressed())
+        {
+            isAiming = false;
+        }
+
         //Zoom In
         if (isAiming)
         {

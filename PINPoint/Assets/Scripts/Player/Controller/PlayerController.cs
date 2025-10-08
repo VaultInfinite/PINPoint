@@ -29,9 +29,6 @@ public partial class PlayerController : MonoBehaviour
     public LayerMask Ground;
     bool grounded;
 
-    [Header("Shooting")]
-    public Shoot shootScr;
-
 
     #endregion
 
@@ -114,11 +111,6 @@ public partial class PlayerController : MonoBehaviour
             grapple.enabled = true;
         }
 
-        if (input.Movement.Aim.IsPressed())
-        {
-            shootScr.isAiming = true;
-        }
-
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 
@@ -164,12 +156,6 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     public Vector3 GetMovement()
     {
-        //if the player is not stunned, then they can move
-        /*if(stun == false)
-        {
-            //Get inputs
-            return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
-        }*/
         //Get inputs
         return new Vector3(input.Movement.Movement.ReadValue<Vector2>().x, 0, input.Movement.Movement.ReadValue<Vector2>().y);
     }
