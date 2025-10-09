@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class Pause : MonoBehaviour
 {
     //Variables
-    public static bool isPaused = false;
+    public static bool isPaused = true;
     private GameObject pauseMenu;
     public PlayerControllerInput input;
 
@@ -17,10 +17,13 @@ public class Pause : MonoBehaviour
     {
         input = new();
         input.Enable();
+    }
 
+    private void Start()
+    {
         pauseMenu = GaMaControl.Instance.pause;
 
-        pauseMenu.SetActive(false);
+        //pauseMenu.SetActive(false);
     }
 
     private void Update()

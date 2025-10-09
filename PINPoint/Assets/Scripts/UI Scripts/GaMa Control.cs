@@ -73,7 +73,7 @@ public class GaMaControl : MonoBehaviour
         }
 
         //Keep this object even when changing scenes
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -110,6 +110,14 @@ public class GaMaControl : MonoBehaviour
 
         shopCash.text = "$" + playerMoney.ToString("0,000,000");
         
+    }
+
+    public void ResumeMenu()
+    {
+        HideMouse();
+        Time.timeScale = 1;
+        Pause.isPaused = false;
+        pause.SetActive(false );
     }
 
     public void GoToLevel(int levelNum)
@@ -156,6 +164,12 @@ public class GaMaControl : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Pause.isPaused = false;
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.LogAssertion("Game Quit");
     }
 
     private void ResetVariables()
@@ -236,6 +250,13 @@ public class GaMaControl : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    //Hide cursor and lock mouse to screen
+    private void HideMouse()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void NPCList()
