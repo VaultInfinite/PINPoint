@@ -2784,11 +2784,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 8646785893516859849, guid: 26e1d46806bedf24985aec1e6aef838f,
-        type: 3}
-      propertyPath: NPCS
-      value: 
-      objectReference: {fileID: 1489138723}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9627,7 +9622,7 @@ PrefabInstance:
     - target: {fileID: 6212856911896769584, guid: 61525d89beb47f14cb7d55af4af4246a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.400932
+      value: -16.384
       objectReference: {fileID: 0}
     - target: {fileID: 6212856911896769584, guid: 61525d89beb47f14cb7d55af4af4246a,
         type: 3}
