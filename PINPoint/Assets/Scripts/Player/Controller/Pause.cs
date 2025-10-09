@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class Pause : MonoBehaviour
 {
     //Variables
-    public static bool isPaused = true;
+    public static bool isPaused = false;
     private GameObject pauseMenu;
     public PlayerControllerInput input;
 

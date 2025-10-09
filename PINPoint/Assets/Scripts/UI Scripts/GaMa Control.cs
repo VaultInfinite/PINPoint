@@ -73,7 +73,7 @@ public class GaMaControl : MonoBehaviour
         }
 
         //Keep this object even when changing scenes
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
