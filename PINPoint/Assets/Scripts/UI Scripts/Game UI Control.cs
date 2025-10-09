@@ -12,7 +12,7 @@ public class GameUIControl : MonoBehaviour
     /// </summary>
     #region Timer Variables
     [SerializeField]
-    private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay;
+    private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay, targetPrice;
 
     //Timer Variables
     private float min, sec, mSec, elapsedTime;
@@ -30,7 +30,19 @@ public class GameUIControl : MonoBehaviour
     private int interest;
     #endregion
 
-  
+    private PlayerController player;
+
+    private void Awake()
+    {
+        player = FindObjectOfType<PlayerController>();
+    }
+
+    private void Start()
+    {
+        targetPrice.text = "$" + GaMaControl.Instance.levelMoney.ToString("00,000,000");
+    }
+
+
     private void Update()
     {
         //If the target has been hit, stop time
@@ -49,7 +61,21 @@ public class GameUIControl : MonoBehaviour
         timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
 
         timeDisplay.text = timer;
-        payDisplay.text = "$" + GaMaControl.Instance.levelMoney.ToString("0,000,000");
+        payDisplay.text = "$" + GaMaControl.Instance.levelMoney.ToString("00,000,000");
+
+
+        //TEMP WEAPON DISPLAY IMPLEMENTATION
+        if (player != null)
+        {
+            if (player.gameObject.GetComponent<Shoot>().isActiveAndEnabled)
+            {
+                weaponDisplay.text = "Sniper";
+            }
+            if (player.gameObject.GetComponent<Grappling>().isActiveAndEnabled)
+            {
+                weaponDisplay.text = "Grappling Hook";
+            }
+        }
     }
 
     void MoneyInterval()

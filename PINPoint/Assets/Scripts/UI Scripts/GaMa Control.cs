@@ -11,6 +11,10 @@ public class GaMaControl : MonoBehaviour
 
     public static GaMaControl Instance { get { return instance; } }
 
+    //Target Variables
+    public List<NPC> npcs = new List<NPC>();
+    public Camera targetCamera;
+
     [Header("UI GameObjects")]
     public GameObject pause;
     public GameObject lose;
@@ -53,8 +57,6 @@ public class GaMaControl : MonoBehaviour
     private Scene restartScene;
     //public int levelNum;
 
-
-
     /// <summary>
     /// Make sure there is one one Game Manager Instance
     /// </summary>
@@ -71,12 +73,13 @@ public class GaMaControl : MonoBehaviour
         }
 
         //Keep this object even when changing scenes
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         startMoney = levelMoney;
+        NPCList();
     }
 
     #region Button Functions
@@ -129,8 +132,6 @@ public class GaMaControl : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
-        //Get current scene
-        restartScene = SceneManager.GetActiveScene();
 
         //Apply Black Screen to hide level
         BlackOut();
@@ -140,9 +141,10 @@ public class GaMaControl : MonoBehaviour
         playerUI.gameObject.GetComponent<GameUIControl>().ResetTime();
 
         //Load Scene
-        SceneManager.LoadSceneAsync(restartScene.name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         ResetVariables();
+        npcs.Clear();
 
         //Rough Fix of the Pause Menu
         //Prevents it from bugging out
@@ -234,6 +236,32 @@ public class GaMaControl : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void NPCList()
+    {
+        bool hasTarget = false;
+
+        for (int index = 0; index < npcs.Count; index++)
+        {
+            Debug.Log("This line activated");
+
+            float randomNumber = Random.Range(0f, 1f);
+
+            if (randomNumber >= 0.9f && !hasTarget || index >= npcs.Count && !hasTarget)
+            {
+                npcs[index].isTarget = true;
+                npcs[index].targetCamera = targetCamera;
+                Debug.Log("target assigned at" + npcs[index].gameObject);
+                npcs[index].gameObject.tag = "Target";
+
+                hasTarget = true;
+            }
+            if (npcs[index].isTarget == false)
+            {
+                npcs[index].targetCamera = null;
+            }
+        }
     }
 
     #endregion

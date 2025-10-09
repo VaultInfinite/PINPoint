@@ -29,6 +29,12 @@ public partial class PlayerController : MonoBehaviour
     public LayerMask Ground;
     bool grounded;
 
+    [Header("Objects")]
+    [SerializeField]
+    private GameObject sniperOBJ;
+    //Used in grappling script to draw line.
+    public GameObject grappleOBJ;
+
 
     #endregion
 
@@ -103,12 +109,17 @@ public partial class PlayerController : MonoBehaviour
         if (input.Movement.SelectSniper.IsPressed())
         {
             sniper.enabled = true;
+            sniperOBJ.SetActive(true);
             grapple.enabled = false;
+            grappleOBJ.SetActive(false);
+
         }
         if (input.Movement.SelectGrapple.IsPressed())
         {
             sniper.enabled = false;
+            sniperOBJ.SetActive(false);
             grapple.enabled = true;
+            grappleOBJ.SetActive(true);
         }
 
         //Check if the player is touching the ground

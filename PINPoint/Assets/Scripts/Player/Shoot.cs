@@ -86,9 +86,9 @@ public class Shoot : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
         {
-            switch (hit.transform.gameObject.tag)
+            switch (hit.transform.gameObject.GetComponent<NPC>().isTarget)
             {
-                case "Target":
+                case true:
                     Debug.Log("KILL!");
 
                     //The Target has been hit
@@ -97,15 +97,11 @@ public class Shoot : MonoBehaviour
                     //Pull up win screen
                     GaMaControl.Instance.CashOut();
 
-                    //Destroy the gameobject
-                    //Can be altered to any other die function
-                    Destroy(hit.transform.gameObject);
-
                     break;
 
                 default:
 
-                    //Do Nothing
+                    GaMaControl.Instance.Fail();
 
                     break;
             }
