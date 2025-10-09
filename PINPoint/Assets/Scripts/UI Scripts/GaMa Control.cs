@@ -81,8 +81,8 @@ public class GaMaControl : MonoBehaviour
     private void Start()
     {
         startMoney = levelMoney;
-        NPCList();
         StartCoroutine(TutorialDisplay());
+        StartCoroutine(TargetSelect());
     }
 
     #region Button Functions
@@ -271,6 +271,12 @@ public class GaMaControl : MonoBehaviour
     {
         yield return new WaitForSeconds(18f);
         tutorial.SetActive(false);
+    }
+
+    private IEnumerator TargetSelect()
+    {
+        yield return new WaitForSeconds(0.5f);
+        NPCList();
     }
     #endregion
 }
