@@ -2601,7 +2601,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1945554031}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: HitPause
         m_Mode: 1
@@ -8852,7 +8852,7 @@ MonoBehaviour:
   loseTime: {fileID: 930866792}
   shopCash: {fileID: 896430957}
   playerMoney: 0
-  levelMoney: 5100000
+  levelMoney: 1000000
   targetHit: 0
   levelFailed: 0
   transTimer: 0.5
@@ -12996,18 +12996,6 @@ Transform:
   - {fileID: 867367746}
   m_Father: {fileID: 1102990345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1945554031 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 789659434168861328, guid: ba8d91f477f53af47ac4af82c83ca54b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3198032699783989257}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11f7e1b3ea95b754fa0cdf4278e6bae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1955738282
 GameObject:
   m_ObjectHideFlags: 0
@@ -13574,7 +13562,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1945554031}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Pause, Assembly-CSharp
         m_MethodName: HitPause
         m_Mode: 1

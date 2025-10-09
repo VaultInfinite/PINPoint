@@ -193,6 +193,9 @@ public class GaMaControl : MonoBehaviour
         //Variable to stop time & money count
         levelFailed = true;
 
+        //Convert Level Money if negative
+        if (levelMoney <= 0) levelMoney = 0;
+
         //Change UI
         loseMoney.text = "$" + levelMoney.ToString("0,000,000");
         loseTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
