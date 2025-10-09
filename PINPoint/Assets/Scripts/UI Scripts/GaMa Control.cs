@@ -48,7 +48,7 @@ public class GaMaControl : MonoBehaviour
     public int levelMoney;
     private int startMoney;
 
-    [Header("Play State")]
+    [Header("Play State")] //Used in other Gameobjects to determine if they should stay active
     public bool targetHit = false;
     public bool levelFailed;
 

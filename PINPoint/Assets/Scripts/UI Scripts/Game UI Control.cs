@@ -18,7 +18,7 @@ public class GameUIControl : MonoBehaviour
     private float min, sec, mSec, elapsedTime;
 
     //For the money
-    float actionTime;
+    private float actionTime;
 
     public string timer;
 

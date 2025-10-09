@@ -20,10 +20,12 @@ public class Shoot : MonoBehaviour
     private PlayerController player;
 
     [Header("Aiming Variables")]
-    public float camZoom;
-    public float deZoom;
-    public bool isAiming;
-    public float zoomSpeed;
+    [SerializeField]
+    private float camZoom;      //Desired Camera FoV while Aiming
+    private float deZoom;       //Original Camera FoV 
+    private bool isAiming;      //See if aiming
+    [SerializeField]
+    private float zoomSpeed;    //How fast the camera zooms in and out
 
     private void Awake()
     {

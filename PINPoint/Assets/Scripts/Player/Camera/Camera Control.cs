@@ -13,8 +13,8 @@ public class CameraControl : MonoBehaviour
 
     public Transform orientation;
 
-    float xRotation;
-    float yRotation;
+    private float xRotation;
+    private float yRotation;
 
 
     // Start is called before the first frame update
