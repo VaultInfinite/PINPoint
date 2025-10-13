@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LvL1Blockout 1.unity
-    guid: 20a182a2da3ce504286384dd00f8e4ba
+    path: Assets/Scenes/LvL1Official.unity
+    guid: 3c236e30b0d4d8e43973cbcbe82fda5e
   m_configObjects: {}

@@ -19,9 +19,6 @@ public partial class PlayerController
             Vector3 moveDirection = player.GetDirection();
             player.Accelerate(moveDirection, maxSpeed, acceleration);
 
-            //Apply movement to avatar
-            //player.rb.AddForce(moveDirection * additionalSpeed, ForceMode.Force);
-
             //Slow player down when on the ground
             player.rb.drag = player.groundDrag;
         }
@@ -41,11 +38,6 @@ public partial class PlayerController
             if (player.input.Movement.Crouch.IsPressed())
             {
                 player.SetState<Crouch>();
-            }
-
-            if (player.input.Movement.Aim.IsPressed())
-            {
-                player.SetState<Aiming>();
             }
 
             if (!player.grounded)

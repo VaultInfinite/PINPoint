@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public partial class PlayerController
 {
+    /*
     [Serializable]
     public class Aiming : State
     {
@@ -19,7 +20,6 @@ public partial class PlayerController
         public float deZoom;
         public bool isAiming;
         public float zoomSpeed;
-        public GameObject reticle;
 
         public override void OnEnter(PlayerController player)
         {
@@ -37,7 +37,7 @@ public partial class PlayerController
             {
                 CameraMoveEffect(camZoom);
 
-                reticle.SetActive(true);
+                GaMaControl.Instance.reticle.SetActive(true);
             }
 
             //If Shoot button is pressed while fully zoomed in, take the shot!
@@ -51,7 +51,7 @@ public partial class PlayerController
             if (!player.input.Movement.Aim.IsPressed())
             {
                 isAiming = false;
-                reticle.SetActive(false);
+                GaMaControl.Instance.reticle.SetActive(false);
 
                 CameraMoveEffect(deZoom);
 
@@ -76,4 +76,5 @@ public partial class PlayerController
             playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetView, Time.deltaTime * zoomSpeed);
         }
     }
+    */
 }
