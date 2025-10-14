@@ -9,13 +9,13 @@ public class StunControl : MonoBehaviour
 {
     //Variables
     public float stunTimer;         //How long the enemy stays stunned
-    public bool stunned = false;   //Determines behavior
+    public bool isStunned = false;   //Determines behavior
 
     //Stun enemy
     public void Stunned()
     {
         Debug.Log("Im STUNNED");
-        stunned = true;
+        isStunned = true;
         StartCoroutine(StunLength());
     }
 
@@ -26,6 +26,6 @@ public class StunControl : MonoBehaviour
 
         Debug.Log("No Longer Stunned");
 
-        stunned = false;
+        isStunned = false;
     }
 }

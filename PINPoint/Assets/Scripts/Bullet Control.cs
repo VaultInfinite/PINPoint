@@ -28,6 +28,7 @@ public class BulletControl : MonoBehaviour
             case "Enemy":
 
                 Debug.Log("KILL");
+                collision.transform.gameObject.GetComponent<StunControl>().Stunned();
                 Destroy(gameObject);
                 break;
 

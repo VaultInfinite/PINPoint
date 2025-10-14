@@ -2727,6 +2727,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447110022}
   m_CullTransparentMesh: 1
+--- !u!1 &453233663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3198032699783989257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &453233673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453233663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596f8291f7063784f8fc609e414e92e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootForce: 50
+  bullet: {fileID: 3570538437298275617, guid: 12b9d56d6c0478540ae25234a77928b9, type: 3}
 --- !u!1 &471589200
 GameObject:
   m_ObjectHideFlags: 0
@@ -8926,6 +8946,7 @@ MonoBehaviour:
   load: {fileID: 1674253218}
   playerUI: {fileID: 928530046}
   reticle: {fileID: 1028623836}
+  tutorial: {fileID: 0}
   winMoney: {fileID: 1697272006}
   winTime: {fileID: 2142442403}
   loseMoney: {fileID: 1148301138}
@@ -11088,7 +11109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunTimer: 5
-  stunned: 0
+  isStunned: 0
 --- !u!114 &1691449906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15288,7 +15309,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 453233673}
   m_SourcePrefab: {fileID: 100100000, guid: ba8d91f477f53af47ac4af82c83ca54b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

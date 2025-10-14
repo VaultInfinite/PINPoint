@@ -18,6 +18,7 @@ public class Shoot : MonoBehaviour
     private float shootCooldown;
     [SerializeField]
     private PlayerController player;
+    private StunShoot stunShootScr;
 
     [Header("Aiming Variables")]
     public float camZoom;
@@ -33,6 +34,7 @@ public class Shoot : MonoBehaviour
 
         //Get Camera FoV
         deZoom = Mathf.Round(cam.fieldOfView);
+        stunShootScr = GetComponent<StunShoot>();
     }
 
     private void Update()

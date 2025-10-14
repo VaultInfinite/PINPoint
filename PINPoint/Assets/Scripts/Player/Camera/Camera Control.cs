@@ -21,10 +21,10 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         //Hide Mouse and lock to screen
-        /*
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        */
+        
     }
 
     // Update is called once per frame

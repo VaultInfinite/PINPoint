@@ -23,7 +23,7 @@ public class Pause : MonoBehaviour
     {
         pauseMenu = GaMaControl.Instance.pause;
 
-        //pauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
     }
 
     private void Update()

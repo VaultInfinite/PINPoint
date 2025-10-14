@@ -19,7 +19,6 @@ public class StunShoot : MonoBehaviour
     //Shoot Projectile - Stun
     public void ShootStun()
     {
-
         //Get firing direction
         Vector3 bulletDir = cam.transform.forward;
 
