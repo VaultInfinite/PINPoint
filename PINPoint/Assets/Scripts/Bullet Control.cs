@@ -28,25 +28,27 @@ public class BulletControl : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, rad, transform.forward, out hit, 0.2f))
         {
+            Debug.Log("I hit...");
             switch (hit.transform.gameObject.tag)
             {
                 case "Target":
-
-                    Debug.Log("KILL");
+                    Debug.Log("the Target!");
                     Destroy(gameObject);
                     break;
 
                 case "Ground":
-                    Debug.Log("miss!");
+                    Debug.Log("the ground...");
                     Destroy(gameObject);
                     break;
 
                 case "Enemy":
 
                     //Stun Enemy
-                    Debug.Log("stunning!");
-                    hit.transform.gameObject.transform.GetComponent<StunControl>().Stunned();
+                    Debug.Log("AN ENEMY!");
                     Destroy(gameObject);
+                    gameObject.SetActive(false);
+                    hit.transform.gameObject.transform.GetComponent<StunControl>().Stunned();
+                    
                     break;
 
                 default:

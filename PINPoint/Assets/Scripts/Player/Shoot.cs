@@ -13,15 +13,12 @@ public class Shoot : MonoBehaviour
     private Transform FirePos;
     private Camera cam;
     private bool canShoot = true;
-    public GameObject bullet;
-    private Ray ray;
-    [SerializeField]
-    private float shootForce;
 
     [SerializeField]
     private float shootCooldown;
     [SerializeField]
     private PlayerController player;
+    private StunShoot stunShootScr;
 
     [Header("Aiming Variables")]
     [SerializeField]
@@ -30,8 +27,6 @@ public class Shoot : MonoBehaviour
     private bool isAiming;      //See if aiming
     [SerializeField]
     private float zoomSpeed;    //How fast the camera zooms in and out
-    private bool enemyAim;      //Check if aiming at enemy
-    private bool targetAim;     //Check if aiming at Target
 
     private void Awake()
     {
@@ -41,6 +36,9 @@ public class Shoot : MonoBehaviour
 
         //Get Camera FoV
         deZoom = Mathf.Round(cam.fieldOfView);
+
+        //Get Stun Shoot Script
+        stunShootScr = GetComponent<StunShoot>();
     }
 
     private void Update()
@@ -87,43 +85,15 @@ public class Shoot : MonoBehaviour
         //Check if can shoot
         if (!canShoot) return;
 
-        //Get center screen
-        ray = cam.ViewportPointToRay(new Vector3(.5f, .5f, 0f));
-
         //Set Shoot to false
         canShoot = false;
 
-
-        RaycastHit hit;
-        Vector3 targetPoint = ray.GetPoint(75);
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit))
         {
-            //Check Object's Tag
-            switch (hit.transform.gameObject.tag)
-            {
-                //If there is no tag
-                default:
-                    //Make Aim Variables false;
-                    enemyAim = false;
-                    targetAim = false;
-                    break;
-
-                //If the tag is "Enemy"
-                case "Enemy":
-                    targetAim = false;
-                    Debug.Log("Enemy Hit!");
-                    enemyAim = true;
-                    targetPoint = hit.point;
-                    break;
-            }
-
             switch (hit.transform.gameObject.GetComponent<NPC>().isTarget)
             {
                 case true:
                     Debug.Log("KILL!");
-
-                    //Prevent the bullet from being created
-                    targetAim = true;
 
                     //The Target has been hit
                     GaMaControl.Instance.targetHit = true;
@@ -135,28 +105,14 @@ public class Shoot : MonoBehaviour
 
                 default:
                     //If aiming at an enemy, Do NOT go the the fail screen
-                    if (!enemyAim) GaMaControl.Instance.Fail();
+                    GaMaControl.Instance.Fail();
 
                     break;
             }
         }
 
-
-        //If NOT Aimed at the target but at an Enemy, create bullet
-        if (!targetAim)
-        {
-            //Get firing direction
-            Vector3 bulletDir = targetPoint - cam.transform.position;
-
-            //Create gameObject and store it
-            GameObject currentBullet = Instantiate(bullet, cam.transform.position, Quaternion.identity);
-
-            //Rotate bullet to desired direction
-            currentBullet.transform.forward = bulletDir.normalized;
-
-            //Add force to bullet
-            currentBullet.GetComponent<Rigidbody>().AddForce(bulletDir.normalized * shootForce, ForceMode.Impulse);
-        }
+        stunShootScr.ShootStun();
+        
 
         //Call timer
         StartCoroutine(ShootingCooldown(shootCooldown));
