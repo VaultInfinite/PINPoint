@@ -40,6 +40,18 @@ public class BulletControl : MonoBehaviour
                     Debug.Log("miss!");
                     Destroy(gameObject);
                     break;
+
+                case "Enemy":
+
+                    //Stun Enemy
+                    Debug.Log("stunning!");
+                    hit.transform.gameObject.transform.GetComponent<StunControl>().Stunned();
+                    Destroy(gameObject);
+                    break;
+
+                default:
+                    //Do Nothing
+                    break;
             }
         }
     }
