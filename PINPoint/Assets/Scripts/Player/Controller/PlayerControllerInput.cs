@@ -98,6 +98,24 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select Sniper"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b2e150d-44dc-4fb5-be39-c863f4cc3168"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select Grapple"",
+                    ""type"": ""Button"",
+                    ""id"": ""7fea3c36-b3a8-44fd-95cb-22ef4f200654"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -298,6 +316,28 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e28cdbc-da60-493b-927b-ff1f58b1d011"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select Sniper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0024029-1947-4db0-989b-554b9998e55b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select Grapple"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -314,6 +354,8 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         m_Movement_Shoot = m_Movement.FindAction("Shoot", throwIfNotFound: true);
         m_Movement_Aim = m_Movement.FindAction("Aim", throwIfNotFound: true);
         m_Movement_Pause = m_Movement.FindAction("Pause", throwIfNotFound: true);
+        m_Movement_SelectSniper = m_Movement.FindAction("Select Sniper", throwIfNotFound: true);
+        m_Movement_SelectGrapple = m_Movement.FindAction("Select Grapple", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +425,8 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
     private readonly InputAction m_Movement_Shoot;
     private readonly InputAction m_Movement_Aim;
     private readonly InputAction m_Movement_Pause;
+    private readonly InputAction m_Movement_SelectSniper;
+    private readonly InputAction m_Movement_SelectGrapple;
     public struct MovementActions
     {
         private @PlayerControllerInput m_Wrapper;
@@ -395,6 +439,8 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         public InputAction @Shoot => m_Wrapper.m_Movement_Shoot;
         public InputAction @Aim => m_Wrapper.m_Movement_Aim;
         public InputAction @Pause => m_Wrapper.m_Movement_Pause;
+        public InputAction @SelectSniper => m_Wrapper.m_Movement_SelectSniper;
+        public InputAction @SelectGrapple => m_Wrapper.m_Movement_SelectGrapple;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -428,6 +474,12 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @SelectSniper.started += instance.OnSelectSniper;
+            @SelectSniper.performed += instance.OnSelectSniper;
+            @SelectSniper.canceled += instance.OnSelectSniper;
+            @SelectGrapple.started += instance.OnSelectGrapple;
+            @SelectGrapple.performed += instance.OnSelectGrapple;
+            @SelectGrapple.canceled += instance.OnSelectGrapple;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -456,6 +508,12 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @SelectSniper.started -= instance.OnSelectSniper;
+            @SelectSniper.performed -= instance.OnSelectSniper;
+            @SelectSniper.canceled -= instance.OnSelectSniper;
+            @SelectGrapple.started -= instance.OnSelectGrapple;
+            @SelectGrapple.performed -= instance.OnSelectGrapple;
+            @SelectGrapple.canceled -= instance.OnSelectGrapple;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -483,5 +541,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         void OnShoot(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnSelectSniper(InputAction.CallbackContext context);
+        void OnSelectGrapple(InputAction.CallbackContext context);
     }
 }

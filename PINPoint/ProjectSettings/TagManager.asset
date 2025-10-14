@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Target
   - Projectile
+  - Target Camera
   layers:
   - Default
   - TransparentFX

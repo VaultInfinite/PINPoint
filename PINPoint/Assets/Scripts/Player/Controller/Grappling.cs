@@ -60,7 +60,7 @@ public class Grappling : MonoBehaviour
         }
         if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
         {
-            lineRenderer.SetPosition(1, player.transform.position);
+            lineRenderer.SetPosition(1, player.grappleOBJ.transform.position);
         }
     }
 

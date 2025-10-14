@@ -55,7 +55,6 @@ public partial class PlayerController
             if (player.input.Movement.Aim.IsPressed())
             {
                 ReturnShape(player);
-                player.SetState<Aiming>();
             }
         }
 
