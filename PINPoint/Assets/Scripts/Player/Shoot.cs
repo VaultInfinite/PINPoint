@@ -18,15 +18,12 @@ public class Shoot : MonoBehaviour
     private float shootCooldown;
     [SerializeField]
     private PlayerController player;
-    private StunShoot stunShootScr;
 
     [Header("Aiming Variables")]
-    [SerializeField]
-    private float camZoom;      //Desired Camera FoV while Aiming
-    private float deZoom;       //Original Camera FoV 
-    private bool isAiming;      //See if aiming
-    [SerializeField]
-    private float zoomSpeed;    //How fast the camera zooms in and out
+    public float camZoom;
+    public float deZoom;
+    public bool isAiming;
+    public float zoomSpeed;
 
     private void Awake()
     {
@@ -36,9 +33,6 @@ public class Shoot : MonoBehaviour
 
         //Get Camera FoV
         deZoom = Mathf.Round(cam.fieldOfView);
-
-        //Get Stun Shoot Script
-        stunShootScr = GetComponent<StunShoot>();
     }
 
     private void Update()
@@ -88,31 +82,40 @@ public class Shoot : MonoBehaviour
         //Set Shoot to false
         canShoot = false;
 
+
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit))
         {
-            switch (hit.transform.gameObject.GetComponent<NPC>().isTarget)
+            GameObject hitObject = hit.transform.gameObject;
+
+            if (hitObject.GetComponent<NPC>())
             {
-                case true:
-                    Debug.Log("KILL!");
+                switch (hitObject.GetComponent<NPC>().isTarget)
+                {
+                    case true:
+                        Debug.Log("KILL!");
 
-                    //The Target has been hit
-                    GaMaControl.Instance.targetHit = true;
+                        //The Target has been hit
+                        GaMaControl.Instance.targetHit = true;
 
-                    //Pull up win screen
-                    GaMaControl.Instance.CashOut();
+                        //Pull up win screen
+                        GaMaControl.Instance.CashOut();
 
-                    break;
+                        break;
+                    case false:
+                        GaMaControl.Instance.Fail();
 
-                default:
-                    //If aiming at an enemy, Do NOT go the the fail screen
-                    //GaMaControl.Instance.Fail();
-
-                    break;
+                        break;
+                }
+            }
+            else
+            {
+                GaMaControl.Instance.Fail();
             }
         }
-
-        stunShootScr.ShootStun();
-        
+        else
+        {
+            GaMaControl.Instance.Fail();
+        }
 
         //Call timer
         StartCoroutine(ShootingCooldown(shootCooldown));
