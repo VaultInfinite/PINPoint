@@ -26,6 +26,8 @@ public class GaMaControl : MonoBehaviour
     public GameObject playerUI;
     public GameObject reticle;
 
+    public GameObject tutorial;
+
     [Header("UI Text")]
     [SerializeField]
     private TextMeshProUGUI winMoney; //How much money was rewarded after WINNING the level
@@ -79,7 +81,8 @@ public class GaMaControl : MonoBehaviour
     private void Start()
     {
         startMoney = levelMoney;
-        NPCList();
+        StartCoroutine(TutorialDisplay());
+        StartCoroutine(TargetSelect());
     }
 
     #region Button Functions
@@ -285,5 +288,16 @@ public class GaMaControl : MonoBehaviour
         }
     }
 
+    private IEnumerator TutorialDisplay()
+    {
+        yield return new WaitForSeconds(18f);
+        tutorial.SetActive(false);
+    }
+
+    private IEnumerator TargetSelect()
+    {
+        yield return new WaitForSeconds(0.5f);
+        NPCList();
+    }
     #endregion
 }
