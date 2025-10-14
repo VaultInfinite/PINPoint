@@ -20,51 +20,12 @@ public class BulletControl : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position, rad);
     }
-
-    private void Update()
-    {
-
-        RaycastHit hit;
-
-        if (Physics.SphereCast(transform.position, rad, transform.forward, out hit, 0.2f))
-        {
-            Debug.Log("I hit...");
-            switch (hit.transform.gameObject.tag)
-            {
-                case "Target":
-                    Debug.Log("the Target!");
-                    Destroy(gameObject);
-                    break;
-
-                case "Ground":
-                    Debug.Log("the ground...");
-                    Destroy(gameObject);
-                    break;
-
-                case "Enemy":
-
-                    //Stun Enemy
-                    Debug.Log("AN ENEMY!");
-                    Destroy(gameObject);
-                    gameObject.SetActive(false);
-                    hit.transform.gameObject.transform.GetComponent<StunControl>().Stunned();
-                    
-                    break;
-
-                default:
-                    //Do Nothing
-                    break;
-            }
-        }
-    }
-  
-
-    /*
+    
     void OnTriggerEnter(Collider collision)
     {
         switch (collision.gameObject.tag)
         {
-            case "Target":
+            case "Enemy":
 
                 Debug.Log("KILL");
                 Destroy(gameObject);
@@ -76,7 +37,7 @@ public class BulletControl : MonoBehaviour
                 break;
         }
     }
-    */
+    
 
     IEnumerator DespawnTime(float timer)
     {

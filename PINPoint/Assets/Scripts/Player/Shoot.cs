@@ -105,7 +105,7 @@ public class Shoot : MonoBehaviour
 
                 default:
                     //If aiming at an enemy, Do NOT go the the fail screen
-                    GaMaControl.Instance.Fail();
+                    //GaMaControl.Instance.Fail();
 
                     break;
             }
