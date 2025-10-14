@@ -83,28 +83,38 @@ public class Shoot : MonoBehaviour
         canShoot = false;
 
 
-        RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit))
         {
-            switch (hit.transform.gameObject.GetComponent<NPC>().isTarget)
+            GameObject hitObject = hit.transform.gameObject;
+
+            if (hitObject.GetComponent<NPC>())
             {
-                case true:
-                    Debug.Log("KILL!");
+                switch (hitObject.GetComponent<NPC>().isTarget)
+                {
+                    case true:
+                        Debug.Log("KILL!");
 
-                    //The Target has been hit
-                    GaMaControl.Instance.targetHit = true;
+                        //The Target has been hit
+                        GaMaControl.Instance.targetHit = true;
 
-                    //Pull up win screen
-                    GaMaControl.Instance.CashOut();
+                        //Pull up win screen
+                        GaMaControl.Instance.CashOut();
 
-                    break;
+                        break;
+                    case false:
+                        GaMaControl.Instance.Fail();
 
-                default:
-
-                    GaMaControl.Instance.Fail();
-
-                    break;
+                        break;
+                }
             }
+            else
+            {
+                GaMaControl.Instance.Fail();
+            }
+        }
+        else
+        {
+            GaMaControl.Instance.Fail();
         }
 
         //Call timer
