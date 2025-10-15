@@ -9,7 +9,8 @@ using static PlayerController;
 /// </summary>
 enum GUNTYPE
 {
-    STUN
+    stun,
+    rifle
 }
 
 /// <summary>
@@ -104,7 +105,7 @@ public class Shoot : MonoBehaviour
         {
             GameObject hitObject = hit.transform.gameObject;
 
-            if (hitObject.GetComponent<NPC>())
+            if (hitObject.GetComponent<NPC>() && playerGun == GUNTYPE.rifle)
             {
                 switch (hitObject.GetComponent<NPC>().isTarget)
                 {
@@ -120,23 +121,28 @@ public class Shoot : MonoBehaviour
                         break;
                     case false:
 
-                        stunShootScr.ShootStun();
-                        //GaMaControl.Instance.Fail();
+                        GaMaControl.Instance.Fail();
 
                         break;
                 }
             }
-            else
+            if (hitObject.GetComponent<PoliceDrone>() && playerGun == GUNTYPE.stun)
             {
                 stunShootScr.ShootStun();
-                //GaMaControl.Instance.Fail();
+            }
+            else
+            {
+
+                GaMaControl.Instance.Fail();
             }
         }
         else
         {
-            stunShootScr.ShootStun();
-            //GaMaControl.Instance.Fail();
+
+            GaMaControl.Instance.Fail();
         }
+
+        
 
         //Check Gun Type
         GetGunCooldown();
@@ -153,7 +159,7 @@ public class Shoot : MonoBehaviour
     {
         switch (playerGun)
         {
-            case GUNTYPE.STUN:
+            case GUNTYPE.stun:
 
                 shootCooldown = stunGunCD;
 
