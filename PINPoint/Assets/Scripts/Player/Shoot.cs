@@ -4,6 +4,15 @@ using UnityEngine;
 using static PlayerController;
 
 /// <summary>
+/// What type of gun the player has.
+/// Currently used for cooldowns
+/// </summary>
+enum GUNTYPE
+{
+    STUN
+}
+
+/// <summary>
 /// Makes the player shoot while aiming
 /// </summary>
 public class Shoot : MonoBehaviour
@@ -18,6 +27,12 @@ public class Shoot : MonoBehaviour
     private float shootCooldown;
     [SerializeField]
     private PlayerController player;
+    [SerializeField]
+    private GUNTYPE playerGun;
+
+    [Header("Stun Gun")]
+    [SerializeField]
+    private float stunGunCD = 7f;
     private StunShoot stunShootScr;
 
     [Header("Aiming Variables")]
@@ -104,23 +119,52 @@ public class Shoot : MonoBehaviour
 
                         break;
                     case false:
-                        GaMaControl.Instance.Fail();
+
+                        stunShootScr.ShootStun();
+                        //GaMaControl.Instance.Fail();
 
                         break;
                 }
             }
             else
             {
-                GaMaControl.Instance.Fail();
+                stunShootScr.ShootStun();
+                //GaMaControl.Instance.Fail();
             }
         }
         else
         {
-            GaMaControl.Instance.Fail();
+            stunShootScr.ShootStun();
+            //GaMaControl.Instance.Fail();
         }
+
+        //Check Gun Type
+        GetGunCooldown();
 
         //Call timer
         StartCoroutine(ShootingCooldown(shootCooldown));
+    }
+
+    /// <summary>
+    /// Check what kind of gun the player has and adjust shooting cooldown
+    /// </summary>
+    /// <param name="gun">type of gun the player has</param>
+    private void GetGunCooldown()
+    {
+        switch (playerGun)
+        {
+            case GUNTYPE.STUN:
+
+                shootCooldown = stunGunCD;
+
+                break;
+
+            default:
+
+                Debug.LogError("There is no Gun Type!");
+
+                break;
+        }
     }
 
     /// <summary>

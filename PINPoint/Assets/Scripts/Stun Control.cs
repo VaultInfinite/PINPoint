@@ -8,7 +8,7 @@ using UnityEngine;
 public class StunControl : MonoBehaviour
 {
     //Variables
-    public float stunTimer;         //How long the enemy stays stunned
+    public float stunTimer = 4f;         //How long the enemy stays stunned
     public bool isStunned = false;   //Determines behavior
 
     //Stun enemy
