@@ -50,7 +50,7 @@ public class GaMaControl : MonoBehaviour
     public int levelMoney;
     private int startMoney;
 
-    [Header("Play State")]
+    [Header("Play State")] //Used in other Gameobjects to determine if they should stay active
     public bool targetHit = false;
     public bool levelFailed;
 
@@ -115,6 +115,14 @@ public class GaMaControl : MonoBehaviour
         
     }
 
+    public void ResumeMenu()
+    {
+        HideMouse();
+        Time.timeScale = 1;
+        Pause.isPaused = false;
+        pause.SetActive(false );
+    }
+
     public void GoToLevel(int levelNum)
     {
         BlackOut();
@@ -159,6 +167,12 @@ public class GaMaControl : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Pause.isPaused = false;
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.LogAssertion("Game Quit");
     }
 
     private void ResetVariables()
@@ -239,6 +253,13 @@ public class GaMaControl : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    //Hide cursor and lock mouse to screen
+    private void HideMouse()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void NPCList()

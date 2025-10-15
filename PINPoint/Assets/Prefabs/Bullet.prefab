@@ -129,11 +129,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7003409470465438524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d57c2684265ee439b1c63a2cfab335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expireTime: 0
-  rad: 2.29
+  expireTime: 2
+  rad: 1

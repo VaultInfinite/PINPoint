@@ -9,15 +9,18 @@ using UnityEngine.InputSystem;
 public class Pause : MonoBehaviour
 {
     //Variables
-    public static bool isPaused = false;
-    private GameObject pauseMenu;
-    public PlayerControllerInput input;
+    public static bool isPaused = false;    //Global Var - See if the game is paused
+    private GameObject pauseMenu;           //Pause menu UI
+    public PlayerControllerInput input;     //Player input system
 
     private void Awake()
     {
         input = new();
         input.Enable();
+    }
 
+    private void Start()
+    {
         pauseMenu = GaMaControl.Instance.pause;
 
         pauseMenu.SetActive(false);

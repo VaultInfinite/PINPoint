@@ -13,16 +13,18 @@ public class CameraControl : MonoBehaviour
 
     public Transform orientation;
 
-    float xRotation;
-    float yRotation;
+    private float xRotation;
+    private float yRotation;
 
 
     // Start is called before the first frame update
     void Start()
     {
         //Hide Mouse and lock to screen
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     // Update is called once per frame
