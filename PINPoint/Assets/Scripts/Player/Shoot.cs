@@ -7,7 +7,7 @@ using static PlayerController;
 /// What type of gun the player has.
 /// Currently used for cooldowns
 /// </summary>
-enum GUNTYPE
+enum GunType
 {
     stun,
     rifle
@@ -29,7 +29,7 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     private PlayerController player;
     [SerializeField]
-    private GUNTYPE playerGun;
+    private GunType playerGun;
 
     [Header("Stun Gun")]
     [SerializeField]
@@ -100,12 +100,12 @@ public class Shoot : MonoBehaviour
         //Set Shoot to false
         canShoot = false;
 
-
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit))
+        //RIFLE CHECK
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit) && playerGun == GunType.rifle)
         {
             GameObject hitObject = hit.transform.gameObject;
 
-            if (hitObject.GetComponent<NPC>() && playerGun == GUNTYPE.rifle)
+            if (hitObject.GetComponent<NPC>())
             {
                 switch (hitObject.GetComponent<NPC>().isTarget)
                 {
@@ -126,10 +126,6 @@ public class Shoot : MonoBehaviour
                         break;
                 }
             }
-            if (hitObject.GetComponent<PoliceDrone>() && playerGun == GUNTYPE.stun)
-            {
-                stunShootScr.ShootStun();
-            }
             else
             {
 
@@ -140,6 +136,19 @@ public class Shoot : MonoBehaviour
         {
 
             GaMaControl.Instance.Fail();
+        }
+
+        //Shock-Gun check
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun)
+        {
+            GameObject hitObject = hit.transform.gameObject;
+
+            //Shock-Gun code goes here; place code when hit lands within GetComponent if statement, recharge after but within Raycast if statement.
+            if (hitObject.GetComponent<PoliceDrone>())
+            {
+                
+                stunShootScr.ShootStun();
+            }
         }
 
         
@@ -159,7 +168,7 @@ public class Shoot : MonoBehaviour
     {
         switch (playerGun)
         {
-            case GUNTYPE.stun:
+            case GunType.stun:
 
                 shootCooldown = stunGunCD;
 
