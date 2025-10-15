@@ -15248,6 +15248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2604340745770524506, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: stunGunCD
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2604340745770524506, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: shootForce
       value: 50
       objectReference: {fileID: 0}
