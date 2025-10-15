@@ -40,7 +40,11 @@ public class PoliceDrone : MonoBehaviour
 
     private void Update()
     {
-        if (stunControlScr.GetComponent<StunControl>().isStunned) return;
+        if (stunControlScr.isStunned)
+        {
+            agent.SetDestination(gameObject.transform.position);
+            return;
+        }
 
         //check for if player is in range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);

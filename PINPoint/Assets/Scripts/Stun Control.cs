@@ -14,6 +14,7 @@ public class StunControl : MonoBehaviour
     //Stun enemy
     public void Stunned()
     {
+        if (isStunned) return;
         Debug.Log("Im STUNNED");
         isStunned = true;
         StartCoroutine(StunLength());
