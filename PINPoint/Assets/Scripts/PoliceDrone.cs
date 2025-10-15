@@ -29,14 +29,19 @@ public class PoliceDrone : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    private StunControl stunControlScr;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        stunControlScr = GetComponent<StunControl>();
     }
 
     private void Update()
     {
+        if (stunControlScr.GetComponent<StunControl>().isStunned) return;
+
         //check for if player is in range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -132,4 +137,7 @@ public class PoliceDrone : MonoBehaviour
         yield return new WaitForSeconds(despawnTime);
         bullet.SetActive(false);
     }
+
+    
+    
 }
