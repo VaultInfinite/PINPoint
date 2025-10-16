@@ -69,6 +69,7 @@ public partial class PlayerController
             if (player.input.Movement.Jump.IsPressed() && CanJump())
             {
                 player.jump.direction = hitInfo.normal;
+                player.air.doubleJumped = false;
                 player.SetState<Jump>();
             }
 

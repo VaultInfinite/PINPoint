@@ -19,6 +19,7 @@ public partial class PlayerController
         {
             //put running related code here
 
+
             //Move in faced direction
             Vector3 moveDirection = player.GetDirection();
             player.Accelerate(moveDirection, maxSpeed, acceleration);

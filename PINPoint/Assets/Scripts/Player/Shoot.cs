@@ -174,6 +174,10 @@ public class Shoot : MonoBehaviour
 
                 break;
 
+            case GunType.rifle:
+
+                break;
+
             default:
 
                 Debug.LogError("There is no Gun Type!");

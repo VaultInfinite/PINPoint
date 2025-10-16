@@ -196,6 +196,7 @@ public partial class PlayerController : MonoBehaviour
             {
                 accel = maxSpeed - product;
             }
+            Debug.Log(accel);
             Vector3 newVelocity = velocity + moveDirection * accel;
 
             //Debug.Log(newVelocity.magnitude);
