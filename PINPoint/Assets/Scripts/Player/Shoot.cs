@@ -41,6 +41,8 @@ public class Shoot : MonoBehaviour
     public float deZoom;
     public bool isAiming;
     public float zoomSpeed;
+    [SerializeField]
+    private GameObject cameraHolder;
 
     private void Awake()
     {
@@ -51,6 +53,8 @@ public class Shoot : MonoBehaviour
         //Get Camera FoV
         deZoom = Mathf.Round(cam.fieldOfView);
         stunShootScr = GetComponent<StunShoot>();
+
+        cameraHolder.GetComponent<CameraControl>();
     }
 
     private void Update()
@@ -60,10 +64,12 @@ public class Shoot : MonoBehaviour
         if (player.input.Movement.Aim.IsPressed())
         {
             isAiming = true;
+            cameraHolder.GetComponent<CameraControl>().playerAiming = true;
         }
         if (!player.input.Movement.Aim.IsPressed())
         {
             isAiming = false;
+            cameraHolder.GetComponent<CameraControl>().playerAiming = false;
         }
 
         //Zoom In

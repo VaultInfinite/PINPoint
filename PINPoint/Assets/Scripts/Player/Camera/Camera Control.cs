@@ -8,11 +8,18 @@ using UnityEngine;
 /// </summary>
 public class CameraControl : MonoBehaviour
 {
+    //The variable that will be applied to the rotation
     public float sensX;
     public float sensY;
 
-    public Transform orientation;
+    //The variables that will be applied to the above variables when aiming
+    public float aimX;
+    public float aimY;
 
+    public bool playerAiming;
+
+    [SerializeField]
+    private Transform orientation;
     private float xRotation;
     private float yRotation;
 
@@ -33,17 +40,57 @@ public class CameraControl : MonoBehaviour
         //Check if Paused
         if (Pause.isPaused)
         {
+            //Lock amd hide cursor to screen
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             return;
         }
 
+        AimContext();
+    }
+
+    /// <summary>
+    /// Determine what sensitivity to use
+    /// </summary>
+    private void AimContext()
+    {
+        if (!playerAiming)
+        {
+            RegularSens();
+        }
+
+        else
+        {
+            AimSens();
+        }
+    }
+
+    //Applies the regular camera sensitivity
+    private void RegularSens()
+    {
         //Get mouse input
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
+        yRotation += mouseX / sensX;
+        xRotation -= mouseY / sensY;
+
+        //Limits how far the player can look up and adown
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+    }
+
+    //Applies the aiming camera sensitivity
+    private void AimSens()
+    {
+        //Get mouse input
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        yRotation += mouseX / aimX;
+        xRotation -= mouseY / aimY;
 
         //Limits how far the player can look up and adown
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
