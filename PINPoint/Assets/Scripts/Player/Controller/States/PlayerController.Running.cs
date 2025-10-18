@@ -19,13 +19,12 @@ public partial class PlayerController
         {
             //put running related code here
 
+            //Slow player down when on the ground
+            player.rb.drag = player.groundDrag;
 
             //Move in faced direction
             Vector3 moveDirection = player.GetDirection();
             player.Accelerate(moveDirection, maxSpeed, acceleration);
-
-            //Slow player down when on the ground
-            player.rb.drag = player.groundDrag;
         }
 
         public override void OnUpdate(PlayerController player)

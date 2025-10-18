@@ -77,11 +77,11 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Walking), walking);
         _states.Add(typeof(Running), running);
         _states.Add(typeof(Jump), jump);
-        _states.Add(typeof(Ledge), ledge);
         _states.Add(typeof(Crouch), crouch);
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
+        _states.Add(typeof(Ledge), ledge);
 
         sniper = gameObject.GetComponent<Shoot>();
         grapple = gameObject.GetComponent<Grappling>();
@@ -186,6 +186,12 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
+        //Reset drag to 1 to fix Unity Editor doing stupid shit
+        if (moveDirection.magnitude >= 0.25f && _state != typeof(Gliding))
+        {
+            rb.drag = 1;
+        }
+
         //if the player isn't stunned, then they can move
         if(stun == false)
         {
@@ -199,7 +205,7 @@ public partial class PlayerController : MonoBehaviour
 
             Vector3 newVelocity = velocity + moveDirection * accel;
 
-            //Debug.Log(newVelocity.magnitude);
+            Debug.Log(newVelocity.magnitude);
 
             newVelocity.y = rb.velocity.y;
             rb.velocity = newVelocity;

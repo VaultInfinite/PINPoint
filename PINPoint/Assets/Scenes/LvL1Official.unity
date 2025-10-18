@@ -8403,53 +8403,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
-      propertyPath: gliding.maxSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: wall.maxWallTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: wall.wallGravity
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: gliding.glideTurn
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: gliding.glideDecline
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: running.acceleration
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: walking.acceleration
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: maxSpeed
+      propertyPath: air.maxSpeed
       value: 50
       objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
-      propertyPath: hookRange
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: acceleration
-      value: 50
+      propertyPath: air.acceleration
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

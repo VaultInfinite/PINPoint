@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +69,7 @@ public class Grappling : MonoBehaviour
     {
         if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
         {
-            Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
+            Grapple((hookPoint - player.transform.position).normalized, maxSpeed * MathF.Min((hookPoint - player.transform.position).magnitude * 0.1f, 1), acceleration);
         }
     }
 
@@ -82,7 +83,7 @@ public class Grappling : MonoBehaviour
     {
         Vector3 velocity = player.rb.velocity;
         float product = Vector3.Dot(moveDirection, velocity);
-        float accel = acceleration * Time.deltaTime;
+        float accel = acceleration * Time.fixedDeltaTime;
         if (product + accel > maxSpeed)
         {
             accel = maxSpeed - product;

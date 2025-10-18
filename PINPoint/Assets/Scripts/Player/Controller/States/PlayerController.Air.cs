@@ -58,13 +58,6 @@ public partial class PlayerController
                 player.SetState<Gliding>();
             }
 
-            //If player is in the air and jumps, double jump if applicable
-            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
-            {
-                doubleJumped = true;
-                player.SetState<Jump>();
-            }
-
             //If player is on the ground, change state to walking
             if (player.grounded)
             {
@@ -80,6 +73,18 @@ public partial class PlayerController
             if (player.wall.CanWallRun(player) && !wallRan)
             {
                 player.SetState<WallRunning>();
+            }
+
+            if (player.ledge.CanLedgeGrab(player) && player.input.Movement.Jump.WasPressedThisFrame())
+            {
+                player.SetState<Ledge>();
+            }
+
+            //If player is in the air and jumps, double jump if applicable
+            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
+            {
+                doubleJumped = true;
+                player.SetState<Jump>();
             }
         }
     }

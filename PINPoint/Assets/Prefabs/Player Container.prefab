@@ -97,7 +97,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715836088934206107}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 58a413a593bf73a4f8c9f1d5fc57a40b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -164,29 +164,32 @@ MonoBehaviour:
   sniperOBJ: {fileID: 2246137082685896813}
   grappleOBJ: {fileID: 2103975018995220354}
   walking:
-    maxSpeed: 14
+    maxSpeed: 15
     acceleration: 30
   running:
-    maxSpeed: 30
-    acceleration: 50
+    maxSpeed: 28
+    acceleration: 40
   jump:
     jumpForce: 25
     direction: {x: 0, y: 0, z: 0}
+  ledge:
+    raycastDistance: 1
+    ledgeHeightOffset: 0.75
   crouch:
     maxSpeed: 8
     acceleration: 6
     crouchScaleY: 0.5
   air:
-    maxSpeed: 26
-    acceleration: 30
+    maxSpeed: 50
+    acceleration: 10
     maxFallSpeed: 60
     gravity: 36
     doubleJumped: 0
   wall:
     maxSpeed: 24
     acceleration: 100
-    wallGravity: 30
-    maxWallTime: 4
+    wallGravity: 40
+    maxWallTime: 3
     bumpForce: 2
     curve:
       serializedVersion: 2
@@ -213,10 +216,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   gliding:
-    maxSpeed: 36
-    acceleration: 20
-    glideTurn: 10
-    glideDecline: 0.75
+    maxSpeed: 40
+    acceleration: 30
+    glideTurn: 15
+    glideDecline: 1.5
     maxGlideTime: 3.5
   stun: 0
 --- !u!114 &2604340745770524506
@@ -239,6 +242,7 @@ MonoBehaviour:
   deZoom: 80
   isAiming: 0
   zoomSpeed: 20
+  cameraHolder: {fileID: 7070010652320882503}
 --- !u!114 &8068283405148292497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,10 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ee4c55319966d4083a5bd7c2c9a777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookRange: 50
-  maxSpeed: 55
-  acceleration: 55
-  yAddition: 20
+  hookRange: 100
+  maxSpeed: 60
+  acceleration: 50
+  yAddition: 10
   point: {fileID: 6117398551943476191, guid: 09e70dbe9dd3aa44294038ae6dee7477, type: 3}
 --- !u!120 &5272038183968401200
 LineRenderer:
@@ -820,6 +824,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec8a31d883dc3341b5e39efd2cb9423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 36.5
-  sensY: 36.5
+  sensX: 1
+  sensY: 1
+  aimX: 4
+  aimY: 4
+  playerAiming: 0
   orientation: {fileID: 3235075872990336042}
