@@ -19,7 +19,6 @@ enum GunType
 public class Shoot : MonoBehaviour
 {
     [Header("Shooting Variables")]
-    //Variables
     private Transform FirePos;
     private Camera cam;
     private bool canShoot = true;
@@ -122,11 +121,13 @@ public class Shoot : MonoBehaviour
                         GaMaControl.Instance.targetHit = true;
 
                         //Pull up win screen
+                        player.input.Disable();
                         GaMaControl.Instance.CashOut();
 
                         break;
                     case false:
 
+                        player.input.Disable();
                         GaMaControl.Instance.Fail();
 
                         break;
@@ -134,13 +135,13 @@ public class Shoot : MonoBehaviour
             }
             else
             {
-
+                player.input.Disable();
                 GaMaControl.Instance.Fail();
             }
         }
         else
         {
-
+            player.input.Disable();
             GaMaControl.Instance.Fail();
         }
 
