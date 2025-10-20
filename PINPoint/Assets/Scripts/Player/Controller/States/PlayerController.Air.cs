@@ -75,15 +75,18 @@ public partial class PlayerController
                 player.SetState<WallRunning>();
             }
 
-            if (player.ledge.CanLedgeGrab(player) && player.input.Movement.Jump.WasPressedThisFrame())
-            {
-                player.SetState<Ledge>();
-            }
+            //if (player.ledge.CanLedgeGrab(player))
+            //{
+            //    player.SetState<Ledge>();
+            //}
 
             //If player is in the air and jumps, double jump if applicable
             if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
             {
-                doubleJumped = true;
+                if (!player.TryJump())
+                {
+                    doubleJumped = true;
+                }
                 player.SetState<Jump>();
             }
         }

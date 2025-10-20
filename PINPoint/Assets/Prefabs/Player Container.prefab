@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2385179720791068542}
   - component: {fileID: 7303076335600652044}
   - component: {fileID: 8147905177628162496}
+  - component: {fileID: 8068283405148292497}
   - component: {fileID: 6317267148356265128}
   - component: {fileID: 2604340745770524506}
-  - component: {fileID: 8068283405148292497}
   - component: {fileID: 5272038183968401200}
   m_Layer: 7
   m_Name: Player
@@ -122,7 +122,7 @@ Rigidbody:
   m_GameObject: {fileID: 715836088934206107}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -140,6 +140,24 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &8068283405148292497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715836088934206107}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ee4c55319966d4083a5bd7c2c9a777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hookRange: 100
+  maxSpeed: 60
+  acceleration: 60
+  yAddition: 15
+  dampeningAmount: 0.7
+  point: {fileID: 6117398551943476191, guid: 09e70dbe9dd3aa44294038ae6dee7477, type: 3}
 --- !u!114 &6317267148356265128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundDrag: 5
+  coyoteTime: 0.3
   rb: {fileID: 0}
   orientation: {fileID: 3235075872990336042}
   wallCameraAngle: 12
@@ -243,23 +262,6 @@ MonoBehaviour:
   isAiming: 0
   zoomSpeed: 20
   cameraHolder: {fileID: 7070010652320882503}
---- !u!114 &8068283405148292497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715836088934206107}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ee4c55319966d4083a5bd7c2c9a777, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hookRange: 100
-  maxSpeed: 60
-  acceleration: 50
-  yAddition: 10
-  point: {fileID: 6117398551943476191, guid: 09e70dbe9dd3aa44294038ae6dee7477, type: 3}
 --- !u!120 &5272038183968401200
 LineRenderer:
   serializedVersion: 2

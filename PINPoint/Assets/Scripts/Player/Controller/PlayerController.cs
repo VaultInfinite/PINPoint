@@ -14,6 +14,10 @@ public partial class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float groundDrag;
 
+    [SerializeField]
+    private float coyoteTime = 0.3f;
+    private float lastGroundedTime;
+
     private MeshRenderer mr;
     [HideInInspector]
     public Rigidbody rb;
@@ -189,7 +193,7 @@ public partial class PlayerController : MonoBehaviour
         //Reset drag to 1 to fix Unity Editor doing stupid shit
         if (moveDirection.magnitude >= 0.25f && _state != typeof(Gliding))
         {
-            rb.drag = 1;
+            rb.drag = 1.2f;
         }
 
         //if the player isn't stunned, then they can move
@@ -246,6 +250,21 @@ public partial class PlayerController : MonoBehaviour
             StartCoroutine(Stunned());
             //stun = false;
         }
+    }
+
+    private bool TryJump()
+    {
+        if (grounded)
+        {
+            lastGroundedTime = Time.time;
+        }
+
+        if (Time.time - lastGroundedTime <= coyoteTime)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     //time the player will be stunned for when hit by police drone

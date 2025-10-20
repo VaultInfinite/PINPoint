@@ -18,6 +18,8 @@ public class Grappling : MonoBehaviour
     private float acceleration;
     [SerializeField]
     private float yAddition;
+    [SerializeField]
+    private float dampeningAmount;
 
     [SerializeField]
     private GameObject point;
@@ -69,7 +71,8 @@ public class Grappling : MonoBehaviour
     {
         if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
         {
-            Grapple((hookPoint - player.transform.position).normalized, maxSpeed * MathF.Min((hookPoint - player.transform.position).magnitude * 0.1f, 1), acceleration);
+            Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
+            //Grapple((hookPoint - player.transform.position).normalized, maxSpeed - MathF.Max(1 - (hookPoint - player.transform.position).magnitude, 0) * maxSpeed, acceleration);
         }
     }
 
@@ -92,6 +95,7 @@ public class Grappling : MonoBehaviour
         newVelocity = new Vector3(newVelocity.x, (newVelocity.y), newVelocity.z);
 
         newVelocity.y += yAddition * Time.fixedDeltaTime;
+        newVelocity -= player.rb.velocity * dampeningAmount * Time.fixedDeltaTime;
         player.rb.velocity = newVelocity;
     }
 }

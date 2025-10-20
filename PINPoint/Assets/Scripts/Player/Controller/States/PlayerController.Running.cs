@@ -34,7 +34,7 @@ public partial class PlayerController
                 player.SetState<Walking>();
             }
 
-            if (player.input.Movement.Jump.WasPressedThisFrame() && (!Pause.isPaused))
+            if (player.input.Movement.Jump.WasPressedThisFrame() && (!Pause.isPaused) && player.TryJump())
             {
                 player.SetState<Jump>();
             }
