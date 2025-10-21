@@ -61,7 +61,8 @@ public partial class PlayerController : MonoBehaviour
 
 
     //The key of the current state, default to walking
-    private Type _state = typeof(Walking);
+    [HideInInspector]
+    public Type _state = typeof(Walking);
 
     //For player shooting
     //[SerializeField] Gun gun;
@@ -110,7 +111,7 @@ public partial class PlayerController : MonoBehaviour
     {
         var state = _states[_state];
 
-        if (input.Movement.SelectSniper.IsPressed())
+        if (input.Movement.SelectSniper.IsPressed() && state != ledge)
         {
             sniper.enabled = true;
             sniperOBJ.SetActive(true);
@@ -118,7 +119,7 @@ public partial class PlayerController : MonoBehaviour
             grappleOBJ.SetActive(false);
 
         }
-        if (input.Movement.SelectGrapple.IsPressed())
+        if (input.Movement.SelectGrapple.IsPressed() && state != ledge)
         {
             sniper.enabled = false;
             sniperOBJ.SetActive(false);
@@ -273,5 +274,15 @@ public partial class PlayerController : MonoBehaviour
         stun = true;
         yield return new WaitForSeconds(3f);
         stun = false;
+    }
+
+    /// <summary>
+    /// Implemented to stop the player from grabbing ledge again too quickly.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator LedgePause()
+    {
+        yield return new WaitForSeconds(0.5f);
+        air.ledgeGrabbed = false;
     }
 }

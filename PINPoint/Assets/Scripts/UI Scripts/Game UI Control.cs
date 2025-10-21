@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 
 public class GameUIControl : MonoBehaviour
@@ -74,6 +75,10 @@ public class GameUIControl : MonoBehaviour
             if (player.gameObject.GetComponent<Grappling>().isActiveAndEnabled)
             {
                 weaponDisplay.text = "Grappling Hook";
+            }
+            else
+            {
+                weaponDisplay.text = "Ledge";
             }
         }
     }
