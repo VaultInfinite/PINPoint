@@ -26,7 +26,12 @@ public class GaMaControl : MonoBehaviour
     public GameObject playerUI;
     public GameObject reticle;
 
+    public GameObject hideOutButtons;
     public GameObject tutorial;
+
+    //Settings UI
+    public GameObject settingsExitButton;
+    public GameObject settingsBackButton;
 
     [Header("UI Text")]
     [SerializeField]
@@ -83,11 +88,15 @@ public class GaMaControl : MonoBehaviour
         startMoney = levelMoney;
         StartCoroutine(TutorialDisplay());
         StartCoroutine(TargetSelect());
+
+        hideOutButtons.SetActive(false);
     }
 
     #region Button Functions
     public void CallContractsUI()
     {
+        hideOutButtons.SetActive(true);
+
         //Due to only being accessable in the contracts menu, disable other menus
         contracts.SetActive(true);
         settings.SetActive(false);
@@ -97,10 +106,34 @@ public class GaMaControl : MonoBehaviour
     //Pulls up the settings UI
     public void CallSettingsUI()
     {
-        //Due to only being accessable in the contracts menu, disable other menus
-        contracts.SetActive(false);
-        settings.SetActive(true);
-        equipment.SetActive(false);
+        // If Settings is called when game is Paused (during killing time)
+        if (Pause.isPaused)
+        {
+            settings.SetActive(true);
+            settingsExitButton.SetActive(false);
+            settingsBackButton.SetActive(true);
+
+        }
+        // If settings is called in between killings
+        else
+        {
+            settingsExitButton.SetActive(true);
+            settingsBackButton.SetActive(false);
+
+            contracts.SetActive(false);
+            settings.SetActive(true);
+            equipment.SetActive(false);
+        } 
+    }
+
+    /// <summary>
+    /// Returns back to the Pause menu
+    /// </summary>
+    public void GoBackToPause()
+    {
+        settings.SetActive(false);
+        settingsExitButton.SetActive(false);
+        settingsBackButton.SetActive(false);
     }
 
     //Calls the shop UI in the menu
@@ -125,6 +158,8 @@ public class GaMaControl : MonoBehaviour
 
     public void GoToLevel(int levelNum)
     {
+        hideOutButtons.SetActive(false);
+
         BlackOut();
 
         ResetVariables();

@@ -158,7 +158,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""67396306-967d-4da5-a368-c842de946bc2"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
