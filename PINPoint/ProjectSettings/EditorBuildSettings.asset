@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Bear Scene.unity
+    guid: 818fcb417bc2fb84aa6b8664ae3e1b54
+  - enabled: 1
     path: Assets/Scenes/LvL1Official.unity
     guid: 3c236e30b0d4d8e43973cbcbe82fda5e
   m_configObjects: {}

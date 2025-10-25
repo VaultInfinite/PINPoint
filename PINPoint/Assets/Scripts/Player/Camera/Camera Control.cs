@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class CameraControl : MonoBehaviour
 {
+    private static CameraControl instance;
+    public static CameraControl Instance { get { return instance; } }
+
     //The variable that will be applied to the rotation
     public float sensX;
     public float sensY;
@@ -22,7 +25,15 @@ public class CameraControl : MonoBehaviour
     private Transform orientation;
     private float xRotation;
     private float yRotation;
+    public int inverse = 1;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -78,8 +89,8 @@ public class CameraControl : MonoBehaviour
         //Limits how far the player can look up and adown
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.rotation = Quaternion.Euler(inverse * xRotation, inverse * yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, inverse * yRotation, 0);
     }
 
     //Applies the aiming camera sensitivity
@@ -95,7 +106,7 @@ public class CameraControl : MonoBehaviour
         //Limits how far the player can look up and adown
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.rotation = Quaternion.Euler(inverse * xRotation, inverse * yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, inverse * yRotation, 0);
     }
 }
