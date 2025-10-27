@@ -21,9 +21,9 @@ public class Grappling : MonoBehaviour
     [SerializeField]
     private float dampeningAmount;
 
-    [SerializeField]
-    private GameObject point;
-    private LineRenderer lineRenderer;
+    public GameObject point;
+    [HideInInspector]
+    public LineRenderer lineRenderer;
 
     private Vector3 hookPoint;
 

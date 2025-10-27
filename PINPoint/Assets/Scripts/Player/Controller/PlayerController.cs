@@ -117,6 +117,8 @@ public partial class PlayerController : MonoBehaviour
             sniperOBJ.SetActive(true);
             grapple.enabled = false;
             grappleOBJ.SetActive(false);
+            grapple.point.SetActive(false);
+            grapple.lineRenderer.enabled = false;
 
         }
         if (input.Movement.SelectGrapple.IsPressed() && state != ledge)

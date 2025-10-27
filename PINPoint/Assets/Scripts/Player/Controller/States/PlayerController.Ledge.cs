@@ -30,6 +30,8 @@ public partial class PlayerController
             {
                 player.grapple.enabled = false;
                 player.grappleOBJ.SetActive(false);
+                player.grapple.point.SetActive(false);
+                player.grapple.lineRenderer.enabled = false;
                 equipGrapple = true;
             }
         }
@@ -39,11 +41,6 @@ public partial class PlayerController
             if (player.input.Movement.Jump.IsPressed())
             {
                 player.SetState<Jump>();
-            }
-
-            if (!CanLedgeGrab(player))
-            {
-                player.SetState<Air>();
             }
         }
 
@@ -67,11 +64,13 @@ public partial class PlayerController
         public bool CanLedgeGrab(PlayerController player)
         {
             bool canLedgeGrab = false;
-            if (Physics.Raycast(player.transform.position + Vector3.up * 0.5f, player.transform.forward, out RaycastHit forwardHit, raycastDistance, player.Ground))
+            if (Physics.Raycast(player.transform.position, player.orientation.transform.forward, out RaycastHit forwardHit, raycastDistance, player.Ground))
             {
+                Debug.DrawRay(player.transform.position + Vector3.up * 0.5f, player.orientation.transform.forward, Color.blue);
                 Vector3 ledgeCheckOrigin = forwardHit.point + Vector3.up * ledgeHeightOffset;
                 if (Physics.Raycast(ledgeCheckOrigin, Vector3.down, out RaycastHit downwardHit, ledgeHeightOffset * 2, player.Ground))
                 {
+                    Debug.DrawRay(ledgeCheckOrigin, Vector3.down, Color.red);
                     canLedgeGrab = (Vector3.Dot(downwardHit.normal, Vector3.up) > 0.8f);
                 }
             }

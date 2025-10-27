@@ -75,6 +75,7 @@ public partial class PlayerController
                 player.gliding.ResetGlide();
                 doubleJumped = false;
                 wallRan = false;
+                ledgeGrabbed = false;
 
                 player.SetState<Walking>();
             }
