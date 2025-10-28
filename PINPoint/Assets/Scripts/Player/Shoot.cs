@@ -21,7 +21,8 @@ public class Shoot : MonoBehaviour
     [Header("Shooting Variables")]
     private Transform FirePos;
     private Camera cam;
-    private bool canShoot = true;
+    [SerializeField]
+    private float targetDistance;
 
     [SerializeField]
     private float shootCooldown;
@@ -38,7 +39,9 @@ public class Shoot : MonoBehaviour
     [Header("Aiming Variables")]
     public float camZoom;
     public float deZoom;
+    [HideInInspector]
     public bool isAiming;
+    public bool canShoot;
     public float zoomSpeed;
     [SerializeField]
     private GameObject cameraHolder;
@@ -94,6 +97,9 @@ public class Shoot : MonoBehaviour
 
             CameraMoveEffect(deZoom);
         }
+
+        canShoot = TargetDistance();
+
     }
 
     //Shoot the bullet
@@ -103,9 +109,6 @@ public class Shoot : MonoBehaviour
 
         //Check if can shoot
         if (!canShoot) return;
-
-        //Set Shoot to false
-        canShoot = false;
 
         //RIFLE CHECK
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit) && playerGun == GunType.rifle)
@@ -192,6 +195,28 @@ public class Shoot : MonoBehaviour
                 Debug.LogError("There is no Gun Type!");
 
                 break;
+        }
+    }
+
+    public bool TargetDistance()
+    {
+        if (GaMaControl.Instance.target != null)
+        {
+            float distance = Vector3.Distance(player.transform.position, GaMaControl.Instance.target.transform.position);
+            if (distance <= targetDistance)
+            {
+                //Debug.Log("Target in Range");
+                return true;
+            }
+            else
+            {
+                //Debug.Log("Target out of Range");
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 

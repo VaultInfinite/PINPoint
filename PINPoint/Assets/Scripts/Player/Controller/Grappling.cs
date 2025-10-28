@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,12 @@ public class Grappling : MonoBehaviour
     private float acceleration;
     [SerializeField]
     private float yAddition;
-
     [SerializeField]
-    private GameObject point;
-    private LineRenderer lineRenderer;
+    private float dampeningAmount;
+
+    public GameObject point;
+    [HideInInspector]
+    public LineRenderer lineRenderer;
 
     private Vector3 hookPoint;
 
@@ -69,6 +72,7 @@ public class Grappling : MonoBehaviour
         if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
         {
             Grapple((hookPoint - player.transform.position).normalized, maxSpeed, acceleration);
+            //Grapple((hookPoint - player.transform.position).normalized, maxSpeed - MathF.Max(1 - (hookPoint - player.transform.position).magnitude, 0) * maxSpeed, acceleration);
         }
     }
 
@@ -82,7 +86,7 @@ public class Grappling : MonoBehaviour
     {
         Vector3 velocity = player.rb.velocity;
         float product = Vector3.Dot(moveDirection, velocity);
-        float accel = acceleration * Time.deltaTime;
+        float accel = acceleration * Time.fixedDeltaTime;
         if (product + accel > maxSpeed)
         {
             accel = maxSpeed - product;
@@ -91,6 +95,7 @@ public class Grappling : MonoBehaviour
         newVelocity = new Vector3(newVelocity.x, (newVelocity.y), newVelocity.z);
 
         newVelocity.y += yAddition * Time.fixedDeltaTime;
+        newVelocity -= player.rb.velocity * dampeningAmount * Time.fixedDeltaTime;
         player.rb.velocity = newVelocity;
     }
 }

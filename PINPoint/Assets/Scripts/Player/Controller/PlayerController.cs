@@ -14,6 +14,10 @@ public partial class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float groundDrag;
 
+    [SerializeField]
+    private float coyoteTime = 0.3f;
+    private float lastGroundedTime;
+
     private MeshRenderer mr;
     [HideInInspector]
     public Rigidbody rb;
@@ -22,6 +26,11 @@ public partial class PlayerController : MonoBehaviour
     public Transform orientation;
     public float wallCameraAngle;
     private float roll;
+    private float rifleRotation;
+    [SerializeField]
+    private float rifleLowered;
+    [SerializeField]
+    private float rifleRaised;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -57,7 +66,8 @@ public partial class PlayerController : MonoBehaviour
 
 
     //The key of the current state, default to walking
-    private Type _state = typeof(Walking);
+    [HideInInspector]
+    public Type _state = typeof(Walking);
 
     //For player shooting
     //[SerializeField] Gun gun;
@@ -77,11 +87,11 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Walking), walking);
         _states.Add(typeof(Running), running);
         _states.Add(typeof(Jump), jump);
-        _states.Add(typeof(Ledge), ledge);
         _states.Add(typeof(Crouch), crouch);
         _states.Add(typeof(Air), air);
         _states.Add(typeof(WallRunning), wall);
         _states.Add(typeof(Gliding), gliding);
+        _states.Add(typeof(Ledge), ledge);
 
         sniper = gameObject.GetComponent<Shoot>();
         grapple = gameObject.GetComponent<Grappling>();
@@ -106,20 +116,37 @@ public partial class PlayerController : MonoBehaviour
     {
         var state = _states[_state];
 
-        if (input.Movement.SelectSniper.IsPressed())
+        if (input.Movement.SelectSniper.IsPressed() && state != ledge)
         {
             sniper.enabled = true;
             sniperOBJ.SetActive(true);
             grapple.enabled = false;
             grappleOBJ.SetActive(false);
+            grapple.point.SetActive(false);
+            grapple.lineRenderer.enabled = false;
 
         }
-        if (input.Movement.SelectGrapple.IsPressed())
+        if (input.Movement.SelectGrapple.IsPressed() && state != ledge)
         {
             sniper.enabled = false;
             sniperOBJ.SetActive(false);
             grapple.enabled = true;
             grappleOBJ.SetActive(true);
+        }
+
+        //Lowers and raises the rifle based on Target Proximity
+        if (sniper.isActiveAndEnabled)
+        {
+            
+            if (!sniper.TargetDistance())
+            {
+                rifleRotation = Mathf.Lerp(rifleRotation, -rifleLowered, Time.deltaTime * 6f);
+            }
+            else
+            {
+                rifleRotation = Mathf.Lerp(rifleRotation, rifleRaised, Time.deltaTime * 6f);
+            }
+            sniperOBJ.transform.localEulerAngles = new Vector3(-rifleRotation / 2, rifleRotation, 0);
         }
 
         //Check if the player is touching the ground
@@ -186,6 +213,12 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
+        //Reset drag to 1 to fix Unity Editor doing stupid shit
+        if (moveDirection.magnitude >= 0.25f && _state != typeof(Gliding))
+        {
+            rb.drag = 1.2f;
+        }
+
         //if the player isn't stunned, then they can move
         if(stun == false)
         {
@@ -242,11 +275,36 @@ public partial class PlayerController : MonoBehaviour
         }
     }
 
+    private bool TryJump()
+    {
+        if (grounded)
+        {
+            lastGroundedTime = Time.time;
+        }
+
+        if (Time.time - lastGroundedTime <= coyoteTime)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     //time the player will be stunned for when hit by police drone
     public IEnumerator Stunned()
     {
         stun = true;
         yield return new WaitForSeconds(3f);
         stun = false;
+    }
+
+    /// <summary>
+    /// Implemented to stop the player from grabbing ledge again too quickly.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator LedgePause()
+    {
+        yield return new WaitForSeconds(0.5f);
+        air.ledgeGrabbed = false;
     }
 }

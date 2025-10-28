@@ -20,7 +20,17 @@ public partial class PlayerController
         //Accessed in WallRunning to allow detaching
         [HideInInspector]
         public bool doubleJumped;
+        [HideInInspector]
+        public bool ledgeGrabbed;
         private bool wallRan;
+
+        public override void OnEnter(PlayerController player)
+        {
+            if (ledgeGrabbed)
+            {
+                player.StartCoroutine(player.LedgePause());
+            }
+        }
 
         public override void OnFixedUpdate(PlayerController player)
         {
@@ -58,13 +68,6 @@ public partial class PlayerController
                 player.SetState<Gliding>();
             }
 
-            //If player is in the air and jumps, double jump if applicable
-            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
-            {
-                doubleJumped = true;
-                player.SetState<Jump>();
-            }
-
             //If player is on the ground, change state to walking
             if (player.grounded)
             {
@@ -72,6 +75,7 @@ public partial class PlayerController
                 player.gliding.ResetGlide();
                 doubleJumped = false;
                 wallRan = false;
+                ledgeGrabbed = false;
 
                 player.SetState<Walking>();
             }
@@ -81,6 +85,23 @@ public partial class PlayerController
             {
                 player.SetState<WallRunning>();
             }
+
+            if (player.ledge.CanLedgeGrab(player) && !ledgeGrabbed)
+            {
+                player.SetState<Ledge>();
+            }
+
+            //If player is in the air and jumps, double jump if applicable
+            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused))
+            {
+                if (!player.TryJump())
+                {
+                    doubleJumped = true;
+                }
+                player.SetState<Jump>();
+            }
         }
     }
+
+    
 }

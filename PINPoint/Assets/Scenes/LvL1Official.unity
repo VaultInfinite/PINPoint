@@ -2678,6 +2678,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4028075981651838161, guid: 26e1d46806bedf24985aec1e6aef838f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5084560682603869473, guid: 26e1d46806bedf24985aec1e6aef838f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8400,56 +8405,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: gliding.maxSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: wall.maxWallTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: wall.wallGravity
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: gliding.glideTurn
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: gliding.glideDecline
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: running.acceleration
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: walking.acceleration
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: maxSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: hookRange
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8068283405148292497, guid: ba8d91f477f53af47ac4af82c83ca54b,
-        type: 3}
-      propertyPath: acceleration
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

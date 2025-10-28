@@ -14,6 +14,8 @@ public class GaMaControl : MonoBehaviour
     //Target Variables
     public List<NPC> npcs = new List<NPC>();
     public Camera targetCamera;
+    [HideInInspector]
+    public GameObject target;
 
     [Header("UI GameObjects")]
     public GameObject pause;
@@ -309,6 +311,7 @@ public class GaMaControl : MonoBehaviour
 
             if (randomNumber >= 0.9f && !hasTarget || index >= npcs.Count && !hasTarget)
             {
+                target = npcs[index].gameObject;
                 npcs[index].isTarget = true;
                 npcs[index].targetCamera = targetCamera;
                 Debug.Log("target assigned at" + npcs[index].gameObject);
