@@ -91,7 +91,10 @@ public class GaMaControl : MonoBehaviour
         StartCoroutine(TutorialDisplay());
         StartCoroutine(TargetSelect());
 
-        hideOutButtons.SetActive(false);
+        if (hideOutButtons != null)
+        {
+            hideOutButtons.SetActive(false);
+        }
     }
 
     #region Button Functions
