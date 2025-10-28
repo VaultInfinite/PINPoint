@@ -176,7 +176,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   orientation: {fileID: 3235075872990336042}
   wallCameraAngle: 12
-  rifleLowered: 0
+  rifleLowered: 40
   rifleRaised: 0
   playerHeight: 2
   playerRadius: 0.5
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetDistance: 50
+  targetDistance: 100
   shootCooldown: 2
   player: {fileID: 6317267148356265128}
   playerGun: 1
