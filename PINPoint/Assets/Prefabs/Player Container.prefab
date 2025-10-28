@@ -155,9 +155,10 @@ MonoBehaviour:
   hookRange: 100
   maxSpeed: 60
   acceleration: 60
-  yAddition: 15
-  dampeningAmount: 0.7
+  yAddition: 20
+  dampeningAmount: 0.6
   point: {fileID: 6117398551943476191, guid: 09e70dbe9dd3aa44294038ae6dee7477, type: 3}
+  lineRenderer: {fileID: 0}
 --- !u!114 &6317267148356265128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,11 +171,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDrag: 5
+  groundDrag: 10
   coyoteTime: 0.3
   rb: {fileID: 0}
   orientation: {fileID: 3235075872990336042}
   wallCameraAngle: 12
+  rifleLowered: 0
+  rifleRaised: 0
   playerHeight: 2
   playerRadius: 0.5
   Ground:
@@ -204,6 +207,7 @@ MonoBehaviour:
     maxFallSpeed: 60
     gravity: 36
     doubleJumped: 0
+    ledgeGrabbed: 0
   wall:
     maxSpeed: 24
     acceleration: 100
@@ -253,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetDistance: 50
   shootCooldown: 2
   player: {fileID: 6317267148356265128}
   playerGun: 1
@@ -260,6 +265,7 @@ MonoBehaviour:
   camZoom: 20
   deZoom: 80
   isAiming: 0
+  canShoot: 0
   zoomSpeed: 20
   cameraHolder: {fileID: 7070010652320882503}
 --- !u!120 &5272038183968401200
@@ -476,8 +482,8 @@ Transform:
   m_GameObject: {fileID: 2246137082685896813}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36299896, y: -0.30499983, z: 0.56700134}
-  m_LocalScale: {x: 0.29364228, y: 0.34547916, z: 1.3769876}
+  m_LocalPosition: {x: 0.5, y: -0.3000002, z: 0.5999985}
+  m_LocalScale: {x: 0.3, y: 0.35, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8394458335755807632}

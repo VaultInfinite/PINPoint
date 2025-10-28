@@ -26,6 +26,11 @@ public partial class PlayerController : MonoBehaviour
     public Transform orientation;
     public float wallCameraAngle;
     private float roll;
+    private float rifleRotation;
+    [SerializeField]
+    private float rifleLowered;
+    [SerializeField]
+    private float rifleRaised;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -129,6 +134,21 @@ public partial class PlayerController : MonoBehaviour
             grappleOBJ.SetActive(true);
         }
 
+        //Lowers and raises the rifle based on Target Proximity
+        if (sniper.isActiveAndEnabled)
+        {
+            
+            if (!sniper.TargetDistance())
+            {
+                rifleRotation = Mathf.Lerp(rifleRotation, -rifleLowered, Time.deltaTime * 6f);
+            }
+            else
+            {
+                rifleRotation = Mathf.Lerp(rifleRotation, rifleRaised, Time.deltaTime * 6f);
+            }
+            sniperOBJ.transform.localEulerAngles = new Vector3(0, rifleRotation, 0);
+        }
+
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 
@@ -212,7 +232,7 @@ public partial class PlayerController : MonoBehaviour
 
             Vector3 newVelocity = velocity + moveDirection * accel;
 
-            Debug.Log(newVelocity.magnitude);
+            //Debug.Log(newVelocity.magnitude);
 
             newVelocity.y = rb.velocity.y;
             rb.velocity = newVelocity;

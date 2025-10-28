@@ -76,7 +76,7 @@ public class GameUIControl : MonoBehaviour
             {
                 weaponDisplay.text = "Grappling Hook";
             }
-            else
+            if (player.ledge.CanLedgeGrab(player))
             {
                 weaponDisplay.text = "Ledge";
             }
