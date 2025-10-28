@@ -105,7 +105,7 @@ public class Shoot : MonoBehaviour
     //Shoot the bullet
     public void Shooting()
     {
-        AudioControl.Instance.PlaySoundEffect(sfxType.SHOOT);
+        //AudioControl.Instance.PlaySoundEffect(sfxType.SHOOT);
 
         //Check if can shoot
         if (!canShoot) return;
