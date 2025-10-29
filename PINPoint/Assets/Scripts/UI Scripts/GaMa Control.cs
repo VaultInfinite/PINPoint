@@ -97,6 +97,11 @@ public class GaMaControl : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        shopCash.text = "$" + playerMoney.ToString("0,000,000");
+    }
+
     #region Button Functions
     public void CallContractsUI()
     {
@@ -149,7 +154,7 @@ public class GaMaControl : MonoBehaviour
         settings.SetActive(false);
         equipment.SetActive(true);
 
-        shopCash.text = "$" + playerMoney.ToString("0,000,000");
+        //shopCash.text = "$" + playerMoney.ToString("0,000,000");
         
     }
 
