@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PoliceDrone : MonoBehaviour
 {
@@ -31,11 +33,15 @@ public class PoliceDrone : MonoBehaviour
 
     private StunControl stunControlScr;
 
+    Animator animator;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         stunControlScr = GetComponent<StunControl>();
+        animator = GetComponent<Animator>();
+        Debug.Log(animator);
     }
 
     private void Update()
@@ -45,6 +51,7 @@ public class PoliceDrone : MonoBehaviour
             agent.SetDestination(gameObject.transform.position);
             return;
         }
+
 
         //check for if player is in range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
@@ -62,13 +69,22 @@ public class PoliceDrone : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
+            animator.SetBool("IsWalking", true);
+        }
+            
+            
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+     
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+        
+
     }
 
     private void ChasePlayer()
