@@ -14,6 +14,16 @@ public class ShopManager : MonoBehaviour
     public Button jumpBootsSlot;
     public Button gliderSlot;
     public Button grappleSlot;
+
+    public string jumpBootsDesc = "This item allows you to jump in the air";
+    public string gliderDesc = "This item allows you to glide in the air";
+    public string grappleDesc = "This item allows you to grapple to nearby walls";
+
+
+
+    public string itemDesc = "";
+
+    public int currItem = 3;
     #endregion
 
     private void Awake()
@@ -72,12 +82,9 @@ public class ShopManager : MonoBehaviour
     /// Buys item from shop
     /// </summary>
     /// <param name="item"></param>
-    public void BuyItem(int item)
+    public void BuyItem()
     {
-        if (!CheckButton(jumpBootsSlot) || !CheckButton(gliderSlot) || !CheckButton(grappleSlot)) { return; }
-
-
-        switch (item)
+        switch (currItem)
         {
             // Jump Boots
             case 0:
@@ -111,6 +118,52 @@ public class ShopManager : MonoBehaviour
                     ItemManager.Instance.grappleBought = true;
                 }
 
+
+                break;
+        }
+
+        RefreshShop();
+    }
+
+    /// <summary>
+    /// Makes the shop-equipment button display description if bought
+    /// </summary>
+    /// <param name="item"></param>
+    public void ClickItem(int item)
+    {
+        if (!CheckButton(jumpBootsSlot) || !CheckButton(gliderSlot) || !CheckButton(grappleSlot)) { return; }
+
+        switch (item)
+        {
+            // Jump Boots
+            case 0:
+
+                currItem = 0;
+                itemDesc = jumpBootsDesc;
+
+
+                break;
+
+            // Glider
+            case 1:
+
+                currItem = 1;
+                itemDesc = gliderDesc;
+
+                break;
+
+            // Grapple
+            case 2:
+
+                currItem = 2;
+                itemDesc = grappleDesc;
+
+                break;
+
+            default:
+
+                currItem = 3;
+                itemDesc = "ERROR";
 
                 break;
         }
