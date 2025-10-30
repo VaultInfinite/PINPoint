@@ -50,10 +50,12 @@ public class GameUIControl : MonoBehaviour
         if (GaMaControl.Instance.targetHit || GaMaControl.Instance.levelFailed) return;
 
         //Timer
-        elapsedTime += Time.deltaTime;
+        
+        elapsedTime += Time.fixedDeltaTime;
         min = Mathf.FloorToInt(elapsedTime/60);
         sec = Mathf.FloorToInt(elapsedTime%60);
         mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
+        
 
         //Decrease Money
         MoneyInterval();
@@ -83,7 +85,18 @@ public class GameUIControl : MonoBehaviour
         }
     }
 
-    void MoneyInterval()
+    /// <summary>
+    /// Reset time for new playthrough
+    /// </summary>
+    public void ResetTime()
+    {
+        min = 0;
+        sec = 0;
+        mSec = 0;
+        elapsedTime = 0;
+    }
+
+    private void MoneyInterval()
     {
         //Check if there is enough money
         if (GaMaControl.Instance.levelMoney <= 0)
@@ -98,16 +111,5 @@ public class GameUIControl : MonoBehaviour
                 GaMaControl.Instance.levelMoney -= interest;
             }
         }
-    }
-
-    /// <summary>
-    /// Reset time for new playthrough
-    /// </summary>
-    public void ResetTime()
-    {
-        min = 0;
-        sec = 0;
-        mSec = 0;
-        elapsedTime = 0;
     }
 }
