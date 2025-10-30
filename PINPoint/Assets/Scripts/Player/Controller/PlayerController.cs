@@ -69,8 +69,11 @@ public partial class PlayerController : MonoBehaviour
     [HideInInspector]
     public Type _state = typeof(Walking);
 
-    //For player shooting
-    //[SerializeField] Gun gun;
+    //Player Ability
+    [Header("Abilities")]
+    public bool canDoubleJump;
+    public bool canGlide;
+    public bool canGrapple;
 
     //bool to eventually stun player if the police drone shoots them
     public bool stun = false;
