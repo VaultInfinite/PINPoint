@@ -155,7 +155,7 @@ public class GaMaControl : MonoBehaviour
         equipment.SetActive(true);
 
         //shopCash.text = "$" + playerMoney.ToString("0,000,000");
-        
+        //ShopManager.Instance.RefreshShop();
     }
 
     public void ResumeMenu()

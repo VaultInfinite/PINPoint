@@ -2,26 +2,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 public class ShopManager : MonoBehaviour
 {
+    private static ShopManager instance;
+    public static ShopManager Instance { get { return instance; } }
+
     #region Variables
-    public GameObject jumpBootsSlot;
-    public GameObject gliderSlot;
-    public GameObject grappleSlot;
+    public Button jumpBootsSlot;
+    public Button gliderSlot;
+    public Button grappleSlot;
     #endregion
 
+    private void Awake()
+    {
+        //Make sure this is the only Game Manager in the Scene
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+    private void Start()
+    {
+        RefreshShop();
+    }
 
+    /// <summary>
+    /// Check if the item can be bought
+    /// </summary>
+    public void RefreshShop()
+    {
+        if (!CheckButton(jumpBootsSlot) || !CheckButton(gliderSlot) || !CheckButton(grappleSlot)) { return; }
 
+        if (ItemManager.Instance.jumpBootsCost > GaMaControl.Instance.playerMoney)
+        {
+            jumpBootsSlot.interactable = false;
+        }
+        else
+        {
+            jumpBootsSlot.interactable = true;
+        }
+
+        if (ItemManager.Instance.gliderCost > GaMaControl.Instance.playerMoney)
+        {
+            gliderSlot.interactable = false;
+        }
+        else
+        {
+            gliderSlot.interactable = true;
+        }
+
+        if (ItemManager.Instance.grappleCost > GaMaControl.Instance.playerMoney)
+        {
+            grappleSlot.interactable = false;
+        }
+        else
+        {
+            grappleSlot.interactable = true;
+        }
+    }
+
+    /// <summary>
+    /// Buys item from shop
+    /// </summary>
+    /// <param name="item"></param>
     public void BuyItem(int item)
     {
-        if (jumpBootsSlot == null || gliderSlot == null || grappleSlot == null)
-        {
-            Debug.Log("ERROR: Equipment Menu is missing equipment slot(s)");
-            return;
-        }
-        
+        if (!CheckButton(jumpBootsSlot) || !CheckButton(gliderSlot) || !CheckButton(grappleSlot)) { return; }
+
 
         switch (item)
         {
@@ -44,7 +98,7 @@ public class ShopManager : MonoBehaviour
                     GaMaControl.Instance.playerMoney -= ItemManager.Instance.gliderCost;
                     ItemManager.Instance.gliderBought = true;
                 }
-                
+
 
                 break;
 
@@ -56,7 +110,7 @@ public class ShopManager : MonoBehaviour
                     GaMaControl.Instance.playerMoney -= ItemManager.Instance.grappleCost;
                     ItemManager.Instance.grappleBought = true;
                 }
-                
+
 
                 break;
         }
@@ -64,36 +118,25 @@ public class ShopManager : MonoBehaviour
         RefreshShop();
     }
 
+    #region Debug Methods
+
     /// <summary>
-    /// Check if the item can be bought
+    /// Check if button is assigned to anything
     /// </summary>
-    private void RefreshShop()
+    /// <param name="button"></param>
+    /// <returns>Bool</returns>
+    private bool CheckButton(Button button)
     {
-        if (ItemManager.Instance.jumpBootsCost > GaMaControl.Instance.playerMoney)
+        if (button == null)
         {
-            jumpBootsSlot.SetActive(false);
+            Debug.Log("ERROR: Button is not assigned!");
+            return false;
         }
         else
         {
-            jumpBootsSlot.SetActive(true);
-        }
-
-        if (ItemManager.Instance.gliderCost > GaMaControl.Instance.playerMoney)
-        {
-            gliderSlot.SetActive(false);
-        }
-        else
-        {
-            gliderSlot.SetActive(true);
-        }
-
-        if (ItemManager.Instance.grappleCost > GaMaControl.Instance.playerMoney)
-        {
-            grappleSlot.SetActive(false);
-        }
-        else
-        {
-            grappleSlot.SetActive(true);
+            return true;
         }
     }
+
+    #endregion
 }

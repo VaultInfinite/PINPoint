@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Item 2
+  m_text: Glider
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1739,7 +1739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Item 1
+  m_text: 'Jump Boots
 
 '
   m_isRightToLeft: 0
@@ -3904,7 +3904,7 @@ RectTransform:
   m_Father: {fileID: 1619907974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.05263158, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5398,8 +5398,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1403823229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.05263158, y: 0}
+  m_AnchorMax: {x: 0.05263158, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7011,7 +7011,7 @@ RectTransform:
   m_Father: {fileID: 9698941}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.33333334, y: 1}
+  m_AnchorMax: {x: 0.36842105, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8245,8 +8245,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1387414856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.33333334, y: 0}
-  m_AnchorMax: {x: 0.33333334, y: 1}
+  m_AnchorMin: {x: 0.36842105, y: 0}
+  m_AnchorMax: {x: 0.36842105, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13646,7 +13646,6 @@ RectTransform:
   - {fileID: 1096876735}
   - {fileID: 680300597}
   - {fileID: 333211571}
-  - {fileID: 1134474493}
   m_Father: {fileID: 279926919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13938,7 +13937,7 @@ RectTransform:
   - {fileID: 678908742}
   - {fileID: 617632988}
   - {fileID: 173964601}
-  m_Father: {fileID: 1102990345}
+  m_Father: {fileID: 1190039202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14631,6 +14630,7 @@ RectTransform:
   m_Children:
   - {fileID: 1930716432}
   - {fileID: 1003002717}
+  - {fileID: 1134474493}
   - {fileID: 580742500}
   m_Father: {fileID: 279926919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15366,6 +15366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcs: []
   targetCamera: {fileID: 0}
+  target: {fileID: 0}
   pause: {fileID: 1096876734}
   lose: {fileID: 680300596}
   win: {fileID: 333211570}
@@ -15384,7 +15385,7 @@ MonoBehaviour:
   loseMoney: {fileID: 1148301138}
   loseTime: {fileID: 930866792}
   shopCash: {fileID: 896430957}
-  playerMoney: 123456789
+  playerMoney: 100000
   levelMoney: 1000000
   targetHit: 0
   levelFailed: 0
@@ -16418,7 +16419,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Item 3
+  m_text: 'Grapple Gun
 
 '
   m_isRightToLeft: 0
@@ -22458,9 +22459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9231ad445871e9f4daf0dc0ca9e0f6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpBootsSlot: {fileID: 139523704}
-  gliderSlot: {fileID: 275095152}
-  grappleSlot: {fileID: 915913234}
+  jumpBootsSlot: {fileID: 139523705}
+  gliderSlot: {fileID: 275095153}
+  grappleSlot: {fileID: 915913236}
 --- !u!114 &1930716434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22476,9 +22477,9 @@ MonoBehaviour:
   jumpBootsBought: 0
   gliderBought: 0
   grappleBought: 0
-  jumpBootsCost: 1000
-  gliderCost: 10000
-  grappleCost: 100000
+  jumpBootsCost: 1000000
+  gliderCost: 50000
+  grappleCost: 100
   jumpCostUI: {fileID: 937071922}
   glideCostUI: {fileID: 161088405}
   grappleCostUI: {fileID: 47402965}
