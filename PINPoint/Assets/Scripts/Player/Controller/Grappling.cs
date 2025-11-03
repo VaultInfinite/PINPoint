@@ -44,7 +44,7 @@ public class Grappling : MonoBehaviour
             hookPoint = grappleHit.point;
             if (point.transform.position == Vector3.zero)
             {
-                point = Instantiate(point, hookPoint, Quaternion.identity);
+                point = Instantiate(point, hookPoint, Quaternion.LookRotation(grappleHit.normal, Vector3.up));
                 point.SetActive(true);
                 gunHook.SetActive(false);
             }
@@ -55,7 +55,7 @@ public class Grappling : MonoBehaviour
                 point.SetActive(true);
                 gunHook.SetActive(false);
             }
-            lineRenderer.SetPosition(0, hookPoint);
+            lineRenderer.SetPosition(0, grappleHit.normal * 0.5f + grappleHit.point);
             lineRenderer.enabled = true;
         }
         if (player.input.Movement.Shoot.WasReleasedThisFrame())

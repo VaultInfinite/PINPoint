@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1806242478540011152}
   - component: {fileID: 5597719175082685518}
   - component: {fileID: 7019664936145875492}
+  - component: {fileID: 1889112382426328906}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -124,7 +125,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6969862669898622117}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 58a413a593bf73a4f8c9f1d5fc57a40b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -152,6 +153,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b56e01033ef3247b36bab2d744893c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCamera: {fileID: 0}
   targetCameraPos: {fileID: 1945098139998313778}
+  targetCamera: {fileID: 0}
+  speed: 5
+  minPauseDuration: 1
+  maxPauseDuration: 5
+  crowdRegion: {fileID: 0}
   isTarget: 0
+  reachedGoal: 0
+--- !u!54 &1889112382426328906
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969862669898622117}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0

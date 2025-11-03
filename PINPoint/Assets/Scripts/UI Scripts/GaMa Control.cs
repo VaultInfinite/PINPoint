@@ -51,11 +51,14 @@ public class GaMaControl : MonoBehaviour
 
     [Header("Money & Time")]
     //Money that is CURRENTLY in the player's posession
-    public int playerMoney;
+    public float playerMoney;
 
     //Money that the player can win in the level
-    public int levelMoney;
-    private int startMoney;
+    public float levelMoney;
+    public float startMoney;
+
+    //Duration of the level
+    public float levelDuration;
 
     [Header("Play State")] //Used in other Gameobjects to determine if they should stay active
     public bool targetHit = false;
