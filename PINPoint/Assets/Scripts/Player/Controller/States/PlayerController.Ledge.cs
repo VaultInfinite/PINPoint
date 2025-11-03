@@ -31,6 +31,7 @@ public partial class PlayerController
                 player.grapple.enabled = false;
                 player.grappleOBJ.SetActive(false);
                 player.grapple.point.SetActive(false);
+                player.grapple.gunHook.SetActive(true);
                 player.grapple.lineRenderer.enabled = false;
                 equipGrapple = true;
             }

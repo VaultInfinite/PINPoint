@@ -22,6 +22,7 @@ public class Grappling : MonoBehaviour
     private float dampeningAmount;
 
     public GameObject point;
+    public GameObject gunHook;
     [HideInInspector]
     public LineRenderer lineRenderer;
 
@@ -43,22 +44,25 @@ public class Grappling : MonoBehaviour
             hookPoint = grappleHit.point;
             if (point.transform.position == Vector3.zero)
             {
-                point = Instantiate(point, hookPoint, Quaternion.identity);
+                point = Instantiate(point, hookPoint, Quaternion.LookRotation(grappleHit.normal, Vector3.up));
                 point.SetActive(true);
+                gunHook.SetActive(false);
             }
             else
             {
                 point.transform.position = hookPoint;
                 point.transform.rotation = Quaternion.LookRotation(grappleHit.normal, Vector3.up);
                 point.SetActive(true);
+                gunHook.SetActive(false);
             }
-            lineRenderer.SetPosition(0, hookPoint);
+            lineRenderer.SetPosition(0, grappleHit.normal * 0.5f + grappleHit.point);
             lineRenderer.enabled = true;
         }
         if (player.input.Movement.Shoot.WasReleasedThisFrame())
         {
             hookPoint = Vector3.zero;
             point.SetActive(false);
+            gunHook.SetActive(true);
             lineRenderer.enabled = false;
         }
         if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
