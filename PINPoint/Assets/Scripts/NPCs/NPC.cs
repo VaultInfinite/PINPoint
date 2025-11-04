@@ -17,6 +17,11 @@ public class NPC : MonoBehaviour
     [HideInInspector]
     public CrowdSpawner crowdRegion;
 
+    [SerializeField]
+    private SkinnedMeshRenderer meshRenderer;
+
+    public Animator npcAnim;
+
     public bool isTarget;
     [SerializeField]
     private bool reachedGoal;
@@ -24,12 +29,14 @@ public class NPC : MonoBehaviour
     private void Start()
     {
         GaMaControl.Instance.npcs.Add(this);
-        Material material = gameObject.GetComponent<MeshRenderer>().material;
+
+        targetLocation = RandomPointInRegion();
+
+        Material material = meshRenderer.material;
         material.color = Random.ColorHSV();
 
         rb = GetComponent<Rigidbody>();
 
-        targetLocation = RandomPointInRegion();
     }
 
     private void OnDrawGizmos()
