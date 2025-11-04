@@ -19,9 +19,13 @@ public class ShopManager : MonoBehaviour
     public string gliderDesc = "This item allows you to glide in the air";
     public string grappleDesc = "This item allows you to grapple to nearby walls";
 
+    public GameObject jumpBootsToggle;
+    public GameObject glidersToggle;
+    public GameObject grappleToggle;
 
+    public GameObject player;
 
-    public string itemDesc = "";
+    public TextMeshProUGUI itemDescUI;
 
     public int currItem = 3;
     #endregion
@@ -76,6 +80,39 @@ public class ShopManager : MonoBehaviour
         {
             grappleSlot.interactable = true;
         }
+
+        if (jumpBootsToggle == null || glidersToggle == null || grappleToggle == null)
+        {
+            Debug.LogError("ERROR: Toggle Not assigned");
+            return;
+        }
+
+        if (ItemManager.Instance.jumpBootsBought == true)
+        {
+            jumpBootsToggle.SetActive(true);
+        }
+        else
+        {
+            jumpBootsToggle.SetActive(false);
+        }
+
+        if (ItemManager.Instance.gliderBought == true)
+        {
+            glidersToggle.SetActive(true);
+        }
+        else
+        {
+            glidersToggle.SetActive(false);
+        }
+
+        if (ItemManager.Instance.grappleBought == true)
+        {
+            grappleToggle.SetActive(true);
+        }
+        else
+        {
+            grappleToggle.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -84,6 +121,13 @@ public class ShopManager : MonoBehaviour
     /// <param name="item"></param>
     public void BuyItem()
     {
+        if (jumpBootsToggle == null || glidersToggle == null || grappleToggle == null)
+        {
+            Debug.LogError("ERROR: Toggle Not assigned");
+            return;
+        }
+
+
         switch (currItem)
         {
             // Jump Boots
@@ -93,6 +137,8 @@ public class ShopManager : MonoBehaviour
                 {
                     GaMaControl.Instance.playerMoney -= ItemManager.Instance.jumpBootsCost;
                     ItemManager.Instance.jumpBootsBought = true;
+                    player.GetComponent<PlayerController>().canDoubleJump = true;
+                    jumpBootsToggle.SetActive(true);
                 }
 
                 break;
@@ -104,6 +150,8 @@ public class ShopManager : MonoBehaviour
                 {
                     GaMaControl.Instance.playerMoney -= ItemManager.Instance.gliderCost;
                     ItemManager.Instance.gliderBought = true;
+                    player.GetComponent<PlayerController>().canGlide = true;
+                    glidersToggle.SetActive(true);
                 }
 
 
@@ -116,6 +164,8 @@ public class ShopManager : MonoBehaviour
                 {
                     GaMaControl.Instance.playerMoney -= ItemManager.Instance.grappleCost;
                     ItemManager.Instance.grappleBought = true;
+                    player.GetComponent<PlayerController>().canGrapple = true;
+                    grappleToggle.SetActive(true);
                 }
 
 
@@ -139,7 +189,7 @@ public class ShopManager : MonoBehaviour
             case 0:
 
                 currItem = 0;
-                itemDesc = jumpBootsDesc;
+                itemDescUI.text = jumpBootsDesc;
 
 
                 break;
@@ -148,7 +198,7 @@ public class ShopManager : MonoBehaviour
             case 1:
 
                 currItem = 1;
-                itemDesc = gliderDesc;
+                itemDescUI.text = gliderDesc;
 
                 break;
 
@@ -156,19 +206,72 @@ public class ShopManager : MonoBehaviour
             case 2:
 
                 currItem = 2;
-                itemDesc = grappleDesc;
+                itemDescUI.text = grappleDesc;
 
                 break;
 
             default:
 
                 currItem = 3;
-                itemDesc = "ERROR";
+                itemDescUI.text = "ERROR";
 
                 break;
         }
 
         RefreshShop();
+    }
+
+    public void ToggleAbility(int item)
+    {
+        switch (item)
+        {
+            // Jump Boots
+            case 0:
+                if (player.GetComponent<PlayerController>().canDoubleJump)
+                {
+                    player.GetComponent<PlayerController>().canDoubleJump = false;
+                }
+                else
+                {
+                    player.GetComponent<PlayerController>().canDoubleJump = true;
+                }
+                    
+
+
+                break;
+
+            // Glider
+            case 1:
+                if (player.GetComponent<PlayerController>().canGlide)
+                {
+                    player.GetComponent<PlayerController>().canGlide = false;
+                }
+                else
+                {
+                    player.GetComponent<PlayerController>().canGlide = true;
+                }
+
+                break;
+
+            // Grapple
+            case 2:
+                if (player.GetComponent<PlayerController>().canGrapple)
+                {
+                    player.GetComponent<PlayerController>().canGrapple = false;
+                }
+                else
+                {
+                    player.GetComponent<PlayerController>().canGrapple = true;
+                }
+
+                break;
+
+            default:
+
+                Debug.LogError("ERROR: Toggle Out Of Range");
+
+                break;
+        }
     }
 
     #region Debug Methods
