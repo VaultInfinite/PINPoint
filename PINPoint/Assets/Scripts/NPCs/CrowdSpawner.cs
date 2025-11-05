@@ -6,8 +6,6 @@ public class CrowdSpawner : MonoBehaviour
 {
     public GameObject npcs;
 
-    public NPCTextureObject NPCTextures;
-
     [SerializeField]
     private int minNpcs, maxNpcs;
     private float Radius => Mathf.Min(size.x, size.y) / 4.0f;

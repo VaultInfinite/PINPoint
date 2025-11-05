@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return instance; } }
 
     //Target Variables
-    public List<NPC> npcs = new List<NPC>();
+    public List<NPC> npcs;
     public Camera targetCamera;
     [HideInInspector]
     public GameObject target;
+    public NPCTextureObject npcTextures;
 
     [Header("UI GameObjects")]
     public GameObject pause;
@@ -92,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         startMoney = levelMoney;
         StartCoroutine(TutorialDisplay());
-        StartCoroutine(TargetSelect());
+        SetupNPCs();
 
         if (hideOutButtons != null)
         {
@@ -310,43 +311,56 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void NPCList()
+    private void SetupNPCs()
     {
-        bool hasTarget = false;
+        int targetMaterial = Random.Range(0, npcTextures.materials.Count);
 
-        for (int index = 0; index < npcs.Count; index++)
+        foreach (NPC npc in npcs)
         {
-            Debug.Log("This line activated");
-
-            float randomNumber = Random.Range(0f, 1f);
-
-            if (randomNumber >= 0.9f && !hasTarget || index >= npcs.Count && !hasTarget)
+            int assignedMaterial;
+            do
             {
-                target = npcs[index].gameObject;
-                npcs[index].isTarget = true;
-                npcs[index].targetCamera = targetCamera;
-                Debug.Log("target assigned at" + npcs[index].gameObject);
-                npcs[index].gameObject.tag = "Target";
+                assignedMaterial = Random.Range(0, npcTextures.materials.Count);
+            } while (targetMaterial == assignedMaterial);
 
-                hasTarget = true;
-            }
-            if (npcs[index].isTarget == false)
-            {
-                npcs[index].targetCamera = null;
-            }
+            npc.meshRenderer.material = npcTextures.materials[assignedMaterial];
         }
+
+        int targetNPC = Random.Range(0, npcs.Count);
+        NPC npcTarget = npcs[targetNPC];
+
+        //Assigning Target Variables
+        npcTarget.meshRenderer.material = npcTextures.materials[targetMaterial];
+        npcTarget.isTarget = true;
+        npcTarget.gameObject.tag = "Target";
+        npcTarget.targetCamera = targetCamera;
+
+        //bool hasTarget = false;
+        //for (int index = 0; index < npcs.Count; index++)
+        //{
+        //    Debug.Log("This line activated");
+
+        //    if (randomNumber >= 0.9f && !hasTarget || index >= npcs.Count && !hasTarget)
+        //    {
+        //        target = npcs[index].gameObject;
+        //        npcs[index].isTarget = true;
+        //        npcs[index].targetCamera = targetCamera;
+        //        Debug.Log("target assigned at" + npcs[index].gameObject);
+        //        npcs[index].gameObject.tag = "Target";
+
+        //        hasTarget = true;
+        //    }
+        //    if (npcs[index].isTarget == false)
+        //    {
+        //        npcs[index].targetCamera = null;
+        //    }
+        //}
     }
 
     private IEnumerator TutorialDisplay()
     {
         yield return new WaitForSeconds(18f);
         tutorial.SetActive(false);
-    }
-
-    private IEnumerator TargetSelect()
-    {
-        yield return new WaitForSeconds(0.5f);
-        NPCList();
     }
     #endregion
 }

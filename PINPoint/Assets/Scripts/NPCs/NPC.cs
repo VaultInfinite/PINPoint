@@ -17,8 +17,7 @@ public class NPC : MonoBehaviour
     [HideInInspector]
     public CrowdSpawner crowdRegion;
 
-    [SerializeField]
-    private SkinnedMeshRenderer meshRenderer;
+    public SkinnedMeshRenderer meshRenderer;
 
     public Animator npcAnim;
 
@@ -26,14 +25,16 @@ public class NPC : MonoBehaviour
     [SerializeField]
     private bool reachedGoal;
 
-    private void Start()
+    private void Awake()
     {
         GameManager.Instance.npcs.Add(this);
+    }
 
+    private void Start()
+    {
         targetLocation = RandomPointInRegion();
 
         rb = GetComponent<Rigidbody>();
-
     }
 
     private void OnDrawGizmos()
@@ -55,10 +56,12 @@ public class NPC : MonoBehaviour
         if (Vector3.Distance(targetLocation, transform.position) < 0.1f && !reachedGoal)
         {
             StartCoroutine(NPCIdle());
+            npcAnim.SetTrigger("Idle");
         }
         else if (!reachedGoal)
         {
             rb.velocity = (targetLocation - transform.position).normalized * speed;
+            npcAnim.SetTrigger("Walk");
         }
         else
         {
@@ -79,10 +82,8 @@ public class NPC : MonoBehaviour
     private IEnumerator NPCIdle()
     {
         reachedGoal = true;
-        npcAnim.SetTrigger("Idle");
         yield return new WaitForSeconds(Random.Range(minPauseDuration,maxPauseDuration));
         targetLocation = RandomPointInRegion();
-        npcAnim.SetTrigger("Walk");
         reachedGoal = false;
     }
 }

@@ -4743,7 +4743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6421379307356660112
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5117,7 +5117,6 @@ MonoBehaviour:
   weaponDisplay: {fileID: 3112171150685675296}
   targetPrice: {fileID: 950168754113243468}
   timer: 
-  interest: 1
 --- !u!1 &4410538986589935742
 GameObject:
   m_ObjectHideFlags: 0
@@ -10004,12 +10003,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &6458287656061655312
 GameObject:
   m_ObjectHideFlags: 0
@@ -10750,6 +10749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcs: []
   targetCamera: {fileID: 259768293440827376}
+  target: {fileID: 0}
+  npcTextures: {fileID: 11400000, guid: f8e9382f5a39b3c4b8906ecbf5539b25, type: 2}
   pause: {fileID: 6742735932734105199}
   lose: {fileID: 4107384689608814940}
   win: {fileID: 5837117445733486248}
@@ -10759,7 +10760,10 @@ MonoBehaviour:
   load: {fileID: 5389291282628053654}
   playerUI: {fileID: 4408154825043583222}
   reticle: {fileID: 76434331543651424}
+  hideOutButtons: {fileID: 0}
   tutorial: {fileID: 4028075981651838161}
+  settingsExitButton: {fileID: 0}
+  settingsBackButton: {fileID: 0}
   winMoney: {fileID: 3772194613017393589}
   winTime: {fileID: 8552036037296052764}
   loseMoney: {fileID: 144960509812634689}
@@ -10767,6 +10771,8 @@ MonoBehaviour:
   shopCash: {fileID: 3947006308273676177}
   playerMoney: 0
   levelMoney: 100000
+  startMoney: 0
+  levelDuration: 240
   targetHit: 0
   levelFailed: 0
   transTimer: 0.5

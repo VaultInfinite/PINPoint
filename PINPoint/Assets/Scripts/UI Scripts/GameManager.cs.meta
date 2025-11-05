@@ -3,8 +3,29 @@ guid: 3913bab997403774f9e3580683faf695
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - targetCamera: {instanceID: 0}
+  - target: {instanceID: 0}
+  - npcTextures: {fileID: 11400000, guid: f8e9382f5a39b3c4b8906ecbf5539b25, type: 2}
+  - pause: {instanceID: 0}
+  - lose: {instanceID: 0}
+  - win: {instanceID: 0}
+  - contracts: {instanceID: 0}
+  - equipment: {instanceID: 0}
+  - settings: {instanceID: 0}
+  - load: {instanceID: 0}
+  - playerUI: {instanceID: 0}
+  - reticle: {instanceID: 0}
+  - hideOutButtons: {instanceID: 0}
+  - tutorial: {instanceID: 0}
+  - settingsExitButton: {instanceID: 0}
+  - settingsBackButton: {instanceID: 0}
+  - winMoney: {instanceID: 0}
+  - winTime: {instanceID: 0}
+  - loseMoney: {instanceID: 0}
+  - loseTime: {instanceID: 0}
+  - shopCash: {instanceID: 0}
+  executionOrder: -1
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
