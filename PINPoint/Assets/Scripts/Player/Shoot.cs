@@ -105,13 +105,15 @@ public class Shoot : MonoBehaviour
     //Shoot the bullet
     public void Shooting()
     {
+        //Check if can shoot
+        if (!canShoot) return;
+
         if (AudioControl.Instance != null)
         {
             AudioControl.Instance.PlaySoundEffect(sfxType.SHOOT);
         }
 
-        //Check if can shoot
-        if (!canShoot) return;
+        
 
         //RIFLE CHECK
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit) && playerGun == GunType.rifle)
