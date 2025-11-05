@@ -17,19 +17,23 @@ public class NPC : MonoBehaviour
     [HideInInspector]
     public CrowdSpawner crowdRegion;
 
+    [SerializeField]
+    private SkinnedMeshRenderer meshRenderer;
+
+    public Animator npcAnim;
+
     public bool isTarget;
     [SerializeField]
     private bool reachedGoal;
 
     private void Start()
     {
-        GaMaControl.Instance.npcs.Add(this);
-        Material material = gameObject.GetComponent<MeshRenderer>().material;
-        material.color = Random.ColorHSV();
+        GameManager.Instance.npcs.Add(this);
+
+        targetLocation = RandomPointInRegion();
 
         rb = GetComponent<Rigidbody>();
 
-        targetLocation = RandomPointInRegion();
     }
 
     private void OnDrawGizmos()
@@ -75,8 +79,10 @@ public class NPC : MonoBehaviour
     private IEnumerator NPCIdle()
     {
         reachedGoal = true;
+        npcAnim.SetTrigger("Idle");
         yield return new WaitForSeconds(Random.Range(minPauseDuration,maxPauseDuration));
         targetLocation = RandomPointInRegion();
+        npcAnim.SetTrigger("Walk");
         reachedGoal = false;
     }
 }

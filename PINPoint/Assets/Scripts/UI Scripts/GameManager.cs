@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GaMaControl : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    private static GaMaControl instance;
+    private static GameManager instance;
 
-    public static GaMaControl Instance { get { return instance; } }
+    public static GameManager Instance { get { return instance; } }
 
     //Target Variables
     public List<NPC> npcs = new List<NPC>();

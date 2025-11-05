@@ -30,14 +30,14 @@ public class GameUIControl : MonoBehaviour
 
     private void Start()
     {
-        targetPrice.text = "$" + GaMaControl.Instance.levelMoney.ToString("00,000,000");
+        targetPrice.text = "$" + GameManager.Instance.levelMoney.ToString("00,000,000");
     }
 
 
     private void Update()
     {
         //If the target has been hit, stop time
-        if (GaMaControl.Instance.targetHit || GaMaControl.Instance.levelFailed) return;
+        if (GameManager.Instance.targetHit || GameManager.Instance.levelFailed) return;
 
         //Timer
         
@@ -50,7 +50,7 @@ public class GameUIControl : MonoBehaviour
         timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
 
         timeDisplay.text = timer;
-        payDisplay.text = "$" + GaMaControl.Instance.levelMoney.ToString("00,000,000");
+        payDisplay.text = "$" + GameManager.Instance.levelMoney.ToString("00,000,000");
 
 
         //TEMP WEAPON DISPLAY IMPLEMENTATION
@@ -93,15 +93,15 @@ public class GameUIControl : MonoBehaviour
     private void MoneyInterval()
     {
         //Check if there is enough money
-        if (GaMaControl.Instance.levelMoney <= 0)
+        if (GameManager.Instance.levelMoney <= 0)
         {
-            GaMaControl.Instance.Fail();
+            GameManager.Instance.Fail();
         }
         //Decrease money
         else
         {
-            float interest = GaMaControl.Instance.startMoney / GaMaControl.Instance.levelDuration;
-            GaMaControl.Instance.levelMoney -= interest * Time.fixedDeltaTime;
+            float interest = GameManager.Instance.startMoney / GameManager.Instance.levelDuration;
+            GameManager.Instance.levelMoney -= interest * Time.fixedDeltaTime;
         }
     }
 }
