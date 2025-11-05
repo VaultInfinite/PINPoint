@@ -21,7 +21,7 @@ public class Pause : MonoBehaviour
 
     private void Start()
     {
-        pauseMenu = GaMaControl.Instance.pause;
+        pauseMenu = GameManager.Instance.pause;
 
         pauseMenu.SetActive(false);
     }
@@ -36,7 +36,7 @@ public class Pause : MonoBehaviour
     /// </summary>
     public void HitPause()
     {
-        if (GaMaControl.Instance.levelFailed) return;
+        if (GameManager.Instance.levelFailed) return;
 
         isPaused = !isPaused;
 

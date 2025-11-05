@@ -28,12 +28,9 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        GaMaControl.Instance.npcs.Add(this);
+        GameManager.Instance.npcs.Add(this);
 
         targetLocation = RandomPointInRegion();
-
-        Material material = meshRenderer.material;
-        material.color = Random.ColorHSV();
 
         rb = GetComponent<Rigidbody>();
 
@@ -82,8 +79,10 @@ public class NPC : MonoBehaviour
     private IEnumerator NPCIdle()
     {
         reachedGoal = true;
+        npcAnim.SetTrigger("Idle");
         yield return new WaitForSeconds(Random.Range(minPauseDuration,maxPauseDuration));
         targetLocation = RandomPointInRegion();
+        npcAnim.SetTrigger("Walk");
         reachedGoal = false;
     }
 }

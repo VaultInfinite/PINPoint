@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: aa46eee8737cab84dbf4880fc58b7714
+guid: 547f30718af649d479e8cb929a1ba9ba
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - npcs: {instanceID: 0}
-  - NPCTextures: {fileID: 11400000, guid: f8e9382f5a39b3c4b8906ecbf5539b25, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -79,7 +79,7 @@ public class Shoot : MonoBehaviour
         {
             CameraMoveEffect(camZoom);
 
-            GaMaControl.Instance.reticle.SetActive(true);
+            GameManager.Instance.reticle.SetActive(true);
         }
 
         //If Shoot button is pressed while fully zoomed in, take the shot!
@@ -93,7 +93,7 @@ public class Shoot : MonoBehaviour
         if (!player.input.Movement.Aim.IsPressed())
         {
             isAiming = false;
-            GaMaControl.Instance.reticle.SetActive(false);
+            GameManager.Instance.reticle.SetActive(false);
 
             CameraMoveEffect(deZoom);
         }
@@ -126,17 +126,17 @@ public class Shoot : MonoBehaviour
                         Debug.Log("KILL!");
 
                         //The Target has been hit
-                        GaMaControl.Instance.targetHit = true;
+                        GameManager.Instance.targetHit = true;
 
                         //Pull up win screen
                         player.input.Disable();
-                        GaMaControl.Instance.CashOut();
+                        GameManager.Instance.CashOut();
 
                         break;
                     case false:
 
                         player.input.Disable();
-                        GaMaControl.Instance.Fail();
+                        GameManager.Instance.Fail();
 
                         break;
                 }
@@ -144,13 +144,13 @@ public class Shoot : MonoBehaviour
             else
             {
                 player.input.Disable();
-                GaMaControl.Instance.Fail();
+                GameManager.Instance.Fail();
             }
         }
         else
         {
             player.input.Disable();
-            GaMaControl.Instance.Fail();
+            GameManager.Instance.Fail();
         }
 
         //Shock-Gun check
@@ -203,9 +203,9 @@ public class Shoot : MonoBehaviour
 
     public bool TargetDistance()
     {
-        if (GaMaControl.Instance.target != null)
+        if (GameManager.Instance.target != null)
         {
-            float distance = Vector3.Distance(player.transform.position, GaMaControl.Instance.target.transform.position);
+            float distance = Vector3.Distance(player.transform.position, GameManager.Instance.target.transform.position);
             if (distance <= targetDistance)
             {
                 //Debug.Log("Target in Range");

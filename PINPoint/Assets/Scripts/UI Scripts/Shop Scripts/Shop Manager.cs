@@ -40,7 +40,7 @@ public class ShopManager : MonoBehaviour
     {
         if (!CheckButton(jumpBootsSlot) || !CheckButton(gliderSlot) || !CheckButton(grappleSlot)) { return; }
 
-        if (ItemManager.Instance.jumpBootsCost > GaMaControl.Instance.playerMoney)
+        if (ItemManager.Instance.jumpBootsCost > GameManager.Instance.playerMoney)
         {
             jumpBootsSlot.interactable = false;
         }
@@ -49,7 +49,7 @@ public class ShopManager : MonoBehaviour
             jumpBootsSlot.interactable = true;
         }
 
-        if (ItemManager.Instance.gliderCost > GaMaControl.Instance.playerMoney)
+        if (ItemManager.Instance.gliderCost > GameManager.Instance.playerMoney)
         {
             gliderSlot.interactable = false;
         }
@@ -58,7 +58,7 @@ public class ShopManager : MonoBehaviour
             gliderSlot.interactable = true;
         }
 
-        if (ItemManager.Instance.grappleCost > GaMaControl.Instance.playerMoney)
+        if (ItemManager.Instance.grappleCost > GameManager.Instance.playerMoney)
         {
             grappleSlot.interactable = false;
         }
@@ -82,9 +82,9 @@ public class ShopManager : MonoBehaviour
             // Jump Boots
             case 0:
 
-                if (ItemManager.Instance.jumpBootsCost <= GaMaControl.Instance.playerMoney)
+                if (ItemManager.Instance.jumpBootsCost <= GameManager.Instance.playerMoney)
                 {
-                    GaMaControl.Instance.playerMoney -= ItemManager.Instance.jumpBootsCost;
+                    GameManager.Instance.playerMoney -= ItemManager.Instance.jumpBootsCost;
                     ItemManager.Instance.jumpBootsBought = true;
                 }
 
@@ -93,9 +93,9 @@ public class ShopManager : MonoBehaviour
             // Glider
             case 1:
 
-                if (ItemManager.Instance.gliderCost <= GaMaControl.Instance.playerMoney)
+                if (ItemManager.Instance.gliderCost <= GameManager.Instance.playerMoney)
                 {
-                    GaMaControl.Instance.playerMoney -= ItemManager.Instance.gliderCost;
+                    GameManager.Instance.playerMoney -= ItemManager.Instance.gliderCost;
                     ItemManager.Instance.gliderBought = true;
                 }
 
@@ -105,9 +105,9 @@ public class ShopManager : MonoBehaviour
             // Grapple
             case 2:
 
-                if (ItemManager.Instance.grappleCost <= GaMaControl.Instance.playerMoney)
+                if (ItemManager.Instance.grappleCost <= GameManager.Instance.playerMoney)
                 {
-                    GaMaControl.Instance.playerMoney -= ItemManager.Instance.grappleCost;
+                    GameManager.Instance.playerMoney -= ItemManager.Instance.grappleCost;
                     ItemManager.Instance.grappleBought = true;
                 }
 
