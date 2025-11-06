@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,7 +31,6 @@ public class GameManager : MonoBehaviour
     public GameObject reticle;
 
     public GameObject hideOutButtons;
-    public GameObject tutorial;
 
     //Settings UI
     public GameObject settingsExitButton;
@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour
     [Header("Scene Transition")]
     public float transTimer;
     private Scene restartScene;
-    //public int levelNum;
 
     /// <summary>
     /// Make sure there is one one Game Manager Instance
@@ -86,13 +85,12 @@ public class GameManager : MonoBehaviour
         }
 
         //Keep this object even when changing scenes
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         startMoney = levelMoney;
-        StartCoroutine(TutorialDisplay());
         SetupNPCs();
 
         if (hideOutButtons != null)
@@ -167,7 +165,7 @@ public class GameManager : MonoBehaviour
         HideMouse();
         Time.timeScale = 1;
         Pause.isPaused = false;
-        pause.SetActive(false );
+        pause.SetActive(false);
     }
 
     public void GoToLevel(int levelNum)
@@ -177,13 +175,15 @@ public class GameManager : MonoBehaviour
         BlackOut();
 
         ResetVariables();
+        npcs.Clear();
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);
         settings.SetActive(false);
         equipment.SetActive(false);
 
-        SceneManager.LoadSceneAsync(levelNum);
+        SceneManager.LoadScene(levelNum);
+        SetupNPCs();
     }
 
 
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-        Debug.LogAssertion("Game Quit");
+        //Debug.LogAssertion("Game Quit");
     }
 
     private void ResetVariables()
@@ -313,6 +313,7 @@ public class GameManager : MonoBehaviour
 
     private void SetupNPCs()
     {
+        npcs = GameObject.FindGameObjectsWithTag("NPC").Select(npc => npc.GetComponent<NPC>()).ToList();
         int targetMaterial = Random.Range(0, npcTextures.materials.Count);
 
         foreach (NPC npc in npcs)
@@ -335,32 +336,8 @@ public class GameManager : MonoBehaviour
         npcTarget.gameObject.tag = "Target";
         npcTarget.targetCamera = targetCamera;
 
-        //bool hasTarget = false;
-        //for (int index = 0; index < npcs.Count; index++)
-        //{
-        //    Debug.Log("This line activated");
-
-        //    if (randomNumber >= 0.9f && !hasTarget || index >= npcs.Count && !hasTarget)
-        //    {
-        //        target = npcs[index].gameObject;
-        //        npcs[index].isTarget = true;
-        //        npcs[index].targetCamera = targetCamera;
-        //        Debug.Log("target assigned at" + npcs[index].gameObject);
-        //        npcs[index].gameObject.tag = "Target";
-
-        //        hasTarget = true;
-        //    }
-        //    if (npcs[index].isTarget == false)
-        //    {
-        //        npcs[index].targetCamera = null;
-        //    }
-        //}
-    }
-
-    private IEnumerator TutorialDisplay()
-    {
-        yield return new WaitForSeconds(18f);
-        tutorial.SetActive(false);
+        npcTarget.gameObject.layer = LayerMask.NameToLayer("Target");
+        npcTarget.meshRenderer.gameObject.layer = LayerMask.NameToLayer("Target");
     }
     #endregion
 }

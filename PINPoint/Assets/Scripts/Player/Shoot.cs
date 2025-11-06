@@ -21,8 +21,6 @@ public class Shoot : MonoBehaviour
     [Header("Shooting Variables")]
     private Transform FirePos;
     private Camera cam;
-    [SerializeField]
-    private float targetDistance;
 
     [SerializeField]
     private float shootCooldown;
@@ -97,23 +95,15 @@ public class Shoot : MonoBehaviour
 
             CameraMoveEffect(deZoom);
         }
-
-        canShoot = TargetDistance();
-
     }
 
     //Shoot the bullet
     public void Shooting()
     {
-        //Check if can shoot
-        if (!canShoot) return;
-
         if (AudioControl.Instance != null)
         {
             AudioControl.Instance.PlaySoundEffect(sfxType.SHOOT);
         }
-
-        
 
         //RIFLE CHECK
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit) && playerGun == GunType.rifle)
@@ -156,7 +146,7 @@ public class Shoot : MonoBehaviour
         }
 
         //Shock-Gun check
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun && canShoot)
         {
             GameObject hitObject = hit.transform.gameObject;
 
@@ -168,13 +158,8 @@ public class Shoot : MonoBehaviour
             }
         }
 
-        
-
         //Check Gun Type
         GetGunCooldown();
-
-        //Call timer
-        StartCoroutine(ShootingCooldown(shootCooldown));
     }
 
     /// <summary>
@@ -188,6 +173,7 @@ public class Shoot : MonoBehaviour
             case GunType.stun:
 
                 shootCooldown = stunGunCD;
+                StartCoroutine(ShootingCooldown(shootCooldown));
 
                 break;
 
@@ -200,28 +186,6 @@ public class Shoot : MonoBehaviour
                 Debug.LogError("There is no Gun Type!");
 
                 break;
-        }
-    }
-
-    public bool TargetDistance()
-    {
-        if (GameManager.Instance.target != null)
-        {
-            float distance = Vector3.Distance(player.transform.position, GameManager.Instance.target.transform.position);
-            if (distance <= targetDistance)
-            {
-                //Debug.Log("Target in Range");
-                return true;
-            }
-            else
-            {
-                //Debug.Log("Target out of Range");
-                return false;
-            }
-        }
-        else
-        {
-            return false;
         }
     }
 

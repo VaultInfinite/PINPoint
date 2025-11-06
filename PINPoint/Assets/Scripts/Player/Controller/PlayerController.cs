@@ -137,21 +137,6 @@ public partial class PlayerController : MonoBehaviour
             grappleOBJ.SetActive(true);
         }
 
-        //Lowers and raises the rifle based on Target Proximity
-        if (sniper.isActiveAndEnabled)
-        {
-            
-            if (!sniper.TargetDistance())
-            {
-                rifleRotation = Mathf.Lerp(rifleRotation, -rifleLowered, Time.deltaTime * 6f);
-            }
-            else
-            {
-                rifleRotation = Mathf.Lerp(rifleRotation, rifleRaised, Time.deltaTime * 6f);
-            }
-            sniperOBJ.transform.localEulerAngles = new Vector3(-rifleRotation / 2, rifleRotation, 0);
-        }
-
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 

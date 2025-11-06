@@ -12,4 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547f30718af649d479e8cb929a1ba9ba, type: 3}
   m_Name: NPCTextures
   m_EditorClassIdentifier: 
-  materials: []
+  materials:
+  - {fileID: 2100000, guid: a4f2ea74299fe514f9eefab3e08a45d3, type: 2}
+  - {fileID: 2100000, guid: 710f9aec6dde83d4abdb7b49315a530a, type: 2}
+  - {fileID: 2100000, guid: ad9d7d31a8d9df84da9c1762867031bb, type: 2}
+  - {fileID: 2100000, guid: 3125e7c099b54aa489e1e4c0d86f6ea9, type: 2}
+  - {fileID: 2100000, guid: 7e3c4a5b4da79d449a0714a30c5b520c, type: 2}
+  - {fileID: 2100000, guid: d866f70439c5cb04b870bd7e7ffe0511, type: 2}
+  - {fileID: 2100000, guid: b9cf70a3a9f121844a10849b820c3799, type: 2}
+  - {fileID: 2100000, guid: c610b18cc84a8d2458c08ae773dd7387, type: 2}
+  - {fileID: 2100000, guid: 46c57aa07176cbc498fb7726adf04a04, type: 2}
+  - {fileID: 2100000, guid: 0380940bbbf5c2d40a758af197851d51, type: 2}
+  - {fileID: 2100000, guid: e7fe4f56c15cf284c917f928c9d4e2a2, type: 2}
+  - {fileID: 2100000, guid: 5f49ed96b4dee6644bd06c97cc7e158b, type: 2}
+  - {fileID: 2100000, guid: 6214c52712149ab44be1b17550435bc2, type: 2}
+  - {fileID: 2100000, guid: 67a318e167e149f4ca7905f7532bf939, type: 2}
+  - {fileID: 2100000, guid: 83cb64bc7174e0348b58391104c5a4bf, type: 2}

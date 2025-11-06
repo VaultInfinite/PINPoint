@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2640467065453060926}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: -2}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1889112382426328906}
   m_Layer: 0
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,6 @@ MonoBehaviour:
   speed: 5
   minPauseDuration: 1
   maxPauseDuration: 5
-  targetLocation: {x: 0, y: 0, z: 0}
   crowdRegion: {fileID: 0}
   meshRenderer: {fileID: 2445808461765559495}
   npcAnim: {fileID: 5911079363547130768}
@@ -164,14 +163,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8324371860830375360}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: 0.03658861, y: -0.9, z: 0.056201883}
+  m_LocalRotation: {x: -0, y: -0.0000022947786, z: -0, w: 1}
+  m_LocalPosition: {x: 0.000000059604645, y: -0.9, z: -0.000000026077032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3625669434182185320}
   m_Father: {fileID: 6212856911896769584}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1607350040044326784
 PrefabInstance:
   m_ObjectHideFlags: 0

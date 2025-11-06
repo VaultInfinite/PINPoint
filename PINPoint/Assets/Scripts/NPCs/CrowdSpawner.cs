@@ -2,8 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard
+}
+
 public class CrowdSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private Difficulty difficulty;
     public GameObject npcs;
 
     [SerializeField]
@@ -15,7 +24,7 @@ public class CrowdSpawner : MonoBehaviour
     /// <summary>
     /// Gizmos to visualize crowd spawning region
     /// </summary>
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         //The navmesh region for the NPCs to wander
         Gizmos.matrix = transform.localToWorldMatrix;

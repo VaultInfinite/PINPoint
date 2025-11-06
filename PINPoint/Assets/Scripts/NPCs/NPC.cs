@@ -25,10 +25,10 @@ public class NPC : MonoBehaviour
     [SerializeField]
     private bool reachedGoal;
 
-    private void Awake()
-    {
-        GameManager.Instance.npcs.Add(this);
-    }
+    //private void Awake()
+    //{
+    //    GameManager.Instance.npcs.Add(this);
+    //}
 
     private void Start()
     {
@@ -57,11 +57,14 @@ public class NPC : MonoBehaviour
         {
             StartCoroutine(NPCIdle());
             npcAnim.SetTrigger("Idle");
+            npcAnim.ResetTrigger("Walk");
         }
         else if (!reachedGoal)
         {
             rb.velocity = (targetLocation - transform.position).normalized * speed;
+            transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
             npcAnim.SetTrigger("Walk");
+            npcAnim.ResetTrigger("Idle");
         }
         else
         {
