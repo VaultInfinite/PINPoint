@@ -63,7 +63,7 @@ public partial class PlayerController
         public override void OnUpdate(PlayerController player)
         {
             //If player is in the air and holds the jump key, player will glide
-            if (player.input.Movement.Gliding.WasPressedThisFrame() && player.gliding.CanGlide() && player.canGlide)
+            if (player.input.Movement.Gliding.WasPressedThisFrame() && player.gliding.CanGlide() && player.CanGlide)
             {
                 player.SetState<Gliding>();
             }
@@ -92,7 +92,7 @@ public partial class PlayerController
             }
 
             //If player is in the air and jumps, double jump if applicable
-            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused) && player.canDoubleJump)
+            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused) && player.CanDoubleJump)
             {
                 if (!player.TryJump())
                 {

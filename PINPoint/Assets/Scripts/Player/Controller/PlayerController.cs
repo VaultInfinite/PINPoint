@@ -8,7 +8,6 @@ using UnityEngine.Playables;
 
 public partial class PlayerController : MonoBehaviour
 {
-    
     #region Variables
 
     [Header("Movement")]
@@ -70,10 +69,9 @@ public partial class PlayerController : MonoBehaviour
     public Type _state = typeof(Walking);
 
     //Player Ability
-    [Header("Abilities")]
-    public bool canDoubleJump;
-    public bool canGlide;
-    public bool canGrapple;
+    private bool CanDoubleJump => ItemManager.Instance.rocketboots.enabled;
+    private bool CanGlide => ItemManager.Instance.glider.enabled;
+    private bool CanGrapple => ItemManager.Instance.grapple.enabled;
 
     //bool to eventually stun player if the police drone shoots them
     public bool stun = false;
@@ -129,7 +127,7 @@ public partial class PlayerController : MonoBehaviour
             grapple.lineRenderer.enabled = false;
 
         }
-        if (input.Movement.SelectGrapple.IsPressed() && state != ledge)
+        if (input.Movement.SelectGrapple.IsPressed() && state != ledge && CanGrapple)
         {
             sniper.enabled = false;
             sniperOBJ.SetActive(false);

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     private Scene restartScene;
 
     /// <summary>
-    /// Make sure there is one one Game Manager Instance
+    /// Make sure there is one Game Manager Instance
     /// </summary>
     private void Awake()
     {
