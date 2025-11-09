@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Grapple
   m_EditorClassIdentifier: 
   cost: 35000
+  bought: 1
+  enabled: 1
   description: Swing :D
   displayName: Grapple

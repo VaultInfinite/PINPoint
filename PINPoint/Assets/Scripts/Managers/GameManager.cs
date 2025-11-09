@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
     public bool targetHit = false;
     public bool levelFailed;
 
+    private LevelManager.Difficulty lastDifficulty = LevelManager.Difficulty.Easy;
+
     /// <summary>
     /// Make sure there is one Game Manager Instance
     /// </summary>
@@ -140,12 +142,11 @@ public class GameManager : MonoBehaviour
 
     private void GoToLevel(LevelManager.Difficulty difficulty)
     {
+        lastDifficulty = difficulty;
+
         hideOutButtons.SetActive(false);
 
         BlackOut();
-
-        //ResetVariables();
-        //npcs.Clear();
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);
@@ -154,11 +155,14 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(0);
 
+        LevelManager.Instance.difficulty = difficulty;
+
         pause.SetActive(false);
         lose.SetActive(false);
         win.SetActive(false);
 
         levelFailed = false;
+        targetHit = false;
 
         Time.timeScale = 1f;
         Cursor.visible = false;
@@ -178,25 +182,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
-        //Apply Black Screen to hide level
-        BlackOut();
-
-        //Reset Level Variables
-        playerUI.gameObject.GetComponent<GameUIControl>().ResetTime();
-
-        //Load Scene
-        SceneManager.LoadScene(0);
-
-        pause.SetActive(false);
-        lose.SetActive(false);
-        win.SetActive(false);
-
-        levelFailed = false;
-
-        Time.timeScale = 1f;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Pause.isPaused = false;
+        GoToLevel(lastDifficulty);
     }
 
     public void QuitGame()

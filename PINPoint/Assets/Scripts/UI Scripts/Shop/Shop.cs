@@ -41,10 +41,13 @@ public class Shop : MonoBehaviour
     //public int currItem = 3;
     #endregion
 
-    private void Start()
+    private void OnEnable()
     {
         shopCash.text = "$" + GameManager.Instance.playerMoney.ToString("0,000,000");
+    }
 
+    private void Start()
+    {
         var items = ItemManager.Instance.Items.ToList();
         items.Sort((a, b) => a.cost.CompareTo(b.cost));
 

@@ -26,7 +26,15 @@ public class Grappling : MonoBehaviour
     [HideInInspector]
     public LineRenderer lineRenderer;
 
+    [Header("Limitation of Grappling hook")]
+    public int chargeLimit;
+    public float chargeRegenSpeed;
+    private float chargeRegenTime;
+    [HideInInspector]
+    public int chargeCount;
+
     private Vector3 hookPoint;
+    private bool charged;
 
     private void Awake()
     {
@@ -34,40 +42,67 @@ public class Grappling : MonoBehaviour
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         cam = Camera.main;
+
+        chargeCount = chargeLimit;
     }
 
     private void Update()
     {
-        bool hookHit = CanGrapple(out RaycastHit grappleHit);
-        if (player.input.Movement.Shoot.WasPressedThisFrame() && hookHit)
+        if (chargeCount > 0)
         {
-            hookPoint = grappleHit.point;
-            if (point.transform.position == Vector3.zero)
+            bool hookHit = CanGrapple(out RaycastHit grappleHit);
+            if (player.input.Movement.Shoot.WasPressedThisFrame() && hookHit)
             {
-                point = Instantiate(point, hookPoint, Quaternion.LookRotation(grappleHit.normal, Vector3.up));
-                point.SetActive(true);
-                gunHook.SetActive(false);
+                hookPoint = grappleHit.point;
+                if (point.transform.position == Vector3.zero)
+                {
+                    
+                    point = Instantiate(point, hookPoint, Quaternion.LookRotation(grappleHit.normal, Vector3.up));
+                    point.SetActive(true);
+                    gunHook.SetActive(false);
+                }
+                else
+                {
+                    point.transform.position = hookPoint;
+                    point.transform.rotation = Quaternion.LookRotation(grappleHit.normal, Vector3.up);
+                    point.SetActive(true);
+                    gunHook.SetActive(false);
+                }
+                charged = true;
+                lineRenderer.SetPosition(0, grappleHit.normal * 0.5f + grappleHit.point);
+                lineRenderer.enabled = true;
             }
-            else
+            if (player.input.Movement.Shoot.WasReleasedThisFrame())
             {
-                point.transform.position = hookPoint;
-                point.transform.rotation = Quaternion.LookRotation(grappleHit.normal, Vector3.up);
-                point.SetActive(true);
-                gunHook.SetActive(false);
+                hookPoint = Vector3.zero;
+                point.SetActive(false);
+                gunHook.SetActive(true);
+                lineRenderer.enabled = false;
+
+                //Lower charge count by 1
+                if (charged)
+                {
+                    chargeCount--;
+                    charged = false;
+                }
             }
-            lineRenderer.SetPosition(0, grappleHit.normal * 0.5f + grappleHit.point);
-            lineRenderer.enabled = true;
+            
+            if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
+            {
+                lineRenderer.SetPosition(1, player.grappleOBJ.transform.position);
+            }
         }
-        if (player.input.Movement.Shoot.WasReleasedThisFrame())
+
+        //Limitation on Grappling Hook Charges
+        if (chargeCount < chargeLimit)
         {
-            hookPoint = Vector3.zero;
-            point.SetActive(false);
-            gunHook.SetActive(true);
-            lineRenderer.enabled = false;
-        }
-        if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
-        {
-            lineRenderer.SetPosition(1, player.grappleOBJ.transform.position);
+            chargeRegenTime += Time.deltaTime;
+
+            if (chargeRegenTime >= chargeRegenSpeed)
+            {
+                chargeCount++;
+                chargeRegenTime -= chargeRegenSpeed;
+            }
         }
     }
 

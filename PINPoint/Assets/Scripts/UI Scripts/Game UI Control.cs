@@ -13,7 +13,7 @@ public class GameUIControl : MonoBehaviour
     /// </summary>
     #region Timer Variables
     [SerializeField]
-    private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay, targetPrice;
+    private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay, chargeDisplay, targetPrice;
 
     //Timer Variables
     private float  elapsedTime;
@@ -60,14 +60,17 @@ public class GameUIControl : MonoBehaviour
             if (player.gameObject.GetComponent<Shoot>().isActiveAndEnabled)
             {
                 weaponDisplay.text = "Sniper";
+                chargeDisplay.text = " ";
             }
             if (player.gameObject.GetComponent<Grappling>().isActiveAndEnabled)
             {
                 weaponDisplay.text = "Grappling Hook";
+                chargeDisplay.text = "Charges: " + player.grapple.chargeCount;
             }
             if (player.ledge.CanLedgeGrab(player))
             {
                 weaponDisplay.text = "Ledge";
+                chargeDisplay.text = " ";
             }
         }
     }

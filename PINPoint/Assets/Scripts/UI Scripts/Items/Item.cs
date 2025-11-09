@@ -8,7 +8,7 @@ public class Item : ScriptableObject
 {
     public int cost;
 
-    [NonSerialized]
+    
     public bool bought, enabled;
 
     public string description, displayName;

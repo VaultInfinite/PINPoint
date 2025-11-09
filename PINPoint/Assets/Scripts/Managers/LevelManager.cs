@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
         Medium,
         Hard
     }
+    public Difficulty difficulty;
 
     private static LevelManager instance;
 
@@ -24,9 +25,9 @@ public class LevelManager : MonoBehaviour
     public GameObject target;
     public NPCTextureObject npcTextures;
 
-    [Header("Money & Time")]
-
     //Money that the player can win in the level
+    public float easyMoney, mediumMoney, hardMoney;
+    [HideInInspector]
     public float levelMoney;
     private float startMoney;
 
@@ -40,14 +41,49 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                levelMoney = easyMoney;
+                levelDuration = 240f;
+                break;
+            case Difficulty.Medium:
+                levelMoney = mediumMoney;
+                levelDuration = 180f;
+                break;
+            case Difficulty.Hard:
+                levelMoney = hardMoney;
+                levelDuration = 150f;
+                break;
+            default:
+                Debug.Log("Something has gone terrible wrong with the startMoney assignments in LevelManager Start");
+                break;
+        }
+
         startMoney = levelMoney;
 
+        SpawnNPCs();
         SetupNPCs();
     }
 
     private void FixedUpdate()
     {
         MoneyInterval();
+    }
+
+    private void SpawnNPCs()
+    {
+        //Acquires all CrowdSpawners in the scene, and only assigns them to the list when spawnPoints local difficulty enum
+        //is set to the difficulty setting in LevelManager, assigned in GameManager through the selection of Contracts in the hideout
+        List<CrowdSpawner> spawnPoints = FindObjectsOfType<CrowdSpawner>().Where(spawnPoints => spawnPoints.difficulty == difficulty).ToList();
+
+        //Grab the specific spawnPoint we're spawning npcs at by utilizing a random.range within the list
+        //Then, set the specific spawner within the list using that targeted spawnpoint
+        int targetSpawnPoint = UnityEngine.Random.Range(0, spawnPoints.Count);
+        CrowdSpawner spawner = spawnPoints[targetSpawnPoint];
+
+        //Spawn the horde
+        spawner.Spawn();
     }
 
     private void SetupNPCs()

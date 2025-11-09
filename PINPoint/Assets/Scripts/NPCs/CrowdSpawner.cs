@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CrowdSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private LevelManager.Difficulty difficulty;
+    public LevelManager.Difficulty difficulty;
     public GameObject npcs;
 
     [SerializeField]
@@ -13,7 +12,6 @@ public class CrowdSpawner : MonoBehaviour
     private float Radius => Mathf.Min(size.x, size.y) / 4.0f;
 
     public Vector2 size;
-
     /// <summary>
     /// Gizmos to visualize crowd spawning region
     /// </summary>
@@ -29,13 +27,8 @@ public class CrowdSpawner : MonoBehaviour
         Gizmos.DrawWireSphere(Vector3.zero, Radius);
     }
 
-    private void Awake()
+    public void Spawn()
     {
-        if (!enabled)
-        {
-            return;
-        }
-
         int spawnCount = Random.Range(minNpcs, maxNpcs + 1);
 
         for (int index = 0; index < spawnCount; index++)
