@@ -16,7 +16,7 @@ public class GameUIControl : MonoBehaviour
     private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay, targetPrice;
 
     //Timer Variables
-    private float min, sec, mSec, elapsedTime;
+    private float  elapsedTime;
 
     public string timer;
     #endregion
@@ -30,7 +30,7 @@ public class GameUIControl : MonoBehaviour
 
     private void Start()
     {
-        targetPrice.text = "$" + GameManager.Instance.levelMoney.ToString("00,000,000");
+        targetPrice.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
     }
 
 
@@ -42,15 +42,16 @@ public class GameUIControl : MonoBehaviour
         //Timer
         
         elapsedTime += Time.deltaTime;
-        min = Mathf.FloorToInt(elapsedTime/60);
-        sec = Mathf.FloorToInt(elapsedTime%60);
-        mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
+
+        int min = Mathf.FloorToInt(elapsedTime/60);
+        int sec = Mathf.FloorToInt(elapsedTime%60);
+        int mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
 
         //Display UI
         timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
 
         timeDisplay.text = timer;
-        payDisplay.text = "$" + GameManager.Instance.levelMoney.ToString("00,000,000");
+        payDisplay.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
 
 
         //TEMP WEAPON DISPLAY IMPLEMENTATION
@@ -71,37 +72,14 @@ public class GameUIControl : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        MoneyInterval();
-    }
-
     /// <summary>
     /// Reset time for new playthrough
     /// </summary>
     public void ResetTime()
     {
-        min = 0;
-        sec = 0;
-        mSec = 0;
         elapsedTime = 0;
-    }
 
-    /// <summary>
-    /// Called in FixedUpdate; removes a specific amount of money per second (interest is amount lost per second)
-    /// </summary>
-    private void MoneyInterval()
-    {
-        //Check if there is enough money
-        if (GameManager.Instance.levelMoney <= 0)
-        {
-            GameManager.Instance.Fail();
-        }
-        //Decrease money
-        else
-        {
-            float interest = GameManager.Instance.startMoney / GameManager.Instance.levelDuration;
-            GameManager.Instance.levelMoney -= interest * Time.fixedDeltaTime;
-        }
+        //This is gross but it's gotta go here
+        player = FindObjectOfType<PlayerController>();
     }
 }

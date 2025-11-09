@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Difficulty
-{
-    Easy,
-    Medium,
-    Hard
-}
-
 public class CrowdSpawner : MonoBehaviour
 {
     [SerializeField]
-    private Difficulty difficulty;
+    private LevelManager.Difficulty difficulty;
     public GameObject npcs;
 
     [SerializeField]

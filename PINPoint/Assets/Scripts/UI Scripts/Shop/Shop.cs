@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 
 public class Shop : MonoBehaviour
 {
 
     #region Variables
+
+    
 
     private Item selected;
 
@@ -32,13 +35,20 @@ public class Shop : MonoBehaviour
     //public PlayerController player;
 
     public TextMeshProUGUI itemDescUI;
+    [SerializeField]
+    private TextMeshProUGUI shopCash; //Display player cash in shop
 
     //public int currItem = 3;
     #endregion
 
     private void Start()
     {
-        foreach (Item item in ItemManager.Instance.Items)
+        shopCash.text = "$" + GameManager.Instance.playerMoney.ToString("0,000,000");
+
+        var items = ItemManager.Instance.Items.ToList();
+        items.Sort((a, b) => a.cost.CompareTo(b.cost));
+
+        foreach (Item item in items)
         {
             GameObject shopButtonInstance = Instantiate(shopButton, shopButtonParent);
             ShopButton c1 = shopButtonInstance.GetComponent<ShopButton>();
