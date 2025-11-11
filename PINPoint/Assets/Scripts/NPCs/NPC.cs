@@ -25,11 +25,6 @@ public class NPC : MonoBehaviour
     [SerializeField]
     private bool reachedGoal;
 
-    //private void Awake()
-    //{
-    //    GameManager.Instance.npcs.Add(this);
-    //}
-
     private void Start()
     {
         targetLocation = RandomPointInRegion();

@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDrag: 10
+  groundDrag: 6
   coyoteTime: 0.3
   rb: {fileID: 0}
   orientation: {fileID: 3235075872990336042}
@@ -188,24 +188,24 @@ MonoBehaviour:
   sniperOBJ: {fileID: 2246137082685896813}
   grappleOBJ: {fileID: 2103975018995220354}
   walking:
-    maxSpeed: 15
-    acceleration: 30
+    maxSpeed: 80
+    acceleration: 120
   running:
-    maxSpeed: 28
-    acceleration: 40
+    maxSpeed: 160
+    acceleration: 240
   jump:
-    jumpForce: 25
+    jumpForce: 26
     direction: {x: 0, y: 0, z: 0}
   ledge:
     raycastDistance: 1
     ledgeHeightOffset: 0.75
   crouch:
-    maxSpeed: 8
-    acceleration: 6
+    maxSpeed: 40
+    acceleration: 30
     crouchScaleY: 0.5
   air:
     maxSpeed: 50
-    acceleration: 10
+    acceleration: 20
     maxFallSpeed: 80
     gravity: 45
     doubleJumped: 0
@@ -213,8 +213,8 @@ MonoBehaviour:
   wall:
     maxSpeed: 24
     acceleration: 100
-    wallGravity: 46
-    maxWallTime: 3
+    wallGravity: 60
+    maxWallTime: 2.5
     bumpForce: 2
     curve:
       serializedVersion: 2
@@ -259,7 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b10660645cebf84b84604f09032bffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetDistance: 100
   shootCooldown: 2
   player: {fileID: 6317267148356265128}
   playerGun: 1
@@ -431,8 +430,8 @@ Transform:
   m_GameObject: {fileID: 2246137082685896813}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0.5}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0.3, y: -0.3, z: 0.35}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2545543762056452648}
@@ -556,7 +555,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

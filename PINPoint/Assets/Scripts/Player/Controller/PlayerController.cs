@@ -8,7 +8,6 @@ using UnityEngine.Playables;
 
 public partial class PlayerController : MonoBehaviour
 {
-    
     #region Variables
 
     [Header("Movement")]
@@ -58,8 +57,10 @@ public partial class PlayerController : MonoBehaviour
     public Gliding gliding;
     private readonly Dictionary<Type, State> _states = new();
 
-    private Shoot sniper;
-    private Grappling grapple;
+    [HideInInspector]
+    public Shoot sniper;
+    [HideInInspector]
+    public Grappling grapple;
     
     //The Input system
     public PlayerControllerInput input;
@@ -70,10 +71,9 @@ public partial class PlayerController : MonoBehaviour
     public Type _state = typeof(Walking);
 
     //Player Ability
-    [Header("Abilities")]
-    public bool canDoubleJump;
-    public bool canGlide;
-    public bool canGrapple;
+    private bool CanDoubleJump => ItemManager.Instance.rocketboots.enabled;
+    private bool CanGlide => ItemManager.Instance.glider.enabled;
+    private bool CanGrapple => ItemManager.Instance.grapple.enabled;
 
     //bool to eventually stun player if the police drone shoots them
     public bool stun = false;
@@ -129,7 +129,7 @@ public partial class PlayerController : MonoBehaviour
             grapple.lineRenderer.enabled = false;
 
         }
-        if (input.Movement.SelectGrapple.IsPressed() && state != ledge)
+        if (input.Movement.SelectGrapple.IsPressed() && state != ledge && CanGrapple)
         {
             sniper.enabled = false;
             sniperOBJ.SetActive(false);
@@ -201,14 +201,8 @@ public partial class PlayerController : MonoBehaviour
     /// </summary>
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
-        //Reset drag to 1 to fix Unity Editor doing stupid shit
-        if (moveDirection.magnitude >= 0.25f && _state != typeof(Gliding))
-        {
-            rb.drag = 1.2f;
-        }
-
         //if the player isn't stunned, then they can move
-        if(stun == false)
+        if(!stun)
         {
             Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             float product = Vector3.Dot(moveDirection, velocity);
@@ -225,20 +219,6 @@ public partial class PlayerController : MonoBehaviour
             newVelocity.y = rb.velocity.y;
             rb.velocity = newVelocity;
         }
-        
-        /*Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        float product = Vector3.Dot(moveDirection, velocity);
-        float accel = acceleration * Time.fixedDeltaTime;
-        if (product + accel > maxSpeed)
-        {
-            accel = maxSpeed - product;
-        }
-        Vector3 newVelocity = velocity + moveDirection * accel;
-
-        //Debug.Log(newVelocity.magnitude);
-
-        newVelocity.y = rb.velocity.y;
-        rb.velocity = newVelocity;*/
     }
 
     private void OnTriggerEnter(Collider other)

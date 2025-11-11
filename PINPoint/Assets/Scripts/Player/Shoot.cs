@@ -122,13 +122,13 @@ public class Shoot : MonoBehaviour
 
                         //Pull up win screen
                         player.input.Disable();
-                        GameManager.Instance.CashOut();
+                        LevelManager.Instance.CashOut();
 
                         break;
                     case false:
 
                         player.input.Disable();
-                        GameManager.Instance.Fail();
+                        LevelManager.Instance.Fail();
 
                         break;
                 }
@@ -136,13 +136,13 @@ public class Shoot : MonoBehaviour
             else
             {
                 player.input.Disable();
-                GameManager.Instance.Fail();
+                LevelManager.Instance.Fail();
             }
         }
         else
         {
             player.input.Disable();
-            GameManager.Instance.Fail();
+            LevelManager.Instance.Fail();
         }
 
         //Shock-Gun check

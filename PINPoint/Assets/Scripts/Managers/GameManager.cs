@@ -12,13 +12,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get { return instance; } }
 
-    //Target Variables
-    public List<NPC> npcs;
-    public Camera targetCamera;
-    [HideInInspector]
-    public GameObject target;
-    public NPCTextureObject npcTextures;
-
     [Header("UI GameObjects")]
     public GameObject pause;
     public GameObject lose;
@@ -37,40 +30,26 @@ public class GameManager : MonoBehaviour
     public GameObject settingsBackButton;
 
     [Header("UI Text")]
-    [SerializeField]
-    private TextMeshProUGUI winMoney; //How much money was rewarded after WINNING the level
-    [SerializeField]
-    private TextMeshProUGUI winTime; //How much time passed before level was completed
-    [SerializeField]
-    private TextMeshProUGUI loseMoney; //How much money was rewarded after LOSING the level
-    [SerializeField]
-    private TextMeshProUGUI loseTime; //How much time passed before the level was lost
-    [SerializeField]
-    private TextMeshProUGUI shopCash; //Display player cash in shop
+    public TextMeshProUGUI winMoney; //How much money was rewarded after WINNING the level
+    public TextMeshProUGUI winTime; //How much time passed before level was completed
+    public TextMeshProUGUI loseMoney; //How much money was rewarded after LOSING the level
+    public TextMeshProUGUI loseTime; //How much time passed before the level was lost
 
-
-
-    [Header("Money & Time")]
     //Money that is CURRENTLY in the player's posession
+    [HideInInspector]
     public float playerMoney;
 
-    //Money that the player can win in the level
-    public float levelMoney;
-    public float startMoney;
-
-    //Duration of the level
-    public float levelDuration;
+    [Header("Scene Transition")]
+    public float transTimer;
 
     [Header("Play State")] //Used in other Gameobjects to determine if they should stay active
     public bool targetHit = false;
     public bool levelFailed;
 
-    [Header("Scene Transition")]
-    public float transTimer;
-    private Scene restartScene;
+    private LevelManager.Difficulty lastDifficulty = LevelManager.Difficulty.Easy;
 
     /// <summary>
-    /// Make sure there is one one Game Manager Instance
+    /// Make sure there is one Game Manager Instance
     /// </summary>
     private void Awake()
     {
@@ -90,18 +69,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        startMoney = levelMoney;
-        SetupNPCs();
 
         if (hideOutButtons != null)
         {
             hideOutButtons.SetActive(false);
         }
-    }
-
-    private void Update()
-    {
-        shopCash.text = "$" + playerMoney.ToString("0,000,000");
     }
 
     #region Button Functions
@@ -168,23 +140,41 @@ public class GameManager : MonoBehaviour
         pause.SetActive(false);
     }
 
-    public void GoToLevel(int levelNum)
+    private void GoToLevel(LevelManager.Difficulty difficulty)
     {
+        lastDifficulty = difficulty;
+
         hideOutButtons.SetActive(false);
 
         BlackOut();
-
-        ResetVariables();
-        npcs.Clear();
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);
         settings.SetActive(false);
         equipment.SetActive(false);
 
-        SceneManager.LoadScene(levelNum);
-        SetupNPCs();
+        SceneManager.LoadScene(0);
+
+        LevelManager.Instance.difficulty = difficulty;
+
+        pause.SetActive(false);
+        lose.SetActive(false);
+        win.SetActive(false);
+
+        levelFailed = false;
+        targetHit = false;
+
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Pause.isPaused = false;
     }
+
+    public void GoToEasy() => GoToLevel(LevelManager.Difficulty.Easy);
+
+    public void GoToMedium() => GoToLevel(LevelManager.Difficulty.Medium);
+
+    public void GoToHard() => GoToLevel(LevelManager.Difficulty.Hard);
 
 
     /// <summary>
@@ -192,30 +182,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
-
-        //Apply Black Screen to hide level
-        BlackOut();
-
-        //Reset Level Variables
-        levelMoney = startMoney;
-        playerUI.gameObject.GetComponent<GameUIControl>().ResetTime();
-
-        //Load Scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        ResetVariables();
-        npcs.Clear();
-
-        //Rough Fix of the Pause Menu
-        //Prevents it from bugging out
-        if (pause.activeSelf == true)
-        {
-            pause.SetActive(false);
-            Time.timeScale = 1f;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Pause.isPaused = false;
-        }
+        GoToLevel(lastDifficulty);
     }
 
     public void QuitGame()
@@ -224,16 +191,16 @@ public class GameManager : MonoBehaviour
         //Debug.LogAssertion("Game Quit");
     }
 
-    private void ResetVariables()
-    {
-        //Turn Off UI
-        lose.SetActive(false);
-        win.SetActive(false);
+    //private void ResetVariables()
+    //{
+    //    //Turn Off UI
+    //    lose.SetActive(false);
+    //    win.SetActive(false);
 
-        //Time Flows again
-        levelFailed = false;
-        targetHit = false;
-    }
+    //    //Time Flows again
+    //    levelFailed = false;
+    //    targetHit = false;
+    //}
 
     /// <summary>
     /// Applies a blackout to transition to the next scene
@@ -254,48 +221,6 @@ public class GameManager : MonoBehaviour
 
     #region Menu Calls
     /// <summary>
-    /// Pull up the fail screen
-    /// </summary>
-    public void Fail()
-    {
-        //Variable to stop time & money count
-        levelFailed = true;
-
-        //Convert Level Money if negative
-        if (levelMoney <= 0) levelMoney = 0;
-
-        //Change UI
-        loseMoney.text = "$" + levelMoney.ToString("0,000,000");
-        loseTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
-
-        //Pull up Lose Screen
-        lose.SetActive(true);
-
-        //Show Mouse
-        HiMouse();
-    }
-
-    /// <summary>
-    /// Pull up the Win screen
-    /// Give player the Level Cash
-    /// </summary>
-    public void CashOut()
-    {
-        //Show Mouse
-        HiMouse();
-
-        //Give money to the player
-        playerMoney += levelMoney;
-
-        //Change UI
-        winMoney.text = "$" + levelMoney.ToString("0,000,000");
-        winTime.text = playerUI.gameObject.GetComponent<GameUIControl>().timer;
-
-        //Pull up win menu
-        win.SetActive(true);
-    }
-
-    /// <summary>
     /// Unlocks the screen and shows the mouse
     /// </summary>
     public void HiMouse()
@@ -309,35 +234,6 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    private void SetupNPCs()
-    {
-        npcs = GameObject.FindGameObjectsWithTag("NPC").Select(npc => npc.GetComponent<NPC>()).ToList();
-        int targetMaterial = Random.Range(0, npcTextures.materials.Count);
-
-        foreach (NPC npc in npcs)
-        {
-            int assignedMaterial;
-            do
-            {
-                assignedMaterial = Random.Range(0, npcTextures.materials.Count);
-            } while (targetMaterial == assignedMaterial);
-
-            npc.meshRenderer.material = npcTextures.materials[assignedMaterial];
-        }
-
-        int targetNPC = Random.Range(0, npcs.Count);
-        NPC npcTarget = npcs[targetNPC];
-
-        //Assigning Target Variables
-        npcTarget.meshRenderer.material = npcTextures.materials[targetMaterial];
-        npcTarget.isTarget = true;
-        npcTarget.gameObject.tag = "Target";
-        npcTarget.targetCamera = targetCamera;
-
-        npcTarget.gameObject.layer = LayerMask.NameToLayer("Target");
-        npcTarget.meshRenderer.gameObject.layer = LayerMask.NameToLayer("Target");
     }
     #endregion
 }
