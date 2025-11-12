@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Grapple
   m_EditorClassIdentifier: 
   cost: 35000
-  bought: 1
-  enabled: 1
-  description: Swing :D
+  bought: 0
+  enabled: 0
+  description: Grappling Hook; Lets you swing from any latched location at will.
+    2 Charges Max.
   displayName: Grapple

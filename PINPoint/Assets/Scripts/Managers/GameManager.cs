@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
         if (hideOutButtons != null)
         {
             hideOutButtons.SetActive(false);
@@ -80,6 +79,8 @@ public class GameManager : MonoBehaviour
     public void CallContractsUI()
     {
         hideOutButtons.SetActive(true);
+        Debug.Log("CallContracts called");
+        Debug.Log(hideOutButtons.activeSelf);
 
         //Due to only being accessable in the contracts menu, disable other menus
         contracts.SetActive(true);
