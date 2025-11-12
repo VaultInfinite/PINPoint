@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.356, y: 0}
+  m_AnchoredPosition: {x: -3.355999, y: 0}
   m_SizeDelta: {x: 103.229, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3553029
@@ -370,6 +370,12 @@ CanvasRenderer:
 --- !u!1 &24662593 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7070010652320882503, guid: ba8d91f477f53af47ac4af82c83ca54b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3198032699783989257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &24662594 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3737704606183863865, guid: ba8d91f477f53af47ac4af82c83ca54b,
     type: 3}
   m_PrefabInstance: {fileID: 3198032699783989257}
   m_PrefabAsset: {fileID: 0}
@@ -3731,9 +3737,9 @@ Canvas:
   m_GameObject: {fileID: 279926918}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 756225974}
+  m_PlaneDistance: 0.33
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -3743,7 +3749,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!1 &297106453
 GameObject:
@@ -9101,6 +9107,55 @@ RectTransform:
   m_AnchoredPosition: {x: 113.853516, y: -36.30002}
   m_SizeDelta: {x: 222.29321, y: 103.400024}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &742321069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742321071}
+  - component: {fileID: 742321070}
+  m_Layer: 0
+  m_Name: Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &742321070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742321069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 77e9af95a8b59ab4599aacff9fafad44, type: 2}
+--- !u!4 &742321071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742321069}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1721, y: -32.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 24662594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &745411416
 GameObject:
   m_ObjectHideFlags: 0
@@ -9235,6 +9290,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745411416}
   m_CullTransparentMesh: 1
+--- !u!20 &756225974 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4909722018506090555, guid: ba8d91f477f53af47ac4af82c83ca54b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3198032699783989257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &765262950
 GameObject:
   m_ObjectHideFlags: 0
@@ -11781,6 +11842,7 @@ MonoBehaviour:
   payDisplay: {fileID: 784357993}
   timeDisplay: {fileID: 666561059}
   weaponDisplay: {fileID: 437604177}
+  chargeDisplay: {fileID: 0}
   targetPrice: {fileID: 620445033}
   timer: 
 --- !u!1 &930866790
@@ -14149,7 +14211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8.982, y: 0}
+  m_AnchoredPosition: {x: -8.982002, y: 0}
   m_SizeDelta: {x: 202.693, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1102617863
@@ -16026,7 +16088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -149, y: 66}
+  m_AnchoredPosition: {x: -149, y: 125.29999}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1312152603
@@ -16081,10 +16143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3913bab997403774f9e3580683faf695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcs: []
-  targetCamera: {fileID: 0}
-  target: {fileID: 0}
-  npcTextures: {fileID: 0}
   pause: {fileID: 1096876734}
   lose: {fileID: 680300596}
   win: {fileID: 333211570}
@@ -16101,14 +16159,10 @@ MonoBehaviour:
   winTime: {fileID: 2142442403}
   loseMoney: {fileID: 1148301138}
   loseTime: {fileID: 930866792}
-  shopCash: {fileID: 896430957}
   playerMoney: 1000000
-  levelMoney: 10
-  startMoney: 0
-  levelDuration: 100000
+  transTimer: 0.5
   targetHit: 0
   levelFailed: 0
-  transTimer: 0.5
 --- !u!114 &1312152606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22597,18 +22651,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9231ad445871e9f4daf0dc0ca9e0f6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpBootsSlot: {fileID: 139523705}
-  gliderSlot: {fileID: 275095153}
-  grappleSlot: {fileID: 915913236}
-  jumpBootsDesc: This item allows you to jump in the air
-  gliderDesc: This item allows you to glide in the air
-  grappleDesc: This item allows you to grapple to nearby walls
-  jumpBootsToggle: {fileID: 603632736}
-  glidersToggle: {fileID: 86257871}
-  grappleToggle: {fileID: 1931277095}
-  player: {fileID: 453233663}
+  shopButton: {fileID: 0}
+  equipButton: {fileID: 0}
+  shopButtonParent: {fileID: 0}
+  equipButtonParent: {fileID: 0}
+  purchaseButton: {fileID: 0}
   itemDescUI: {fileID: 372511945}
-  currItem: 3
+  shopCash: {fileID: 0}
 --- !u!114 &1930716434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22621,15 +22670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c5c41d2af22024fb0e16fc06f148b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpBootsBought: 0
-  gliderBought: 0
-  grappleBought: 0
-  jumpBootsCost: 10000
-  gliderCost: 50000
-  grappleCost: 100
-  jumpCostUI: {fileID: 937071922}
-  glideCostUI: {fileID: 161088405}
-  grappleCostUI: {fileID: 47402965}
+  glider: {fileID: 0}
+  grapple: {fileID: 0}
+  rocketboots: {fileID: 0}
 --- !u!1 &1931277095
 GameObject:
   m_ObjectHideFlags: 0
@@ -25408,6 +25451,21 @@ PrefabInstance:
       propertyPath: sensY
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4747494001993596243, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: m_RendererIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747494001993596243, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909722018506090555, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5122045086986388650, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
       propertyPath: m_Name
@@ -25465,7 +25523,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3737704606183863865, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 742321071}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 715836088934206107, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
