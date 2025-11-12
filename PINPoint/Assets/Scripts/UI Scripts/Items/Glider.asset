@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Glider
   m_EditorClassIdentifier: 
   cost: 20000
-  description: Idk
+  bought: 0
+  enabled: 0
+  description: A wingsuit built into your suit; allows you to glide for a few seconds.
   displayName: Glider

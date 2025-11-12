@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
         if (hideOutButtons != null)
         {
             hideOutButtons.SetActive(false);
