@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI loseTime; //How much time passed before the level was lost
 
     //Money that is CURRENTLY in the player's posession
-    [HideInInspector]
     public float playerMoney;
 
     [Header("Scene Transition")]
@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
     public bool targetHit = false;
     public bool levelFailed;
 
-    private LevelManager.Difficulty lastDifficulty = LevelManager.Difficulty.Easy;
+    [NonSerialized]
+    public LevelManager.Difficulty lastDifficulty = LevelManager.Difficulty.Easy;
 
     /// <summary>
     /// Make sure there is one Game Manager Instance
@@ -153,8 +154,6 @@ public class GameManager : MonoBehaviour
         equipment.SetActive(false);
 
         SceneManager.LoadScene(0);
-
-        LevelManager.Instance.difficulty = difficulty;
 
         pause.SetActive(false);
         lose.SetActive(false);

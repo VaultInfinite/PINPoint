@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: RocketBoots
   m_EditorClassIdentifier: 
   cost: 10000
-  bought: 0
-  enabled: 0
   description: Miniature rockets strapped to your boots; lets you perform a secondary
     jump in midair.
   displayName: Rocket Boots

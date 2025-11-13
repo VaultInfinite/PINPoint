@@ -132,17 +132,17 @@ public class PoliceDrone : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
+    //public void TakeDamage(int damage)
+    //{
+    //    health -= damage;
 
-        if (health <= 0) Invoke(nameof(EnemyDeath), 0.5f);
-    }
+    //    if (health <= 0) Invoke(nameof(EnemyDeath), 0.5f);
+    //}
 
-    private void EnemyDeath()
-    {
-        Destroy(gameObject);
-    }
+    //private void EnemyDeath()
+    //{
+    //    Destroy(gameObject);
+    //}
 
     private void OnDrawGizmosSelected()
     {

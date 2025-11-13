@@ -4305,6 +4305,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5189521777221432925, guid: 1c8f2d3ed676e8646b9138720c283e2f,
+        type: 3}
+      propertyPath: playerMoney
+      value: 100000
+      objectReference: {fileID: 0}
     - target: {fileID: 5549768769150480923, guid: 1c8f2d3ed676e8646b9138720c283e2f,
         type: 3}
       propertyPath: m_AnchorMax.x

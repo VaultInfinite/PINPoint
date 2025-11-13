@@ -41,17 +41,20 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        switch (difficulty)
+        switch (GameManager.Instance.lastDifficulty)
         {
             case Difficulty.Easy:
+                Debug.Log("Easy Money");
                 levelMoney = easyMoney;
                 levelDuration = 240f;
                 break;
             case Difficulty.Medium:
+                Debug.Log("Medium Money");
                 levelMoney = mediumMoney;
                 levelDuration = 180f;
                 break;
             case Difficulty.Hard:
+                Debug.Log("Hard");
                 levelMoney = hardMoney;
                 levelDuration = 150f;
                 break;
