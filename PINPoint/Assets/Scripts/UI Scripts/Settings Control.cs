@@ -39,7 +39,7 @@ public class SettingsControl : MonoBehaviour
     private void Start()
     {
         fullScreen = true;
-        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullScreen);
+        Screen.SetResolution(1280, 1240, fullScreen);
     }
 
     #region Volume Methods
