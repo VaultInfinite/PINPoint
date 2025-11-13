@@ -188,18 +188,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
         //Debug.LogAssertion("Game Quit");
     }
-
-    //private void ResetVariables()
-    //{
-    //    //Turn Off UI
-    //    lose.SetActive(false);
-    //    win.SetActive(false);
-
-    //    //Time Flows again
-    //    levelFailed = false;
-    //    targetHit = false;
-    //}
-
+    
     /// <summary>
     /// Applies a blackout to transition to the next scene
     /// </summary>
