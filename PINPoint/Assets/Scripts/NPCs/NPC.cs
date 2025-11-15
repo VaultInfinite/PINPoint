@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField]
-    private Transform targetCameraPos;
-    public Camera targetCamera;
     private Rigidbody rb;
 
     [SerializeField]
@@ -39,11 +36,7 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        if (isTarget)
-        {
-            targetCamera.transform.position = targetCameraPos.position;
-            targetCamera.transform.LookAt(gameObject.transform.position);
-        }
+        
     }
 
     private void FixedUpdate()

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 
 public class GameUIControl : MonoBehaviour
@@ -23,35 +24,40 @@ public class GameUIControl : MonoBehaviour
 
     private PlayerController player;
 
-    private void Awake()
-    {
-        player = FindObjectOfType<PlayerController>();
-    }
-
     private void Start()
     {
-        targetPrice.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
+        SceneManager.activeSceneChanged += FindPlayer;
+
+        if (LevelManager.Instance != null)
+        {
+            targetPrice.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
+        }
     }
 
 
     private void Update()
     {
         //If the target has been hit, stop time
-        if (GameManager.Instance.targetHit || GameManager.Instance.levelFailed) return;
+        if (GameManager.Instance.targetHit || GameManager.Instance.levelFailed || player == null) return;
 
-        //Timer
         
-        elapsedTime += Time.deltaTime;
+        if (LevelManager.Instance != null)
+        {
+            //Timer
 
-        int min = Mathf.FloorToInt(elapsedTime/60);
-        int sec = Mathf.FloorToInt(elapsedTime%60);
-        int mSec = Mathf.FloorToInt((elapsedTime%1f) * 60);
+            elapsedTime += Time.deltaTime;
 
-        //Display UI
-        timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
+            int min = Mathf.FloorToInt(elapsedTime / 60);
+            int sec = Mathf.FloorToInt(elapsedTime % 60);
+            int mSec = Mathf.FloorToInt((elapsedTime % 1f) * 60);
 
-        timeDisplay.text = timer;
-        payDisplay.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
+            //Display UI
+            timer = min.ToString("00") + ":" + sec.ToString("00") + ":" + mSec.ToString("00");
+
+            timeDisplay.text = timer;
+
+            payDisplay.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
+        }
 
 
         //TEMP WEAPON DISPLAY IMPLEMENTATION
@@ -81,8 +87,10 @@ public class GameUIControl : MonoBehaviour
     public void ResetTime()
     {
         elapsedTime = 0;
+    }
 
-        //This is gross but it's gotta go here
+    private void FindPlayer(Scene current, Scene next)
+    {
         player = FindObjectOfType<PlayerController>();
     }
 }

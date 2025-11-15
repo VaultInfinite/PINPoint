@@ -70,21 +70,33 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (hideOutButtons != null)
-        {
-            hideOutButtons.SetActive(false);
-        }
+        //if (hideOutButtons != null)
+        //{
+        //    hideOutButtons.SetActive(false);
+        //}
     }
 
     #region Button Functions
-    public void CallContractsUI()
+    public void HideoutReturn()
     {
-        hideOutButtons.SetActive(true);
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            //Due to only being accessable in the contracts menu, disable other menus
+            contracts.SetActive(true);
+            settings.SetActive(false);
+            equipment.SetActive(false);
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+            hideOutButtons.SetActive(true);
 
-        //Due to only being accessable in the contracts menu, disable other menus
-        contracts.SetActive(true);
-        settings.SetActive(false);
-        equipment.SetActive(false);
+            //Due to only being accessable in the contracts menu, disable other menus
+            contracts.SetActive(true);
+            settings.SetActive(false);
+            equipment.SetActive(false);
+        }
+        
     }
 
     //Pulls up the settings UI
@@ -153,7 +165,7 @@ public class GameManager : MonoBehaviour
         settings.SetActive(false);
         equipment.SetActive(false);
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
 
         pause.SetActive(false);
         lose.SetActive(false);

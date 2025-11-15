@@ -5,16 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
+    public GameObject mainMenu, controlsMenu;
+
     public void PlayGame()
     {
-        Debug.Log("Game scene needs to be connected");
-        //SceneManager.LoadScene();
+        SceneManager.LoadScene(1);
     }
 
     public void Controls()
     {
-        Debug.Log("Controls panel needs to be connected");
-        //SceneManager.LoadScene();
+        Debug.Log("Turn off Main Menu, Enable Controls");
+        mainMenu.SetActive(false);
+        controlsMenu.SetActive(true);
     }
 
     public void ExitGame()
@@ -25,7 +27,7 @@ public class ButtonManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        Debug.Log("Menu needs to be connected");
-        //SceneManager.LoadScene();
+        controlsMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }
