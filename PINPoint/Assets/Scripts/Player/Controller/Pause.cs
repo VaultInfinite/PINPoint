@@ -11,13 +11,6 @@ public class Pause : MonoBehaviour
     //Variables
     public static bool isPaused = false;    //Global Var - See if the game is paused
     private GameObject pauseMenu;           //Pause menu UI
-    public PlayerControllerInput input;     //Player input system
-
-    private void Awake()
-    {
-        input = new();
-        input.Enable();
-    }
 
     private void Start()
     {
@@ -28,7 +21,10 @@ public class Pause : MonoBehaviour
 
     private void Update()
     {
-        if (input.Movement.Pause.WasPressedThisFrame()) HitPause();
+        if (PlayerController.Instance != null)
+        {
+            if (PlayerController.Instance.input.Movement.Pause.WasPressedThisFrame()) HitPause();
+        }
     }
 
     /// <summary>

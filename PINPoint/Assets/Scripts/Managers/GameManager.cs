@@ -68,14 +68,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        //if (hideOutButtons != null)
-        //{
-        //    hideOutButtons.SetActive(false);
-        //}
-    }
-
     #region Button Functions
     public void HideoutReturn()
     {

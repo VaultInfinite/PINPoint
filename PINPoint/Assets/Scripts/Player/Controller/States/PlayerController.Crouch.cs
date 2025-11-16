@@ -32,10 +32,6 @@ public partial class PlayerController
             //Move in faced direction
             Vector3 moveDirection = player.GetDirection();
             player.Accelerate(moveDirection, maxSpeed, acceleration);
-
-
-            //Apply movement to avatar
-            player.rb.AddForce(moveDirection.normalized * maxSpeed * 10f, ForceMode.Force);
         }
 
         public override void OnUpdate(PlayerController player)

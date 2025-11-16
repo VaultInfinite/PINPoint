@@ -121,13 +121,13 @@ public class Shoot : MonoBehaviour
                         GameManager.Instance.targetHit = true;
 
                         //Pull up win screen
-                        player.input.Disable();
+                        player.input.Movement.Disable();
                         LevelManager.Instance.CashOut();
 
                         break;
                     case false:
 
-                        player.input.Disable();
+                        player.input.Movement.Disable();
                         LevelManager.Instance.Fail();
 
                         break;
@@ -135,13 +135,13 @@ public class Shoot : MonoBehaviour
             }
             else
             {
-                player.input.Disable();
+                player.input.Movement.Disable();
                 LevelManager.Instance.Fail();
             }
         }
         else
         {
-            player.input.Disable();
+            player.input.Movement.Disable();
             LevelManager.Instance.Fail();
         }
 

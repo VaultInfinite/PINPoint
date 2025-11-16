@@ -28,5 +28,10 @@ public partial class PlayerController
             direction = Vector3.up;
             player.SetState<Air>();
         }
+
+        public override void OnExit(PlayerController player)
+        {
+            player.coyoteJumped = true;
+        }
     }
 }

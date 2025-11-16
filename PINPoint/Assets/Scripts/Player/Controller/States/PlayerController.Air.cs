@@ -23,7 +23,6 @@ public partial class PlayerController
         [HideInInspector]
         public bool ledgeGrabbed;
         private bool wallRan;
-
         public override void OnEnter(PlayerController player)
         {
             if (ledgeGrabbed)
@@ -39,7 +38,7 @@ public partial class PlayerController
             player.Accelerate(moveDirection, maxSpeed, acceleration);
 
             //Move quickly in air
-            player.rb.drag = 0;
+            player.rb.drag = 1;
 
             //Get player velocity
             Vector3 vel = player.rb.velocity;
@@ -54,9 +53,9 @@ public partial class PlayerController
             //Maintain downward velocity
             if (player.rb.velocity.y < -maxFallSpeed)
             {
-                    Vector3 limitVel = flatVel.normalized * maxFallSpeed;
+                Vector3 limitVel = flatVel.normalized * maxFallSpeed;
 
-                    player.rb.velocity = new Vector3(player.rb.velocity.x, limitVel.y, player.rb.velocity.z);
+                player.rb.velocity = new Vector3(player.rb.velocity.x, limitVel.y, player.rb.velocity.z);
             }
         }
 
@@ -92,13 +91,19 @@ public partial class PlayerController
             }
 
             //If player is in the air and jumps, double jump if applicable
-            if (player.input.Movement.Jump.WasPressedThisFrame() && !doubleJumped && (!Pause.isPaused) && player.CanDoubleJump)
+            if (player.input.Movement.Jump.WasPressedThisFrame() && (!Pause.isPaused))
             {
-                if (!player.TryJump())
+                if (player.TryJump() && !player.coyoteJumped)
+                {
+                    Debug.Log("Coyote Jumped");
+                    player.SetState<Jump>();
+                }
+                if (player.CanDoubleJump && !doubleJumped)
                 {
                     doubleJumped = true;
+                    Debug.Log("Double Jumped");
+                    player.SetState<Jump>();
                 }
-                player.SetState<Jump>();
             }
         }
     }
