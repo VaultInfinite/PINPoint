@@ -3,11 +3,7 @@ guid: f0c5c41d2af22024fb0e16fc06f148b4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - glider: {fileID: 11400000, guid: 6502783b06d36c34781d4c206d7e80af, type: 2}
-  - grapple: {fileID: 11400000, guid: a7332bdfedc9c514bbd705a933f62776, type: 2}
-  - rocketboots: {fileID: 11400000, guid: 1c1d2def4547ac5468b552beab406be3, type: 2}
-  - shockGun: {fileID: 11400000, guid: c42d4a389c5814c49bf38abdafe1bf89, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

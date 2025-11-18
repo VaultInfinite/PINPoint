@@ -11,9 +11,9 @@ public class ItemManager : MonoBehaviour
     private static ItemManager instance;
     public static ItemManager Instance { get { return instance; } }
 
-    public Item glider, grapple, rocketBoots, shockGun;
+    public Item glider, grapple, rocketboots;
 
-    public Item[] Items => new Item[] {glider, grapple, rocketBoots};
+    public Item[] Items => new Item[] {glider, grapple, rocketboots};
 
     //private void Start()
     //{
