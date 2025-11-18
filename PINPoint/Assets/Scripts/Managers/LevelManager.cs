@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Target Variables")]
     public Camera targetCamera;
+    public TargetDummy targetDummy;
     [HideInInspector]
     public GameObject target;
     public NPCTextureObject npcTextures;
@@ -44,17 +45,20 @@ public class LevelManager : MonoBehaviour
         switch (GameManager.Instance.lastDifficulty)
         {
             case Difficulty.Easy:
+                difficulty = Difficulty.Easy;
                 Debug.Log("Easy Money");
                 levelMoney = easyMoney;
                 levelDuration = 240f;
                 break;
             case Difficulty.Medium:
+                difficulty = Difficulty.Medium;
                 Debug.Log("Medium Money");
                 levelMoney = mediumMoney;
                 levelDuration = 180f;
                 break;
             case Difficulty.Hard:
-                Debug.Log("Hard");
+                difficulty = Difficulty.Hard;
+                Debug.Log("Hard Money");
                 levelMoney = hardMoney;
                 levelDuration = 150f;
                 break;
@@ -91,7 +95,7 @@ public class LevelManager : MonoBehaviour
 
     private void SetupNPCs()
     {
-        List<NPC> npcs = GameObject.FindGameObjectsWithTag("NPC").Select(npc => npc.GetComponent<NPC>()).ToList();
+        List<NPC> npcs = FindObjectsOfType<NPC>().ToList();
         int targetMaterial = UnityEngine.Random.Range(0, npcTextures.materials.Count);
 
         foreach (NPC npc in npcs)
@@ -110,12 +114,9 @@ public class LevelManager : MonoBehaviour
 
         //Assigning Target Variables
         npcTarget.meshRenderer.material = npcTextures.materials[targetMaterial];
+        targetDummy.meshRenderer.material = npcTextures.materials[targetMaterial];
         npcTarget.isTarget = true;
         npcTarget.gameObject.tag = "Target";
-        npcTarget.targetCamera = targetCamera;
-
-        npcTarget.gameObject.layer = LayerMask.NameToLayer("Target");
-        npcTarget.meshRenderer.gameObject.layer = LayerMask.NameToLayer("Target");
     }
 
     /// <summary>

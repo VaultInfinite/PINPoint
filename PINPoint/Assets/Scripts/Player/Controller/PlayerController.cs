@@ -14,8 +14,9 @@ public partial class PlayerController : MonoBehaviour
     public float groundDrag;
 
     [SerializeField]
-    private float coyoteTime = 0.3f;
+    private float coyoteTime;
     private float lastGroundedTime;
+    private bool coyoteJumped;
 
     private MeshRenderer mr;
     [HideInInspector]
@@ -25,17 +26,12 @@ public partial class PlayerController : MonoBehaviour
     public Transform orientation;
     public float wallCameraAngle;
     private float roll;
-    private float rifleRotation;
-    [SerializeField]
-    private float rifleLowered;
-    [SerializeField]
-    private float rifleRaised;
 
     [Header("Ground Check")]
     public float playerHeight;
     public float playerRadius;
     public LayerMask Ground;
-    bool grounded;
+    private bool grounded;
 
     [Header("Objects")]
     [SerializeField]
@@ -45,6 +41,10 @@ public partial class PlayerController : MonoBehaviour
 
 
     #endregion
+
+    private static PlayerController instance;
+
+    public static PlayerController Instance { get { return instance; } }
 
     //Dictionary containing all the states the player can be in // STATES MUST BE CALLED AS THEY ARE BELOW, AS WELL AS ADDED IN AWAKE TO BE CALLED
     public Walking walking;
@@ -83,6 +83,7 @@ public partial class PlayerController : MonoBehaviour
     {
         input = new();
         input.Enable();
+        instance = this;
 
         rb = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
@@ -113,6 +114,15 @@ public partial class PlayerController : MonoBehaviour
         var state = _states[_state];
         state.OnFixedUpdate(this);
         Debug.Log(_state);
+
+        //Check if the player is touching the ground
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
+
+        if (grounded && _state != typeof(Air))
+        {
+            lastGroundedTime = Time.time;
+            coyoteJumped = false;
+        }
     }
 
     private void Update()
@@ -136,9 +146,6 @@ public partial class PlayerController : MonoBehaviour
             grapple.enabled = true;
             grappleOBJ.SetActive(true);
         }
-
-        //Check if the player is touching the ground
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
 
         if (state is WallRunning)
         {
@@ -243,13 +250,20 @@ public partial class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        input.Enable();
+        input.Movement.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Movement.Disable();
+        input.Disable();
+    }
+
     private bool TryJump()
     {
-        if (grounded)
-        {
-            lastGroundedTime = Time.time;
-        }
-
         if (Time.time - lastGroundedTime <= coyoteTime)
         {
             return true;

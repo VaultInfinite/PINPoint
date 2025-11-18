@@ -87,8 +87,8 @@ public partial class PlayerController
         /// <returns>Which side of the player has returned a wall hit</returns>
         public bool CanWallRun(PlayerController player)
         {
-            bool leftHit = Physics.Raycast(player.transform.position, -Camera.main.transform.right, player.playerRadius + 0.02f, player.Ground);
-            bool rightHit = Physics.Raycast(player.transform.position, Camera.main.transform.right, player.playerRadius + 0.02f, player.Ground);
+            bool leftHit = Physics.Raycast(player.transform.position, -Camera.main.transform.right, player.playerRadius + 0.025f, player.Ground);
+            bool rightHit = Physics.Raycast(player.transform.position, Camera.main.transform.right, player.playerRadius + 0.025f, player.Ground);
             return leftHit || rightHit;
         }
 
