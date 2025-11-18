@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 
 public partial class PlayerController : MonoBehaviour
 {
@@ -71,9 +70,10 @@ public partial class PlayerController : MonoBehaviour
     public Type _state = typeof(Walking);
 
     //Player Ability
-    private bool CanDoubleJump => ItemManager.Instance.rocketboots.enabled;
+    private bool CanDoubleJump => ItemManager.Instance.rocketBoots.enabled;
     private bool CanGlide => ItemManager.Instance.glider.enabled;
     private bool CanGrapple => ItemManager.Instance.grapple.enabled;
+    private bool CanShock => ItemManager.Instance.shockGun.enabled;
 
     //bool to eventually stun player if the police drone shoots them
     public bool stun = false;
@@ -270,6 +270,42 @@ public partial class PlayerController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void RifleSetActive(bool toggle)
+    {
+        if (toggle)
+        {
+            
+        }
+        else
+        {
+
+        }
+    }
+
+    private void GrappleSetActive(bool toggle)
+    {
+        if (toggle)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+    private void ShockSetActive(bool toggle)
+    {
+        if (toggle)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     //time the player will be stunned for when hit by police drone
