@@ -20,9 +20,9 @@ public partial class PlayerController
         public override void OnEnter(PlayerController player)
         {
             player.rb.velocity = Vector3.zero;
-            if (player.sniper.enabled)
+            if (player.shooting.enabled)
             {
-                player.sniper.enabled = false;
+                player.shooting.enabled = false;
                 player.sniperOBJ.SetActive(false);
                 equipSniper = true;
             }
@@ -50,7 +50,7 @@ public partial class PlayerController
             player.air.ledgeGrabbed = true;
             if (equipSniper)
             {
-                player.sniper.enabled = true;
+                player.shooting.enabled = true;
                 player.sniperOBJ.SetActive(true);
                 equipSniper = false;
             }
