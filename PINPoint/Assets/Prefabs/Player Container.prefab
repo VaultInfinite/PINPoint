@@ -154,13 +154,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookRange: 100
-  maxSpeed: 60
-  acceleration: 60
+  maxSpeed: 140
+  acceleration: 120
   yAddition: 20
-  dampeningAmount: 0.6
+  dampeningAmount: 2
   point: {fileID: 6664788189219570390, guid: d454b32ad9896ca4fb11d53b018e389a, type: 3}
   gunHook: {fileID: 9207939844593794825}
   lineRenderer: {fileID: 0}
+  chargeLimit: 2
+  chargeRegenSpeed: 6
+  chargeCount: 0
 --- !u!114 &6317267148356265128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,13 +176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197d7feab91fd034e98153cfde58c0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundDrag: 6
-  coyoteTime: 0.3
+  groundDrag: 7.5
+  coyoteTime: 0.35
   rb: {fileID: 0}
   orientation: {fileID: 3235075872990336042}
   wallCameraAngle: 12
-  rifleLowered: 40
-  rifleRaised: 0
   playerHeight: 2
   playerRadius: 0.5
   Ground:
@@ -188,30 +189,30 @@ MonoBehaviour:
   sniperOBJ: {fileID: 2246137082685896813}
   grappleOBJ: {fileID: 2103975018995220354}
   walking:
-    maxSpeed: 80
-    acceleration: 120
+    maxSpeed: 90
+    acceleration: 135
   running:
-    maxSpeed: 160
-    acceleration: 240
+    maxSpeed: 170
+    acceleration: 255
   jump:
-    jumpForce: 26
+    jumpForce: 36
     direction: {x: 0, y: 0, z: 0}
   ledge:
     raycastDistance: 1
     ledgeHeightOffset: 0.75
   crouch:
-    maxSpeed: 40
+    maxSpeed: 30
     acceleration: 30
     crouchScaleY: 0.5
   air:
-    maxSpeed: 50
-    acceleration: 20
-    maxFallSpeed: 80
-    gravity: 45
+    maxSpeed: 35
+    acceleration: 30
+    maxFallSpeed: 140
+    gravity: 40
     doubleJumped: 0
     ledgeGrabbed: 0
   wall:
-    maxSpeed: 24
+    maxSpeed: 26
     acceleration: 100
     wallGravity: 60
     maxWallTime: 2.5
@@ -243,9 +244,11 @@ MonoBehaviour:
   gliding:
     maxSpeed: 50
     acceleration: 36
-    glideTurn: 20
+    glideTurn: 45
     glideDecline: 4
     maxGlideTime: 2
+  sniper: {fileID: 0}
+  grapple: {fileID: 0}
   stun: 0
 --- !u!114 &2604340745770524506
 MonoBehaviour:
@@ -505,7 +508,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
