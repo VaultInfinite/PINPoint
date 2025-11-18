@@ -90,7 +90,16 @@
                     "name": "Select Grapple",
                     "type": "Button",
                     "id": "7fea3c36-b3a8-44fd-95cb-22ef4f200654",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select Shock",
+                    "type": "Button",
+                    "id": "1fb2e51f-05d3-4b4e-a645-7417d61112c6",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -314,6 +323,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select Grapple",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee19ac92-5fb9-453f-bdbd-13cd6fffecb2",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select Shock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

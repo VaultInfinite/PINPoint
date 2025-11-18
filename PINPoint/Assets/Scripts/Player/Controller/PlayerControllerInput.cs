@@ -176,7 +176,16 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""name"": ""Select Grapple"",
                     ""type"": ""Button"",
                     ""id"": ""7fea3c36-b3a8-44fd-95cb-22ef4f200654"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select Shock"",
+                    ""type"": ""Button"",
+                    ""id"": ""1fb2e51f-05d3-4b4e-a645-7417d61112c6"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -402,6 +411,17 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
                     ""action"": ""Select Grapple"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee19ac92-5fb9-453f-bdbd-13cd6fffecb2"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select Shock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -420,6 +440,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         m_Movement_Pause = m_Movement.FindAction("Pause", throwIfNotFound: true);
         m_Movement_SelectSniper = m_Movement.FindAction("Select Sniper", throwIfNotFound: true);
         m_Movement_SelectGrapple = m_Movement.FindAction("Select Grapple", throwIfNotFound: true);
+        m_Movement_SelectShock = m_Movement.FindAction("Select Shock", throwIfNotFound: true);
     }
 
     ~@PlayerControllerInput()
@@ -510,6 +531,7 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
     private readonly InputAction m_Movement_Pause;
     private readonly InputAction m_Movement_SelectSniper;
     private readonly InputAction m_Movement_SelectGrapple;
+    private readonly InputAction m_Movement_SelectShock;
     /// <summary>
     /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
@@ -561,6 +583,10 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         /// Provides access to the underlying input action "Movement/SelectGrapple".
         /// </summary>
         public InputAction @SelectGrapple => m_Wrapper.m_Movement_SelectGrapple;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/SelectShock".
+        /// </summary>
+        public InputAction @SelectShock => m_Wrapper.m_Movement_SelectShock;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -617,6 +643,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @SelectGrapple.started += instance.OnSelectGrapple;
             @SelectGrapple.performed += instance.OnSelectGrapple;
             @SelectGrapple.canceled += instance.OnSelectGrapple;
+            @SelectShock.started += instance.OnSelectShock;
+            @SelectShock.performed += instance.OnSelectShock;
+            @SelectShock.canceled += instance.OnSelectShock;
         }
 
         /// <summary>
@@ -658,6 +687,9 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
             @SelectGrapple.started -= instance.OnSelectGrapple;
             @SelectGrapple.performed -= instance.OnSelectGrapple;
             @SelectGrapple.canceled -= instance.OnSelectGrapple;
+            @SelectShock.started -= instance.OnSelectShock;
+            @SelectShock.performed -= instance.OnSelectShock;
+            @SelectShock.canceled -= instance.OnSelectShock;
         }
 
         /// <summary>
@@ -768,5 +800,12 @@ public partial class @PlayerControllerInput: IInputActionCollection2, IDisposabl
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectGrapple(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Select Shock" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelectShock(InputAction.CallbackContext context);
     }
 }

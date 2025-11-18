@@ -126,7 +126,26 @@ public partial class PlayerController : MonoBehaviour
     {
         var state = _states[_state];
 
-        if (state is WallRunning)
+        if (input.Movement.SelectSniper.IsPressed() && state != ledge)
+        {
+            GrappleSetActive(false);
+            ShockSetActive(false);
+            RifleSetActive(true);
+        }
+        if (input.Movement.SelectGrapple.IsPressed() && state != ledge && CanGrapple)
+        {
+            RifleSetActive(false);
+            ShockSetActive(false);
+            GrappleSetActive(true);
+        }
+        if (input.Movement.SelectShock.IsPressed() && state != ledge && CanShock)
+        {
+            RifleSetActive(false);
+            GrappleSetActive(false);
+            ShockSetActive(true);
+        }
+
+            if (state is WallRunning)
         {
             if (wall.IsOnLeftWall(this))
             {
@@ -253,48 +272,59 @@ public partial class PlayerController : MonoBehaviour
 
     private void RifleSetActive(bool toggle)
     {
-        if (toggle)
+        if (sniperOBJ)
         {
-            shooting.enabled = true;
-            shooting.playerGun = GunType.rifle;
-            sniperOBJ.SetActive(true);
-        }
-        else
-        {
-            shooting.enabled = false;
-            sniperOBJ.SetActive(false);
+            if (toggle)
+            {
+                shooting.enabled = true;
+                shooting.playerGun = GunType.rifle;
+                sniperOBJ.SetActive(true);
+            }
+            else
+            {
+                shooting.enabled = false;
+                sniperOBJ.SetActive(false);
+            }
         }
     }
 
     private void GrappleSetActive(bool toggle)
     {
-        if (toggle)
+        if (grappleOBJ != null)
         {
-            grapple.enabled = true;
-            grappleOBJ.SetActive(true);
+            if (toggle)
+            {
+                grapple.enabled = true;
+                grappleOBJ.SetActive(true);
+            }
+            else
+            {
+                grapple.enabled = false;
+                grappleOBJ.SetActive(false);
+                grapple.point.SetActive(false);
+                grapple.lineRenderer.enabled = false;
+            }
         }
-        else
-        {
-            grapple.enabled = false;
-            grappleOBJ.SetActive(false);
-            grapple.point.SetActive(false);
-            grapple.lineRenderer.enabled = false;
-        }
+        
     }
 
     private void ShockSetActive(bool toggle)
     {
-        if (toggle)
+        if (shockOBJ != null)
         {
-            shooting.enabled = true;
-            shooting.playerGun = GunType.stun;
-            shockOBJ.SetActive(true);
+            if (toggle)
+            {
+                shooting.enabled = true;
+                shooting.playerGun = GunType.stun;
+                shockOBJ.SetActive(true);
+            }
+            else
+            {
+                shooting.enabled = false;
+                shockOBJ.SetActive(false);
+            }
         }
-        else
-        {
-            shooting.enabled = false;
-            shockOBJ.SetActive(false);
-        }
+        
     }
 
     //time the player will be stunned for when hit by police drone
