@@ -33,10 +33,7 @@ public partial class PlayerController : MonoBehaviour
     private bool grounded;
 
     [Header("Objects")]
-    [SerializeField]
-    private GameObject sniperOBJ;
-    //Used in grappling script to draw line.
-    public GameObject grappleOBJ;
+    public GameObject sniperOBJ, grappleOBJ, shockOBJ;
 
 
     #endregion
@@ -57,7 +54,7 @@ public partial class PlayerController : MonoBehaviour
     private readonly Dictionary<Type, State> _states = new();
 
     [HideInInspector]
-    public Shoot sniper;
+    public Shoot shooting;
     [HideInInspector]
     public Grappling grapple;
     
@@ -97,7 +94,7 @@ public partial class PlayerController : MonoBehaviour
         _states.Add(typeof(Gliding), gliding);
         _states.Add(typeof(Ledge), ledge);
 
-        sniper = gameObject.GetComponent<Shoot>();
+        shooting = gameObject.GetComponent<Shoot>();
         grapple = gameObject.GetComponent<Grappling>();
     }
 
@@ -128,24 +125,6 @@ public partial class PlayerController : MonoBehaviour
     private void Update()
     {
         var state = _states[_state];
-
-        if (input.Movement.SelectSniper.IsPressed() && state != ledge)
-        {
-            sniper.enabled = true;
-            sniperOBJ.SetActive(true);
-            grapple.enabled = false;
-            grappleOBJ.SetActive(false);
-            grapple.point.SetActive(false);
-            grapple.lineRenderer.enabled = false;
-
-        }
-        if (input.Movement.SelectGrapple.IsPressed() && state != ledge && CanGrapple)
-        {
-            sniper.enabled = false;
-            sniperOBJ.SetActive(false);
-            grapple.enabled = true;
-            grappleOBJ.SetActive(true);
-        }
 
         if (state is WallRunning)
         {
@@ -276,11 +255,14 @@ public partial class PlayerController : MonoBehaviour
     {
         if (toggle)
         {
-            
+            shooting.enabled = true;
+            shooting.playerGun = GunType.rifle;
+            sniperOBJ.SetActive(true);
         }
         else
         {
-
+            shooting.enabled = false;
+            sniperOBJ.SetActive(false);
         }
     }
 
@@ -288,11 +270,15 @@ public partial class PlayerController : MonoBehaviour
     {
         if (toggle)
         {
-
+            grapple.enabled = true;
+            grappleOBJ.SetActive(true);
         }
         else
         {
-
+            grapple.enabled = false;
+            grappleOBJ.SetActive(false);
+            grapple.point.SetActive(false);
+            grapple.lineRenderer.enabled = false;
         }
     }
 
@@ -300,11 +286,14 @@ public partial class PlayerController : MonoBehaviour
     {
         if (toggle)
         {
-
+            shooting.enabled = true;
+            shooting.playerGun = GunType.stun;
+            shockOBJ.SetActive(true);
         }
         else
         {
-
+            shooting.enabled = false;
+            shockOBJ.SetActive(false);
         }
     }
 

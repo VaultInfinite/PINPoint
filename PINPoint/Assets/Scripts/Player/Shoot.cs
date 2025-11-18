@@ -7,7 +7,7 @@ using static PlayerController;
 /// What type of gun the player has.
 /// Currently used for cooldowns
 /// </summary>
-enum GunType
+public enum GunType
 {
     stun,
     rifle
@@ -26,8 +26,7 @@ public class Shoot : MonoBehaviour
     private float shootCooldown;
     [SerializeField]
     private PlayerController player;
-    [SerializeField]
-    private GunType playerGun;
+    public GunType playerGun;
 
     [Header("Stun Gun")]
     [SerializeField]
