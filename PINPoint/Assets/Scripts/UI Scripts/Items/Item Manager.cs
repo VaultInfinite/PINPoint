@@ -13,7 +13,7 @@ public class ItemManager : MonoBehaviour
 
     public Item glider, grapple, rocketBoots, shockGun;
 
-    public Item[] Items => new Item[] {glider, grapple, rocketBoots};
+    public Item[] Items => new Item[] {glider, grapple, rocketBoots, shockGun};
 
     //private void Start()
     //{
