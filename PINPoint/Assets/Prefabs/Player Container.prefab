@@ -243,10 +243,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   gliding:
-    maxSpeed: 50
-    acceleration: 36
+    maxSpeed: 60
+    acceleration: 45
     glideTurn: 45
-    glideDecline: 4
+    glideDecline: 6
     maxGlideTime: 2
   shooting: {fileID: 0}
   grapple: {fileID: 0}
