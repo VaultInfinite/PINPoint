@@ -67,8 +67,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: ' $99,999,999'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 382a3fa564c03dd418b6717106821a29, type: 2}
+  m_sharedMaterial: {fileID: -982299193116535744, guid: 382a3fa564c03dd418b6717106821a29,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -203,8 +204,9 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 382a3fa564c03dd418b6717106821a29, type: 2}
+  m_sharedMaterial: {fileID: -982299193116535744, guid: 382a3fa564c03dd418b6717106821a29,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -812,6 +814,6 @@ MonoBehaviour:
   nameText: {fileID: 529671877785057068}
   costText: {fileID: 2107138142940934261}
   button: {fileID: 4159464475007200288}
-  onBought:
+  onSelected:
     m_PersistentCalls:
       m_Calls: []
