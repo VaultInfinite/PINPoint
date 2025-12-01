@@ -63,9 +63,17 @@ public class GameUIControl : MonoBehaviour
         //TEMP WEAPON DISPLAY IMPLEMENTATION
         if (player != null)
         {
-            if (player.gameObject.GetComponent<Shoot>().isActiveAndEnabled)
+            var weapon = player.gameObject.GetComponent<Shoot>();
+            var grapple = player.gameObject.GetComponent<Grappling>();
+
+            if (weapon.isActiveAndEnabled && weapon.playerGun == GunType.rifle)
             {
                 weaponDisplay.text = "Sniper";
+                chargeDisplay.text = " ";
+            }
+            if (weapon.isActiveAndEnabled && weapon.playerGun == GunType.stun)
+            {
+                weaponDisplay.text = "Stun Gun";
                 chargeDisplay.text = " ";
             }
             if (player.gameObject.GetComponent<Grappling>().isActiveAndEnabled)
