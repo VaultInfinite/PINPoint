@@ -26,11 +26,6 @@ public class ButtonManager : MonoBehaviour
         controlsMenu.SetActive(true);
     }
 
-    public void Tutorial()
-    {
-
-    }
-
     public void ReturnToMenu()
     {
         title.SetActive(true);
