@@ -138,11 +138,6 @@ public class Shoot : MonoBehaviour
                 LevelManager.Instance.Fail();
             }
         }
-        else
-        {
-            player.input.Movement.Disable();
-            LevelManager.Instance.Fail();
-        }
 
         //Shock-Gun check
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun && canShoot)
