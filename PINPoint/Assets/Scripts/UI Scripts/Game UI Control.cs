@@ -76,7 +76,7 @@ public class GameUIControl : MonoBehaviour
                 weaponDisplay.text = "Stun Gun";
                 chargeDisplay.text = " ";
             }
-            if (player.gameObject.GetComponent<Grappling>().isActiveAndEnabled)
+            if (grapple.isActiveAndEnabled)
             {
                 weaponDisplay.text = "Grappling Hook";
                 chargeDisplay.text = "Charges: " + player.grapple.chargeCount;
