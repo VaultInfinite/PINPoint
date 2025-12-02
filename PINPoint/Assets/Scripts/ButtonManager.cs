@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public GameObject mainMenu, controlsMenu, settingsMenu;
+    public GameObject mainMenu, controlsMenu, settingsMenu, title;
 
     public void PlayGame()
     {
@@ -20,15 +20,20 @@ public class ButtonManager : MonoBehaviour
     public void Controls()
     {
         Debug.Log("Turn off Main Menu, Enable Controls");
+        title.SetActive(false);
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(true);
     }
 
-    
+    public void Tutorial()
+    {
+
+    }
 
     public void ReturnToMenu()
     {
+        title.SetActive(true);
         controlsMenu.SetActive(false);
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);

@@ -8,16 +8,15 @@ public class MainMenuEffects : MonoBehaviour
 {
     //Variables
     public RawImage clickToPlay;
+    public float fadeAnimTimer;
+    public GameObject backgroundBlack;
+    public GameObject buttonGroup;
+    public GameObject backgroundCity;
+    public GameObject invisibleButton;
 
-    private void Update()
-    {
-        
-    }
+    private bool hasClicked = false;
 
-    /// <summary>
-    /// Makes the UI Fade in and out
-    /// </summary>
-    private void FadeInAndOut()
+    private void Start()
     {
         if (clickToPlay == null)
         {
@@ -25,12 +24,39 @@ public class MainMenuEffects : MonoBehaviour
             return;
         }
 
-        
+        StartCoroutine(FadeInAndOut());
     }
 
-    /*
-    private IEnumerator FadeIn()
+    public void ProceedToMainMenu()
     {
-        return;
-    }*/
+        invisibleButton.SetActive(false);
+        backgroundCity.SetActive(false);
+
+        backgroundBlack.SetActive(true);
+        hasClicked = true;
+        buttonGroup.SetActive(true);
+    }
+
+    private IEnumerator FadeInAndOut()
+    {
+        if (!hasClicked){
+
+            yield return new WaitForSeconds(fadeAnimTimer);
+
+            if (clickToPlay.enabled)
+            {
+                clickToPlay.enabled = false;
+            }
+            else if (!clickToPlay.enabled)
+            {
+                clickToPlay.enabled = true;
+            }
+
+            StartCoroutine(FadeInAndOut());
+        }
+        else
+        {
+            clickToPlay.enabled = false;
+        }
+    }
 }
