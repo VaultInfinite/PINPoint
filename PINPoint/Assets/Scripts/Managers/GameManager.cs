@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
     #region Button Functions
     public void HideoutReturn()
     {
+        AudioControl.Instance.StopMusic();
+
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             //Due to only being accessable in the contracts menu, disable other menus
@@ -151,6 +153,8 @@ public class GameManager : MonoBehaviour
         hideOutButtons.SetActive(false);
 
         BlackOut();
+
+        AudioControl.Instance.PlayMusic();
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);

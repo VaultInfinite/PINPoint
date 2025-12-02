@@ -16990,8 +16990,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2e8161d0ad43dc74fbb8ffde62394152, type: 3}
   - {fileID: 8300000, guid: 2e8161d0ad43dc74fbb8ffde62394152, type: 3}
   jumpClip: {fileID: 8300000, guid: 2e8161d0ad43dc74fbb8ffde62394152, type: 3}
-  shootClip: {fileID: 0}
-  musicClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 94ff3e3428a3d3e469ec9ce8982cafa4, type: 3}
+  musicClip: {fileID: 8300000, guid: 815b6c8dbddcbcb4ca6bf57143e94339, type: 3}
   ambientClip: {fileID: 0}
 --- !u!1 &8979510831816316699
 GameObject:

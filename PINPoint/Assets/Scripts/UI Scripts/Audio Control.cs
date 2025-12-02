@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum sfxType
@@ -61,13 +62,22 @@ public class AudioControl : MonoBehaviour
         instance.effectsAudio.Play();
     }
 
-    private void PlayMusic()
+    public void PlayMusic()
     {
+        Debug.Log("Play Music");
+        instance.effectsAudio.clip = musicClip;
+
+        instance.effectsAudio.Play();
+    }
+
+    public void StopMusic()
+    {
+        Debug.Log("Stop Music");
+
+        instance.effectsAudio.Stop();
     }
 
     private void PlayAmbient()
     {
     }
-
-    
 }
