@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalScenes/Hideout.unity
     guid: cd127b0f902641d4e86e309ebd33cc5b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FinalScenes/FinalLevel.unity
     guid: 47e20e98f01954f458dcc331ab6e4a4b
+  - enabled: 1
+    path: Assets/Scenes/Wyatt/WyattWork.unity
+    guid: fe4deb6094314d84887293399f8c478e
   m_configObjects: {}
