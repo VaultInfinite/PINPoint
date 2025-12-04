@@ -35,6 +35,9 @@ public partial class PlayerController : MonoBehaviour
     [Header("Objects")]
     public GameObject sniperOBJ, grappleOBJ, shockOBJ;
 
+    //Charge Regen for the Grappling Hook; time passed
+    private float chargeRegenTime;
+
 
     #endregion
 
@@ -72,9 +75,9 @@ public partial class PlayerController : MonoBehaviour
     private bool CanGrapple => ItemManager.Instance.grapple.enabled;
     private bool CanShock => ItemManager.Instance.shockGun.enabled;
 
-    //bool to eventually stun player if the police drone shoots them
-    public bool stun = false;
-
+    //Allow stun control script to handle logic
+    [HideInInspector]
+    public StunControl stunControl;
 
     private void Awake()
     {
@@ -96,6 +99,7 @@ public partial class PlayerController : MonoBehaviour
 
         shooting = gameObject.GetComponent<Shoot>();
         grapple = gameObject.GetComponent<Grappling>();
+        stunControl = gameObject.GetComponent<StunControl>();
     }
 
     private void Start()
@@ -109,7 +113,10 @@ public partial class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         var state = _states[_state];
-        state.OnFixedUpdate(this);
+        if (!stunControl.isStunned)
+        {
+            state.OnFixedUpdate(this);
+        }
         Debug.Log(_state);
 
         //Check if the player is touching the ground
@@ -144,8 +151,8 @@ public partial class PlayerController : MonoBehaviour
             GrappleSetActive(false);
             ShockSetActive(true);
         }
-
-            if (state is WallRunning)
+        
+        if (state is WallRunning)
         {
             if (wall.IsOnLeftWall(this))
             {
@@ -162,7 +169,22 @@ public partial class PlayerController : MonoBehaviour
             roll = Mathf.Lerp(roll, 0, Time.deltaTime * 3);
             Camera.main.transform.localEulerAngles = new Vector3(0, 0, roll);
         }
+        if (!stunControl.isStunned)
+        {
             state.OnUpdate(this);
+        }
+
+        //Limitation on Grappling Hook Charges
+        if (grapple.chargeCount < grapple.chargeLimit)
+        {
+            chargeRegenTime += Time.deltaTime;
+
+            if (chargeRegenTime >= grapple.chargeRegenSpeed)
+            {
+                grapple.chargeCount++;
+                chargeRegenTime -= grapple.chargeRegenSpeed;
+            }
+        }
     }
 
     //Sets the current state calling OnEnter on new state and OnExit on old state
@@ -207,23 +229,22 @@ public partial class PlayerController : MonoBehaviour
     private void Accelerate(Vector3 moveDirection, float maxSpeed, float acceleration)
     {
         //if the player isn't stunned, then they can move
-        if(!stun)
+
+        Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        float product = Vector3.Dot(moveDirection, velocity);
+        float accel = acceleration * Time.fixedDeltaTime;
+        if (product + accel > maxSpeed)
         {
-            Vector3 velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            float product = Vector3.Dot(moveDirection, velocity);
-            float accel = acceleration * Time.fixedDeltaTime;
-            if (product + accel > maxSpeed)
-            {
-                accel = maxSpeed - product;
-            }
-
-            Vector3 newVelocity = velocity + moveDirection * accel;
-
-            //Debug.Log(newVelocity.magnitude);
-
-            newVelocity.y = rb.velocity.y;
-            rb.velocity = newVelocity;
+            accel = maxSpeed - product;
         }
+
+        Vector3 newVelocity = velocity + moveDirection * accel;
+
+        //Debug.Log(newVelocity.magnitude);
+
+        newVelocity.y = rb.velocity.y;
+        rb.velocity = newVelocity;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -238,13 +259,6 @@ public partial class PlayerController : MonoBehaviour
             Transform respawn = other.gameObject.transform;
             DeathFloor deathFloor = FindAnyObjectByType<DeathFloor>();
             deathFloor.Checkpoint(respawn);
-        }
-        if (other.gameObject.tag == "Projectile")
-        {
-            //stun = true;
-            Debug.Log("Stun is true.");
-            StartCoroutine(Stunned());
-            //stun = false;
         }
     }
 
@@ -325,14 +339,6 @@ public partial class PlayerController : MonoBehaviour
             }
         }
         
-    }
-
-    //time the player will be stunned for when hit by police drone
-    public IEnumerator Stunned()
-    {
-        stun = true;
-        yield return new WaitForSeconds(3f);
-        stun = false;
     }
 
     /// <summary>

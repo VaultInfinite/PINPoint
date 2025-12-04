@@ -102,16 +102,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b56e01033ef3247b36bab2d744893c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCameraPos: {fileID: 1945098139998313778}
-  targetCamera: {fileID: 0}
-  speed: 5
-  minPauseDuration: 1
-  maxPauseDuration: 5
+  speed: 6
+  panicBoost: 4
+  minPauseDuration: 2
+  maxPauseDuration: 3
   crowdRegion: {fileID: 0}
   meshRenderer: {fileID: 2445808461765559495}
   npcAnim: {fileID: 5911079363547130768}
   isTarget: 0
   reachedGoal: 0
+  playerDetectionRange: 20
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &1889112382426328906
 Rigidbody:
   m_ObjectHideFlags: 0
