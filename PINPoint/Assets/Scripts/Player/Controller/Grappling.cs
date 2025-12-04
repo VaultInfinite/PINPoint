@@ -29,7 +29,6 @@ public class Grappling : MonoBehaviour
     [Header("Limitation of Grappling hook")]
     public int chargeLimit;
     public float chargeRegenSpeed;
-    private float chargeRegenTime;
     [HideInInspector]
     public int chargeCount;
 
@@ -90,18 +89,6 @@ public class Grappling : MonoBehaviour
             if (player.input.Movement.Shoot.IsPressed() && hookPoint != Vector3.zero)
             {
                 lineRenderer.SetPosition(1, player.grappleOBJ.transform.position);
-            }
-        }
-
-        //Limitation on Grappling Hook Charges
-        if (chargeCount < chargeLimit)
-        {
-            chargeRegenTime += Time.deltaTime;
-
-            if (chargeRegenTime >= chargeRegenSpeed)
-            {
-                chargeCount++;
-                chargeRegenTime -= chargeRegenSpeed;
             }
         }
     }

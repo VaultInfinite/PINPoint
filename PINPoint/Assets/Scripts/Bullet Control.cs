@@ -7,44 +7,66 @@ using UnityEngine;
 public class BulletControl : MonoBehaviour
 {
     public float expireTime;
-    public float rad;
+    public float gizmoRadius;
+
+    public float playerStunDuration, droneStunDuration;
+
+    [HideInInspector]
+    public Vector3 startPoint, endPoint;
+    private Vector3 direction;
+    [SerializeField]
+    private float speed;
+
+    private Rigidbody rb;
 
     private void Start()
     {
-        StartCoroutine(DespawnTime(expireTime));
+        rb = GetComponent<Rigidbody>();
+        startPoint = transform.position;
+
+        direction = ShootDirection();
+        transform.rotation = Quaternion.LookRotation(direction);
+        Destroy(gameObject, expireTime);
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position += direction * speed * Time.fixedDeltaTime;
     }
 
     private void OnDrawGizmos()
     {
         //Debug
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, rad);
+        Gizmos.DrawSphere(transform.position, gizmoRadius);
     }
     
     void OnTriggerEnter(Collider collision)
     {
-        switch (collision.gameObject.tag)
+        switch (collision.gameObject.layer)
         {
-            case "Enemy":
+            case 9: //Assuming layer 9 is enemy
 
-                Debug.Log("KILL");
-                collision.transform.gameObject.GetComponent<StunControl>().Stunned();
+                Debug.Log("Stun drone");
+                collision.gameObject.GetComponent<PoliceDrone>().stunControl.Stunned();
                 Destroy(gameObject);
                 break;
 
-            case "Ground":
+            case 7: //Assuming layer 7 is player
+                Debug.Log("Stun Player");
+                collision.gameObject.GetComponent<PlayerController>().stunControl.Stunned();
+                Destroy(gameObject);
+                break;
+            case 3: //Assuming layer 3 is ground
                 Debug.Log("miss!");
                 Destroy(gameObject);
                 break;
         }
     }
-    
 
-    IEnumerator DespawnTime(float timer)
+    private Vector3 ShootDirection()
     {
-        yield return new WaitForSeconds(timer);
-
-        //KYS
-        Destroy(gameObject);
+        direction = -(startPoint - endPoint).normalized;
+        return direction;
     }
 }
