@@ -45,9 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2935fb92af5db4d91cdac4c810662d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficulty: 0
   targetCamera: {fileID: 6434573820119777115}
+  targetDummy: {fileID: 0}
   target: {fileID: 0}
   npcTextures: {fileID: 11400000, guid: f8e9382f5a39b3c4b8906ecbf5539b25, type: 2}
+  easyMoney: 10000
+  mediumMoney: 25000
+  hardMoney: 100000
   levelMoney: 10000
   levelDuration: 240
 --- !u!1 &8972676584987953684
@@ -75,16 +80,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8972676584987953684}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.00000038510765, y: -0.99144495, z: 0.13052596, w: 0.0000029251885}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8205843598395573580}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: -180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!20 &6434573820119777115
@@ -97,7 +102,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -122,7 +127,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 0.7
+  orthographic size: 0.6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
