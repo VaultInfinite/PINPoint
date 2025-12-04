@@ -16,15 +16,22 @@ public partial class PlayerController
         //Present to reequip certain weapons.
         private bool equipSniper;
         private bool equipGrapple;
+        private bool equipShock;
 
         public override void OnEnter(PlayerController player)
         {
             player.rb.velocity = Vector3.zero;
-            if (player.shooting.enabled)
+            if (player.shooting.enabled && player.shooting.playerGun == GunType.rifle)
             {
                 player.shooting.enabled = false;
                 player.sniperOBJ.SetActive(false);
                 equipSniper = true;
+            }
+            if (player.shooting.enabled && player.shooting.playerGun == GunType.stun)
+            {
+                player.shooting.enabled = false;
+                player.shockOBJ.SetActive(false);
+                equipShock = true;
             }
             if (player.grapple.enabled)
             {
@@ -54,12 +61,19 @@ public partial class PlayerController
                 player.sniperOBJ.SetActive(true);
                 equipSniper = false;
             }
+            if (equipShock)
+            {
+                player.shooting.enabled = true;
+                player.shockOBJ.SetActive(true);
+                equipShock = false;
+            }
             if (equipGrapple)
             {
                 player.grapple.enabled = true;
                 player.grappleOBJ.SetActive(true);
                 equipGrapple = false;
             }
+            
         }
 
         public bool CanLedgeGrab(PlayerController player)

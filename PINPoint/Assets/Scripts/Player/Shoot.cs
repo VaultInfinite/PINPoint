@@ -31,7 +31,6 @@ public class Shoot : MonoBehaviour
     [Header("Stun Gun")]
     [SerializeField]
     private float stunGunCD = 7f;
-    private StunShoot stunShootScr;
 
     [Header("Aiming Variables")]
     public float camZoom;
@@ -51,7 +50,6 @@ public class Shoot : MonoBehaviour
 
         //Get Camera FoV
         deZoom = Mathf.Round(cam.fieldOfView);
-        stunShootScr = GetComponent<StunShoot>();
 
         cameraHolder.GetComponent<CameraControl>();
     }
@@ -80,9 +78,14 @@ public class Shoot : MonoBehaviour
         }
 
         //If Shoot button is pressed while fully zoomed in, take the shot!
-        if (Mathf.Round(cam.fieldOfView) == camZoom && player.input.Movement.Shoot.IsPressed())
+        if (Mathf.Round(cam.fieldOfView) == camZoom && player.input.Movement.Shoot.IsPressed() && playerGun == GunType.rifle)
         {
             //Shoot
+            Shooting();
+        }
+        else if (player.input.Movement.Shoot.IsPressed() && playerGun == GunType.stun)
+        {
+            //Shoot but under different reasoning for the stun gun
             Shooting();
         }
 
@@ -140,15 +143,16 @@ public class Shoot : MonoBehaviour
         }
 
         //Shock-Gun check
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun && canShoot)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit) && playerGun == GunType.stun)
         {
             GameObject hitObject = hit.transform.gameObject;
 
             //Shock-Gun code goes here; place code when hit lands within GetComponent if statement, recharge after but within Raycast if statement.
             if (hitObject.GetComponent<PoliceDrone>())
             {
-                
-                stunShootScr.ShootStun();
+                PoliceDrone drone = hitObject.GetComponent<PoliceDrone>();
+                drone.stunControl.Stunned();
+                Debug.Log("Enemy Stunned");
             }
         }
 
