@@ -94,16 +94,27 @@ public class PoliceDrone : MonoBehaviour
 
     private void ChasePlayer()
     {
+        LookAt();
+
         //agent.SetDestination(player.position);
         walkPoint = new Vector3(player.transform.position.x, player.transform.position.y + 10f, player.transform.position.z);
+
+        
     }
 
     private void AttackPlayer(bool approach)
     {
+        LookAt();
+
         playerApproach = approach;
+
+        Vector3 lookDirection = (gameObject.transform.position - player.transform.position).normalized;
+        lookDirection.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookDirection);
 
         //agent.SetDestination(transform.position);
         walkPoint = new Vector3(player.transform.position.x, player.transform.position.y + 10f, player.transform.position.z);
+
 
 
         if (!alreadyAttacked)
@@ -201,6 +212,13 @@ public class PoliceDrone : MonoBehaviour
         return position;
     }
 
+    public void LookAt()
+    {
+        Vector3 lookDirection = (gameObject.transform.position - player.transform.position).normalized;
+        lookDirection.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookDirection);
+    }
+
     private IEnumerator DroneIdle()
     {
         reachedGoal = true;
@@ -208,7 +226,4 @@ public class PoliceDrone : MonoBehaviour
         walkPoint = NextPointInArray();
         reachedGoal = false;
     }
-
-    
-
 }
