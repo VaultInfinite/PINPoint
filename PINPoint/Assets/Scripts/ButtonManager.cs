@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public GameObject mainMenu, controlsMenu, settingsMenu, title;
+    public GameObject mainMenu, tutorialMenu, settingsMenu, title;
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1); 
     }
     public void ExitGame()
     {
@@ -17,19 +17,19 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("You quit the game.");
     }
 
-    public void Controls()
+    public void Tutorial()
     {
         Debug.Log("Turn off Main Menu, Enable Controls");
         title.SetActive(false);
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
-        controlsMenu.SetActive(true);
+        tutorialMenu.SetActive(true);
     }
 
     public void ReturnToMenu()
     {
         title.SetActive(true);
-        controlsMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
@@ -37,7 +37,7 @@ public class ButtonManager : MonoBehaviour
     public void Settings()
     {
         mainMenu.SetActive(false);
-        controlsMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 }
