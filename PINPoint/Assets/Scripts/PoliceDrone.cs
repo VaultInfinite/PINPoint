@@ -81,9 +81,10 @@ public class PoliceDrone : MonoBehaviour
 
     private void Wandering()
     {
-        //if (!walkPointSet) SearchWalkPoint();            
+        //if (!walkPointSet) SearchWalkPoint();
+        //Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        Debug.Log("Wandering");
 
 
 
@@ -94,16 +95,23 @@ public class PoliceDrone : MonoBehaviour
 
     private void ChasePlayer()
     {
+        LookAt();
+
         //agent.SetDestination(player.position);
         walkPoint = new Vector3(player.transform.position.x, player.transform.position.y + 10f, player.transform.position.z);
+
+        
     }
 
     private void AttackPlayer(bool approach)
     {
+        LookAt();
+
         playerApproach = approach;
 
         //agent.SetDestination(transform.position);
         walkPoint = new Vector3(player.transform.position.x, player.transform.position.y + 10f, player.transform.position.z);
+
 
 
         if (!alreadyAttacked)
@@ -175,21 +183,18 @@ public class PoliceDrone : MonoBehaviour
 
     private void Movement()
     {
-        if (!stunControl.isStunned)
+        if (Vector3.Distance(walkPoint, transform.position) < 0.1f && !reachedGoal)
         {
-            if (Vector3.Distance(walkPoint, transform.position) < 0.1f && !reachedGoal)
-            {
-                StartCoroutine(DroneIdle());
-            }
-            else if (!reachedGoal && playerApproach)
-            {
-                rb.velocity = (walkPoint - transform.position).normalized * speed;
-                transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
-            }
-            else
-            {
-                rb.velocity = Vector3.zero;
-            }
+            StartCoroutine(DroneIdle());
+        }
+        else if (!reachedGoal)
+        {
+            rb.velocity = (walkPoint - transform.position).normalized * speed;
+            transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);
+        }
+        else if (playerApproach || reachedGoal)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 
@@ -201,6 +206,13 @@ public class PoliceDrone : MonoBehaviour
         return position;
     }
 
+    public void LookAt()
+    {
+        Vector3 lookDirection = (gameObject.transform.position - player.transform.position).normalized;
+        lookDirection.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookDirection);
+    }
+
     private IEnumerator DroneIdle()
     {
         reachedGoal = true;
@@ -208,7 +220,4 @@ public class PoliceDrone : MonoBehaviour
         walkPoint = NextPointInArray();
         reachedGoal = false;
     }
-
-    
-
 }
