@@ -113,8 +113,8 @@ public class LevelManager : MonoBehaviour
         NPC npcTarget = npcs[targetNPC];
 
         //Assigning Target Variables
-        npcTarget.meshRenderer.material = npcTextures.materials[targetMaterial];
-        targetDummy.meshRenderer.material = npcTextures.materials[targetMaterial];
+        npcTarget.meshRenderer.material = GameManager.Instance.lastTarget;
+        targetDummy.meshRenderer.material = GameManager.Instance.lastTarget;
         npcTarget.isTarget = true;
         npcTarget.gameObject.tag = "Target";
     }

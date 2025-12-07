@@ -48,6 +48,14 @@ public class GameManager : MonoBehaviour
 
     [NonSerialized]
     public LevelManager.Difficulty lastDifficulty = LevelManager.Difficulty.Easy;
+    [NonSerialized]
+    public Material lastTarget;
+    public NPCTextureObject npcTextures;
+    public Material[] targetMat;
+
+    public TargetDummy[] targets;
+
+    private bool setupRan;
 
     /// <summary>
     /// Make sure there is one Game Manager Instance
@@ -66,6 +74,8 @@ public class GameManager : MonoBehaviour
 
         //Keep this object even when changing scenes
         DontDestroyOnLoad(gameObject);
+
+        SetupTargets();
     }
 
     #region Button Functions
@@ -82,6 +92,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            setupRan = false;
             SceneManager.LoadScene(1);
             hideOutButtons.SetActive(true);
 
@@ -89,8 +100,15 @@ public class GameManager : MonoBehaviour
             contracts.SetActive(true);
             settings.SetActive(false);
             equipment.SetActive(false);
+
+            foreach (TargetDummy target in targets)
+            {
+                target.gameObject.SetActive(true);
+            }
+            SetupTargets();
+
         }
-        
+
     }
 
     //Pulls up the settings UI
@@ -146,11 +164,17 @@ public class GameManager : MonoBehaviour
         pause.SetActive(false);
     }
 
-    private void GoToLevel(LevelManager.Difficulty difficulty)
+    private void GoToLevel(LevelManager.Difficulty difficulty, Material targetMaterial)
     {
         lastDifficulty = difficulty;
+        lastTarget = targetMaterial;
 
         hideOutButtons.SetActive(false);
+
+        foreach (TargetDummy target in targets)
+        {
+            target.gameObject.SetActive(false);
+        }
 
         BlackOut();
 
@@ -176,11 +200,11 @@ public class GameManager : MonoBehaviour
         Pause.isPaused = false;
     }
 
-    public void GoToEasy() => GoToLevel(LevelManager.Difficulty.Easy);
+    public void GoToEasy() => GoToLevel(LevelManager.Difficulty.Easy, targetMat[0]);
 
-    public void GoToMedium() => GoToLevel(LevelManager.Difficulty.Medium);
+    public void GoToMedium() => GoToLevel(LevelManager.Difficulty.Medium, targetMat[1]);
 
-    public void GoToHard() => GoToLevel(LevelManager.Difficulty.Hard);
+    public void GoToHard() => GoToLevel(LevelManager.Difficulty.Hard, targetMat[2]);
 
 
     /// <summary>
@@ -188,7 +212,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RetryLevel()
     {
-        GoToLevel(lastDifficulty);
+        GoToLevel(lastDifficulty, lastTarget);
     }
 
     public void QuitGame()
@@ -229,6 +253,20 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void SetupTargets()
+    {
+        if (!setupRan)
+        {
+            for (int index = 0; index < targets.Length; index++)
+            {
+                int targetMaterial = UnityEngine.Random.Range(0, npcTextures.materials.Count);
+                targets[index].meshRenderer.material = npcTextures.materials[targetMaterial];
+                targetMat[index] = npcTextures.materials[targetMaterial];
+            }
+        }
+        setupRan = true;
     }
     #endregion
 }
