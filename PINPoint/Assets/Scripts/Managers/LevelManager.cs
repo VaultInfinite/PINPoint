@@ -86,17 +86,21 @@ public class LevelManager : MonoBehaviour
 
         //Grab the specific spawnPoint we're spawning npcs at by utilizing a random.range within the list
         //Then, set the specific spawner within the list using that targeted spawnpoint
-        int targetSpawnPoint = UnityEngine.Random.Range(0, spawnPoints.Count);
-        CrowdSpawner spawner = spawnPoints[targetSpawnPoint];
+        //int targetSpawnPoint = UnityEngine.Random.Range(0, spawnPoints.Count);
+        //CrowdSpawner targetSpawner = spawnPoints[targetSpawnPoint];
 
         //Spawn the horde
-        spawner.Spawn();
+        //spawner.Spawn();
+
+        foreach (CrowdSpawner spawnPoint in spawnPoints)
+        {
+            spawnPoint.Spawn();
+        }
     }
 
     private void SetupNPCs()
     {
         List<NPC> npcs = FindObjectsOfType<NPC>().ToList();
-        int targetMaterial = UnityEngine.Random.Range(0, npcTextures.materials.Count);
 
         foreach (NPC npc in npcs)
         {
@@ -104,7 +108,7 @@ public class LevelManager : MonoBehaviour
             do
             {
                 assignedMaterial = UnityEngine.Random.Range(0, npcTextures.materials.Count);
-            } while (targetMaterial == assignedMaterial);
+            } while (GameManager.Instance.lastTarget == npcTextures.materials[assignedMaterial]);
 
             npc.meshRenderer.material = npcTextures.materials[assignedMaterial];
         }
