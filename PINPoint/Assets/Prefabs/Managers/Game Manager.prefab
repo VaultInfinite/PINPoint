@@ -1904,14 +1904,14 @@ Canvas:
   m_PlaneDistance: 0.24
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4183099016738909343
 MonoBehaviour:
@@ -2369,8 +2369,6 @@ MonoBehaviour:
   playerUI: {fileID: 726592653007504162}
   reticle: {fileID: 1923019412251415736}
   hideOutButtons: {fileID: 3203549077396651588}
-  settingsExitButton: {fileID: 0}
-  settingsBackButton: {fileID: 0}
   winMoney: {fileID: 7016734704178065740}
   winTime: {fileID: 3375803396139482367}
   loseMoney: {fileID: 3890903495571093240}

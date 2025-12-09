@@ -57,7 +57,10 @@ public class AudioControl : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
+    private void Start()
+    {
+        PlayMusic(musicType.MainMenu);
+    }
 
     /// <summary>
     /// Play sound effect

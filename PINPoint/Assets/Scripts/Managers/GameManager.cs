@@ -84,16 +84,26 @@ public class GameManager : MonoBehaviour
     #region Button Functions
     public void HideoutReturn()
     {
+        playerUI.SetActive(false);
+        pause.SetActive(false);
+
+        
+
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
+            Debug.Log("A");
             //Due to only being accessable in the contracts menu, disable other menus
             contracts.SetActive(true);
-            //settings.SetActive(false);
+            SettingsControl.Instance.HideSettings();
             equipment.SetActive(false);
         }
         else
         {
+            Debug.Log("B");
             AudioControl.Instance.PlayMusic(musicType.MainMenu);
+
+            Pause.Instance.HitPause();
+            HiMouse();
 
             setupRan = false;
             SceneManager.LoadScene(1);
@@ -101,7 +111,8 @@ public class GameManager : MonoBehaviour
 
             //Due to only being accessable in the contracts menu, disable other menus
             contracts.SetActive(true);
-            //settings.SetActive(false);
+            SettingsControl.Instance.HideSettings();
+            SettingsControl.Instance.VanishExitButtons();
             equipment.SetActive(false);
 
             foreach (TargetDummy target in targets)
@@ -117,23 +128,28 @@ public class GameManager : MonoBehaviour
     //Pulls up the settings UI
     public void CallSettingsUI()
     {
+        playerUI.SetActive(false);
+        pause.SetActive(false);
+
         // If Settings is called when game is Paused (during killing time)
         if (Pause.isPaused)
         {
             SettingsControl.Instance.ShowSettings();
+            contracts.SetActive(false);
+            equipment.SetActive(false);
 
             SettingsControl.Instance.GameButtons();
         }
         // If settings is called in between killings
         else
         {
-            SettingsControl.Instance.HideOutButtons();
+            SettingsControl.Instance.VanishExitButtons();
 
             contracts.SetActive(false);
-
+            equipment.SetActive(false);
             SettingsControl.Instance.ShowSettings();
 
-            equipment.SetActive(false);
+            
         } 
     }
 
@@ -149,6 +165,9 @@ public class GameManager : MonoBehaviour
     //Calls the shop UI in the menu
     public void CallEquipmentUI()
     {
+        playerUI.SetActive(false);
+        pause.SetActive(false);
+
         //Due to only being accessable in the contracts menu, disable other menus
         contracts.SetActive(false);
         SettingsControl.Instance.HideSettings();
@@ -180,11 +199,14 @@ public class GameManager : MonoBehaviour
 
         BlackOut();
 
+        playerUI.SetActive(true);
+        pause.SetActive(true);
+
         AudioControl.Instance.PlayMusic(musicType.Level);
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);
-        //settings.SetActive(false);
+        SettingsControl.Instance.HideSettings();
         equipment.SetActive(false);
 
         SceneManager.LoadScene(2);

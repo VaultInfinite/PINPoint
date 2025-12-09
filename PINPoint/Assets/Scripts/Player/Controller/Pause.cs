@@ -8,9 +8,26 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Pause : MonoBehaviour
 {
+    private static Pause instance;
+
+    public static Pause Instance { get { return instance; } }
+
     //Variables
     public static bool isPaused = false;    //Global Var - See if the game is paused
     private GameObject pauseMenu;           //Pause menu UI
+
+    private void Awake()
+    {
+        //Make sure this is the only Game Manager in the Scene
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -49,5 +66,15 @@ public class Pause : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    /// <summary>
+    /// For settings only
+    /// Turns the Pause menu back on
+    /// </summary>
+    public void BackToPause()
+    {
+        //Set the Pause Menu
+        pauseMenu.SetActive(true);
     }
 }

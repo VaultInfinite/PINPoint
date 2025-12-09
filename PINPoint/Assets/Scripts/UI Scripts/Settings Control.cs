@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Diagnostics.Contracts;
+using UnityEngine.SceneManagement;
 
 
 
@@ -61,15 +62,13 @@ public class SettingsControl : MonoBehaviour
         //Keep this object even when changing scenes
         DontDestroyOnLoad(gameObject);
         HideSettings();
-        AudioControl.Instance.PlaySceneMusic();
+        
     }
 
     private void Start()
     {
         fullScreen = true;
         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullScreen);
-
-        
     }
 
     #region Volume Methods
@@ -216,12 +215,27 @@ public class SettingsControl : MonoBehaviour
 
     public void ShowSettings()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+
         this.gameObject.SetActive(true);
+
+        if (currentScene.name == "Hideout")
+        {
+            settingsExitButton.SetActive(false);
+            settingsBackButton.SetActive(false);
+        }
+        
     }
 
+    /// <summary>
+    /// Used via game pause
+    /// </summary>
     public void HideSettings()
     {
         this.gameObject.SetActive(false);
+
+        if (Pause.Instance != null) { Pause.Instance.BackToPause(); }
+        
     }
 
     #endregion
