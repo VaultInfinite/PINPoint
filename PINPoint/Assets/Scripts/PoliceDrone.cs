@@ -34,7 +34,7 @@ public class PoliceDrone : MonoBehaviour
 
     //StateSwitch
     public float sightRange, attackRange, tooCloseRange;
-    public bool playerInSightRange, playerInAttackRange, playerTooClose;
+    public bool playerInSightRange, playerInAttackRange;
 
     [HideInInspector]
     public StunControl stunControl;
@@ -56,14 +56,13 @@ public class PoliceDrone : MonoBehaviour
         //check for if player is in range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        playerTooClose = Physics.CheckSphere(transform.position, tooCloseRange, whatIsPlayer);
+        playerApproach = Physics.CheckSphere(transform.position, tooCloseRange, whatIsPlayer);
 
         if (!stunControl.isStunned)
         {
             if (!playerInSightRange && !playerInAttackRange) Wandering();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInAttackRange && playerInSightRange) AttackPlayer(true);
-            if (playerInAttackRange && playerInSightRange && playerTooClose) AttackPlayer(false);
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
         }
     }
 
@@ -103,11 +102,9 @@ public class PoliceDrone : MonoBehaviour
         
     }
 
-    private void AttackPlayer(bool approach)
+    private void AttackPlayer()
     {
         LookAt();
-
-        playerApproach = approach;
 
         //agent.SetDestination(transform.position);
         walkPoint = new Vector3(player.transform.position.x, player.transform.position.y + 10f, player.transform.position.z);
@@ -187,7 +184,7 @@ public class PoliceDrone : MonoBehaviour
         {
             StartCoroutine(DroneIdle());
         }
-        else if (!reachedGoal)
+        else if (!reachedGoal && !playerApproach)
         {
             rb.velocity = (walkPoint - transform.position).normalized * speed;
             transform.rotation = Quaternion.LookRotation(rb.velocity, Vector3.up);

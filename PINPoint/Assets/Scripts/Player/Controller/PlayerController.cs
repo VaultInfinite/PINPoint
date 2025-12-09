@@ -34,6 +34,8 @@ public partial class PlayerController : MonoBehaviour
 
     [Header("Objects")]
     public GameObject sniperOBJ, grappleOBJ, shockOBJ;
+    public GameObject ledgeHands;
+    public GameObject shockOBJLight;
 
     //Charge Regen for the Grappling Hook; time passed
     private float chargeRegenTime;

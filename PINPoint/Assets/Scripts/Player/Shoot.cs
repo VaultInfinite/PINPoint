@@ -152,7 +152,7 @@ public class Shoot : MonoBehaviour
             {
                 PoliceDrone drone = hitObject.GetComponent<PoliceDrone>();
                 drone.stunControl.Stunned();
-                Debug.Log("Enemy Stunned");
+                StartCoroutine(ShockVisual());
             }
         }
 
@@ -201,5 +201,12 @@ public class Shoot : MonoBehaviour
         yield return new WaitForSeconds(timer);
 
         canShoot = true;
+    }
+
+    IEnumerator ShockVisual()
+    {
+        player.shockOBJLight.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        player.shockOBJLight.SetActive(false);
     }
 }
