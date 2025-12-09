@@ -17,7 +17,7 @@ public class GameUIControl : MonoBehaviour
     private TextMeshProUGUI payDisplay, timeDisplay, weaponDisplay, chargeDisplay, targetPrice;
 
     //Timer Variables
-    private float  elapsedTime;
+    private float elapsedTime;
 
     public string timer;
     #endregion
@@ -27,11 +27,6 @@ public class GameUIControl : MonoBehaviour
     private void Start()
     {
         SceneManager.activeSceneChanged += FindPlayer;
-
-        if (LevelManager.Instance != null)
-        {
-            targetPrice.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
-        }
     }
 
 
@@ -56,7 +51,7 @@ public class GameUIControl : MonoBehaviour
 
             timeDisplay.text = timer;
 
-            payDisplay.text = "$" + LevelManager.Instance.levelMoney.ToString("00,000,000");
+            payDisplay.text = "$" + LevelManager.Instance.levelMoney.ToString("###,###,###");
         }
 
 
@@ -66,6 +61,10 @@ public class GameUIControl : MonoBehaviour
             var weapon = player.gameObject.GetComponent<Shoot>();
             var grapple = player.gameObject.GetComponent<Grappling>();
 
+            if (player.stunControl.isStunned)
+            {
+                weaponDisplay.text = "STUNNED";
+            }
             if (weapon.isActiveAndEnabled && weapon.playerGun == GunType.rifle)
             {
                 weaponDisplay.text = "Sniper";
@@ -97,8 +96,30 @@ public class GameUIControl : MonoBehaviour
         elapsedTime = 0;
     }
 
+    public void SetTargetPrice()
+    {
+        int priceOfTarget = 0;
+
+        switch (GameManager.Instance.lastDifficulty)
+        {
+            case LevelManager.Difficulty.Easy:
+                priceOfTarget = 10000;
+                break;
+            case LevelManager.Difficulty.Medium:
+                priceOfTarget = 25000;
+                break;
+            case LevelManager.Difficulty.Hard:
+                priceOfTarget = 100000;
+                break;
+        }
+
+        targetPrice.text = "$" + priceOfTarget.ToString("###,###,###");
+    }
+
     private void FindPlayer(Scene current, Scene next)
     {
         player = FindObjectOfType<PlayerController>();
     }
+
+    
 }

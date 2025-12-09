@@ -30901,6 +30901,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
         type: 3}
+      propertyPath: wall.bumpForce
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317267148356265128, guid: ba8d91f477f53af47ac4af82c83ca54b,
+        type: 3}
       propertyPath: air.maxFallSpeed
       value: 200
       objectReference: {fileID: 0}

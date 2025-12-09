@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get { return instance; } }
 
+    private GameUIControl gameUIControl;
+
     [Header("UI GameObjects")]
     public GameObject pause;
     public GameObject lose;
@@ -76,6 +78,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SetupTargets();
+    }
+
+    private void Start()
+    {
+        gameUIControl = FindObjectOfType<GameUIControl>();
     }
 
     #region Button Functions
@@ -198,6 +205,8 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Pause.isPaused = false;
+        gameUIControl.ResetTime();
+        gameUIControl.SetTargetPrice();
     }
 
     public void GoToEasy() => GoToLevel(LevelManager.Difficulty.Easy, targetMat[0]);
@@ -213,6 +222,7 @@ public class GameManager : MonoBehaviour
     public void RetryLevel()
     {
         GoToLevel(lastDifficulty, lastTarget);
+        gameUIControl.ResetTime();
     }
 
     public void QuitGame()

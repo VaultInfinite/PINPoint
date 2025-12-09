@@ -117,7 +117,7 @@ public partial class PlayerController : MonoBehaviour
         {
             state.OnFixedUpdate(this);
         }
-        Debug.Log(_state);
+        //Debug.Log(_state);
 
         //Check if the player is touching the ground
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.01f, Ground);
