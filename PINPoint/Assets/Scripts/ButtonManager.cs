@@ -22,7 +22,7 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("Turn off Main Menu, Enable Controls");
         title.SetActive(false);
         mainMenu.SetActive(false);
-        settingsMenu.SetActive(false);
+        SettingsControl.Instance.HideSettings();
         tutorialMenu.SetActive(true);
     }
 
@@ -30,7 +30,7 @@ public class ButtonManager : MonoBehaviour
     {
         title.SetActive(true);
         tutorialMenu.SetActive(false);
-        settingsMenu.SetActive(false);
+        SettingsControl.Instance.HideSettings();
         mainMenu.SetActive(true);
     }
 
@@ -38,6 +38,6 @@ public class ButtonManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         tutorialMenu.SetActive(false);
-        settingsMenu.SetActive(true);
+        SettingsControl.Instance.ShowSettings();
     }
 }

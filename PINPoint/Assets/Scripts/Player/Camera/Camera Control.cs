@@ -11,14 +11,6 @@ public class CameraControl : MonoBehaviour
     private static CameraControl instance;
     public static CameraControl Instance { get { return instance; } }
 
-    //The variable that will be applied to the rotation
-    public float sensX;
-    public float sensY;
-
-    //The variables that will be applied to the above variables when aiming
-    public float aimX;
-    public float aimY;
-
     public bool playerAiming;
 
     [SerializeField]
@@ -42,7 +34,6 @@ public class CameraControl : MonoBehaviour
         
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        
     }
 
     // Update is called once per frame
@@ -83,14 +74,14 @@ public class CameraControl : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        yRotation += mouseX / sensX;
-        xRotation -= mouseY / sensY;
+        yRotation += mouseX / SettingsControl.Instance.camSensitivitySlider.value; ;
+        xRotation -= mouseY / SettingsControl.Instance.camSensitivitySlider.value; ;
 
         //Limits how far the player can look up and adown
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(inverse * xRotation, inverse * yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, inverse * yRotation, 0);
+        transform.rotation = Quaternion.Euler(SettingsControl.Instance.aimIsReversed * xRotation, SettingsControl.Instance.aimIsReversed * yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, SettingsControl.Instance.aimIsReversed * yRotation, 0);
     }
 
     //Applies the aiming camera sensitivity
@@ -100,13 +91,14 @@ public class CameraControl : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        yRotation += mouseX / aimX;
-        xRotation -= mouseY / aimY;
+        yRotation += mouseX / SettingsControl.Instance.aimSensitivitySlider.value;;
+        xRotation -= mouseY / SettingsControl.Instance.aimSensitivitySlider.value; ;
 
         //Limits how far the player can look up and adown
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(inverse * xRotation, inverse * yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, inverse * yRotation, 0);
+        transform.rotation = Quaternion.Euler(SettingsControl.Instance.aimIsReversed * xRotation, SettingsControl.Instance.aimIsReversed * yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, SettingsControl.Instance.aimIsReversed * yRotation, 0);
     }
+
 }

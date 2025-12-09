@@ -11,6 +11,10 @@ using System.Diagnostics.Contracts;
 public class SettingsControl : MonoBehaviour
 {
 
+    private static SettingsControl instance;
+
+    public static SettingsControl Instance { get { return instance; } }
+
     [Header("Volume")]
     [SerializeField]
     private Slider masterSlider;
@@ -29,17 +33,43 @@ public class SettingsControl : MonoBehaviour
     private bool fullScreen;
 
     [Header("Aim")]
-    [SerializeField]
-    private Slider aimSensitivitySlider;
-    [SerializeField]
-    private Slider camSensitivitySlider;
+    public Slider aimSensitivitySlider;
+    public Slider camSensitivitySlider;
     public Toggle reverseAim;
 
+    [Header("Exit Buttons")]
+    [SerializeField]
+    private GameObject settingsExitButton;
+    [SerializeField]
+    private GameObject settingsBackButton;
+
+    [Header("Global")]
+    public int aimIsReversed = 1;
+
+    private void Awake()
+    {
+        //Make sure this is the only Game Manager in the Scene
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        //Keep this object even when changing scenes
+        DontDestroyOnLoad(gameObject);
+        HideSettings();
+        AudioControl.Instance.PlaySceneMusic();
+    }
 
     private void Start()
     {
         fullScreen = true;
         Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullScreen);
+
+        
     }
 
     #region Volume Methods
@@ -138,28 +168,62 @@ public class SettingsControl : MonoBehaviour
 
     #region Controls Methods
 
-    /// <summary>
-    /// Controls the Aim Sensitivity
-    /// </summary>
-    public void ControlAimSensitivity()
-    {
-        CameraControl.Instance.aimX = aimSensitivitySlider.value;
-        CameraControl.Instance.aimY = aimSensitivitySlider.value;
-    }
-
-    /// <summary>
-    /// Control the general camera sensitivity
-    /// </summary>
-    public void ControlCamSensitivity()
-    {
-        CameraControl.Instance.sensX = camSensitivitySlider.value;
-        CameraControl.Instance.sensY = camSensitivitySlider.value;
-    }
-
     public void ReverseAim()
     {
-        CameraControl.Instance.inverse *= -1;
+        //CameraControl.Instance.inverse *= -1;
+
+        aimIsReversed *= -1;
     }
 
     #endregion
+
+    #region Global Button Effects
+
+    /// <summary>
+    /// Enables the proper exit button for the Main Menu
+    /// </summary>
+    public void MainMenuButtons()
+    {
+
+    }
+
+    /// <summary>
+    /// Enables the proper exit buttons during gameplay
+    /// </summary>
+    public void GameButtons()
+    {
+        settingsExitButton.SetActive(false);
+        settingsBackButton.SetActive(true);
+    }
+
+    /// <summary>
+    /// Enables the proper exit buttons when in the hideout
+    /// </summary>
+    public void HideOutButtons()
+    {
+        settingsExitButton.SetActive(true);
+        settingsBackButton.SetActive(false);
+    }
+
+    /// <summary>
+    /// Deactivates EVERY exit button
+    /// </summary>
+    public void VanishExitButtons()
+    {
+        settingsExitButton.SetActive(false);
+        settingsBackButton.SetActive(false);
+    }
+
+    public void ShowSettings()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void HideSettings()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    #endregion
+
 }

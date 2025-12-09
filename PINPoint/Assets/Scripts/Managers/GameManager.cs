@@ -21,16 +21,12 @@ public class GameManager : MonoBehaviour
     public GameObject win;
     public GameObject contracts;
     public GameObject equipment;
-    public GameObject settings;
+    //public GameObject settings;
     public GameObject load;
     public GameObject playerUI;
     public GameObject reticle;
 
     public GameObject hideOutButtons;
-
-    //Settings UI
-    public GameObject settingsExitButton;
-    public GameObject settingsBackButton;
 
     [Header("UI Text")]
     public TextMeshProUGUI winMoney; //How much money was rewarded after WINNING the level
@@ -88,24 +84,24 @@ public class GameManager : MonoBehaviour
     #region Button Functions
     public void HideoutReturn()
     {
-        AudioControl.Instance.StopMusic();
-
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             //Due to only being accessable in the contracts menu, disable other menus
             contracts.SetActive(true);
-            settings.SetActive(false);
+            //settings.SetActive(false);
             equipment.SetActive(false);
         }
         else
         {
+            AudioControl.Instance.PlayMusic(musicType.MainMenu);
+
             setupRan = false;
             SceneManager.LoadScene(1);
             hideOutButtons.SetActive(true);
 
             //Due to only being accessable in the contracts menu, disable other menus
             contracts.SetActive(true);
-            settings.SetActive(false);
+            //settings.SetActive(false);
             equipment.SetActive(false);
 
             foreach (TargetDummy target in targets)
@@ -124,19 +120,19 @@ public class GameManager : MonoBehaviour
         // If Settings is called when game is Paused (during killing time)
         if (Pause.isPaused)
         {
-            settings.SetActive(true);
-            settingsExitButton.SetActive(false);
-            settingsBackButton.SetActive(true);
+            SettingsControl.Instance.ShowSettings();
 
+            SettingsControl.Instance.GameButtons();
         }
         // If settings is called in between killings
         else
         {
-            settingsExitButton.SetActive(true);
-            settingsBackButton.SetActive(false);
+            SettingsControl.Instance.HideOutButtons();
 
             contracts.SetActive(false);
-            settings.SetActive(true);
+
+            SettingsControl.Instance.ShowSettings();
+
             equipment.SetActive(false);
         } 
     }
@@ -146,9 +142,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GoBackToPause()
     {
-        settings.SetActive(false);
-        settingsExitButton.SetActive(false);
-        settingsBackButton.SetActive(false);
+        //settings.SetActive(false);
+        SettingsControl.Instance.HideSettings();
     }
 
     //Calls the shop UI in the menu
@@ -156,7 +151,7 @@ public class GameManager : MonoBehaviour
     {
         //Due to only being accessable in the contracts menu, disable other menus
         contracts.SetActive(false);
-        settings.SetActive(false);
+        SettingsControl.Instance.HideSettings();
         equipment.SetActive(true);
 
         //shopCash.text = "$" + playerMoney.ToString("0,000,000");
@@ -185,11 +180,11 @@ public class GameManager : MonoBehaviour
 
         BlackOut();
 
-        AudioControl.Instance.PlayMusic();
+        AudioControl.Instance.PlayMusic(musicType.Level);
 
         //Turn off Contracts, Settings, and Equipment UI
         contracts.SetActive(false);
-        settings.SetActive(false);
+        //settings.SetActive(false);
         equipment.SetActive(false);
 
         SceneManager.LoadScene(2);

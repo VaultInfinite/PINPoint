@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum sfxType
 {
@@ -12,8 +13,8 @@ public enum sfxType
 
 public enum musicType
 {
-    MAINMENU,
-    STAGE
+    MainMenu,
+    Level
 }
 
 /// <summary>
@@ -38,7 +39,9 @@ public class AudioControl : MonoBehaviour
     public AudioClip shootClip;
 
     [Header("Music")]
-    public AudioClip musicClip;
+    public AudioClip[] musicList;
+    public AudioClip mainMenuClip;
+    public AudioClip levelClip;
 
     [Header("Ambient")]
     public AudioClip ambientClip;
@@ -49,7 +52,12 @@ public class AudioControl : MonoBehaviour
         {
             instance = this;
         }
+
+        //Keep this object even when changing scenes
+        DontDestroyOnLoad(gameObject);
     }
+
+
 
     /// <summary>
     /// Play sound effect
@@ -62,12 +70,12 @@ public class AudioControl : MonoBehaviour
         instance.effectsAudio.Play();
     }
 
-    public void PlayMusic()
+    public void PlayMusic(musicType music)
     {
         Debug.Log("Play Music");
-        instance.effectsAudio.clip = musicClip;
+        instance.musicAudio.clip = instance.musicList[(int)music];
 
-        instance.effectsAudio.Play();
+        instance.musicAudio.Play();
     }
 
     public void StopMusic()
@@ -79,5 +87,40 @@ public class AudioControl : MonoBehaviour
 
     private void PlayAmbient()
     {
+    }
+
+    public void PlaySceneMusic()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        string sceneName = currentScene.name;
+
+        Debug.Log("Scene: " + sceneName);
+
+        switch (sceneName)
+        {
+            case "StartMenu":
+
+                PlayMusic(musicType.MainMenu);
+
+
+                break;
+
+            case "Hideout":
+                PlayMusic(musicType.MainMenu);
+
+                break;
+
+            case "FinalLevel":
+                PlayMusic(musicType.Level);
+
+                break;
+
+            default:
+
+                Debug.LogErrorFormat("ERROR: SCENE NAME");
+
+                break;
+        }
     }
 }
