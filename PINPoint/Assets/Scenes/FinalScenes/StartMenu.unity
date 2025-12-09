@@ -3608,15 +3608,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Buyable Upgrade
-
+  m_text: '
 
     Allows you to grab onto ledges of platforms.
 
 
-    you
-    need to jump up against a wall and reach near the top of the ledge to ledge grab.
-    this will hold you in place and you can jump again to climb up the ledge.'
+    you need to jump
+    up against a wall and reach near the top of the ledge to ledge grab. this will
+    hold you in place and you can jump again to climb up the ledge.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 382a3fa564c03dd418b6717106821a29, type: 2}
   m_sharedMaterial: {fileID: -982299193116535744, guid: 382a3fa564c03dd418b6717106821a29,
