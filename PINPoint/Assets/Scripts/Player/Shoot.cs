@@ -102,9 +102,10 @@ public class Shoot : MonoBehaviour
     //Shoot the bullet
     public void Shooting()
     {
-        if (AudioControl.Instance != null)
+        if (AudioControl.Instance != null && playerGun == GunType.rifle)
         {
             AudioControl.Instance.PlaySoundEffect(sfxType.SHOOT);
+            Debug.Log("Shooting Sound");
         }
 
         //RIFLE CHECK
