@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public TargetDummy[] targets;
 
     private bool setupRan;
+    private bool moneyTransferred;
 
     /// <summary>
     /// Make sure there is one Game Manager Instance
@@ -83,6 +84,21 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameUIControl = FindObjectOfType<GameUIControl>();
+
+        if (!PlayerPrefs.HasKey("Money"))
+        {
+            PlayerPrefs.SetFloat("Money", 0f);
+        }
+        else
+        {
+            if (!moneyTransferred)
+            {
+                float savedMoney = PlayerPrefs.GetFloat("Money");
+                playerMoney += savedMoney;
+                moneyTransferred = true;
+            }
+            
+        }
     }
 
     #region Button Functions

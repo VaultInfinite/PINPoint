@@ -160,6 +160,9 @@ public class LevelManager : MonoBehaviour
         //Give money to the player
         gm.playerMoney += levelMoney;
 
+        float tempMoney = PlayerPrefs.GetFloat("Money");
+        PlayerPrefs.SetFloat("Money", tempMoney + levelMoney);
+
         //Change UI
         gm.winMoney.text = "$" + levelMoney.ToString("0,000,000");
         gm.winTime.text = gm.playerUI.gameObject.GetComponent<GameUIControl>().timer;
